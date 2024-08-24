@@ -76,8 +76,6 @@ app.get('*', async (req, res) => {
       .replace(`<!--app-head-->`, `${helmet?.head || ''}${preloadLinks || ''}`)
       .replace(`<!--app-html-->`, html || '');
 
-    console.log('fullHtml：', fullHtml);
-
     res.status(statusCode).set({ 'Content-Type': 'text/html' }).send(fullHtml);
   } catch (error) {
     if (!isProduction && vite) {
