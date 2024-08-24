@@ -1,0 +1,35 @@
+{
+  "name": "app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:ssr": "pnpm build && node ./scripts/server.mjs",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cross-env BUILD_TARGET=client vite build",
+    "build:server": "cross-env BUILD_TARGET=server vite build",
+    "preview": "cross-env NODE_ENV=production node ./scripts/server.mjs",
+    "postbuild": "node ./scripts/run.mjs"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cross-env": "^7.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-helmet-async": "^2.0.5",
+    "react-router-dom": "^6.26.1",
+    "sirv": "^2.0.4",
+    "sitemap": "^8.0.0"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.7.5",
+    "@types/express": "^4.17.21",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "express": "^4.19.2",
+    "sass": "^1.77.8",
+    "vite-plugin-html": "^3.2.2",
+    "vite-plugin-pwa": "^0.20.1"
+  }
+}
