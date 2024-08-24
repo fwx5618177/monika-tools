@@ -9,7 +9,7 @@ const HomePage = () => {
   return (
     <div>
       {SeoComponent}
-      <h1>Welcome to the Home Page122444</h1>
+      <h1>Welcome to the Home Page122444...</h1>
     </div>
   );
 };

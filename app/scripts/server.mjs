@@ -16,9 +16,10 @@ const distDir = resolve(__dirname, '..', '..', 'dist/client');
 const templateHtml = isProduction
   ? await fs.readFile(resolve(__dirname, '..', 'index.html'), 'utf-8')
   : '';
-
 const ssrManifest = isProduction
-  ? await fs.readFile(resolve(distDir, '.vite/ssr-manifest.json'), 'utf-8')
+  ? JSON.parse(
+      await fs.readFile(resolve(distDir, '.vite/ssr-manifest.json'), 'utf-8')
+    )
   : undefined;
 
 // Create http server
@@ -75,7 +76,7 @@ app.get('*', async (req, res) => {
       .replace(`<!--app-head-->`, `${helmet?.head || ''}${preloadLinks || ''}`)
       .replace(`<!--app-html-->`, html || '');
 
-    console.log(fullHtml);
+    console.log('fullHtml：', fullHtml);
 
     res.status(statusCode).set({ 'Content-Type': 'text/html' }).send(fullHtml);
   } catch (error) {

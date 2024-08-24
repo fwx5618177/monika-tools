@@ -20,27 +20,26 @@ export function render(url: string, manifest?: Record<string, string[]>) {
 
   // 使用 ssrManifest 来生成预加载标签，并处理 files 不是数组的情况
   const preloadLinks = manifest
-    ? Object.keys(manifest)
-        .map((key) => {
-          const files = manifest[key];
-          if (Array.isArray(files)) {
-            return files
-              .map((file) => {
-                if (file.endsWith('.js')) {
-                  return `<script type="module" src="/${file}"></script>`;
-                } else if (file.endsWith('.css')) {
-                  return `<link rel="stylesheet" href="/${file}">`;
-                }
-                return '';
-              })
-              .join('');
-          } else if (typeof files === 'string') {
-            if ((files as string)?.endsWith('.js')) {
-              return `<script type="module" src="/${files}"></script>`;
-            } else if ((files as string)?.endsWith('.css')) {
-              return `<link rel="stylesheet" href="/${files}">`;
-            }
-            return '';
+    ? Array.from(
+        new Set(
+          Object.keys(manifest)
+            .flatMap((key) => {
+              const files = manifest[key];
+              if (Array.isArray(files)) {
+                return files;
+              } else if (typeof files === 'string') {
+                return [files];
+              }
+              return [];
+            })
+            .filter(Boolean) // 过滤掉空字符串或非文件路径
+        )
+      )
+        .map((file) => {
+          if (file.endsWith('.js')) {
+            return `<script type="module" src="${file}"></script>`;
+          } else if (file.endsWith('.css')) {
+            return `<link rel="stylesheet" href="${file}">`;
           }
           return '';
         })
