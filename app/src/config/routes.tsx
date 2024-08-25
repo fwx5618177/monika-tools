@@ -9,7 +9,7 @@ function LazyWrapper({
   return <>{createElement(component)}</>;
 }
 
-const routes: RouteObject[] = [
+export const routes: RouteObject[] = [
   {
     path: '/',
     element: <LazyWrapper component={lazy(() => import('@pages/Home'))} />,
@@ -23,5 +23,3 @@ const routes: RouteObject[] = [
     element: <LazyWrapper component={lazy(() => import('@pages/NotFound'))} />,
   },
 ];
-
-export default routes;

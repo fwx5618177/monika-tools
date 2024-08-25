@@ -5,6 +5,7 @@ import {
 } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import App from './App';
+
 import * as pkg from 'react-helmet-async';
 const { HelmetProvider } = pkg;
 
@@ -15,8 +16,8 @@ export function render(
 ) {
   const helmetContext = {};
   const statusCode = 200;
-  const isSSG = process.env.isSSG;
-  const isSSR = process.env.isSSR;
+  const isSSG = process.env.isSSG as unknown as boolean;
+  const isSSR = process.env.isSSR as unknown as boolean;
 
   // 在 SSR 环境中优先使用 renderToPipeableStream，如果不可用则降级为 renderToString
   if (isSSR && typeof renderToPipeableStream === 'function') {
@@ -55,7 +56,7 @@ export function render(
     ? renderToStaticMarkup(
         <HelmetProvider context={helmetContext}>
           <StaticRouter location={url}>
-            <App />
+            <App helmetContext={helmetContext} />
           </StaticRouter>
         </HelmetProvider>
       )

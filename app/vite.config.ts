@@ -18,11 +18,10 @@ export default defineConfig(({ mode, command }) => {
       ? '../dist/client'
       : isSSG
         ? '../dist/ssg'
-        : '../dist/ssg';
+        : '../dist';
 
   return {
     define: {
-      'process.env.VITE_APP_TITLE': JSON.stringify(process.env.VITE_APP_TITLE),
       'process.env.isSSR': isSSR,
       'process.env.isSSG': isSSG,
     },
@@ -59,13 +58,15 @@ export default defineConfig(({ mode, command }) => {
       outDir,
       assetsDir: '.',
       ssrManifest: isClient || isSPA || isSSG ? true : undefined,
-      emptyOutDir: true,
+      manifest: isClient || isSPA || isSSG ? true : undefined,
+      emptyOutDir: isSSG ? true : false,
       rollupOptions: {
-        input: isSSR
-          ? './src/entry-server.tsx'
-          : isSPA || isSSG
-            ? resolve(__dirname, 'index.html')
-            : './src/entry-client.tsx',
+        input:
+          isSSR || isSSG
+            ? './src/entry-server.tsx'
+            : isSPA
+              ? resolve(__dirname, 'index.html')
+              : './src/entry-client.tsx',
         output: {
           dir: outDir,
           entryFileNames: isSSR ? '[name].js' : undefined,

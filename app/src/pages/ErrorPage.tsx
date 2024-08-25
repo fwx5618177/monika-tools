@@ -1,12 +1,10 @@
-import { Lang } from '@seo/seoConfig';
 import { useSeo } from '@seo/useSeo';
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ErrorPage: React.FC = () => {
   const navigate = useNavigate();
-  const { lang } = useParams<{ lang: Lang }>();
-  const SeoComponent = useSeo('common', lang);
+  const SeoComponent = useSeo('common');
 
   return (
     <div style={{ textAlign: 'center', padding: '2rem' }}>

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { SeoConfig } from './seoConfig';
 import { capitalizeFirstLetter } from '@utils/common';
+import * as pkg from 'react-helmet-async';
+const { Helmet } = pkg;
 
 interface SeoProps {
   config: SeoConfig;

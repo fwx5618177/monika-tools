@@ -74,7 +74,6 @@ app.get('*', async (req, res) => {
       res.status(statusCode).set({
         'Content-Type': 'text/html',
       });
-
       res.write(
         template
           .replace(

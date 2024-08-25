@@ -1,10 +1,7 @@
-import { Lang } from '@seo/seoConfig';
 import { useSeo } from '@seo/useSeo';
-import { useParams } from 'react-router-dom';
 
 const HomePage = () => {
-  const { lang } = useParams<{ lang: Lang }>();
-  const SeoComponent = useSeo('home', lang);
+  const SeoComponent = useSeo('home');
 
   return (
     <div>
