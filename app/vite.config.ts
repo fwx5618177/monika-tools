@@ -1,4 +1,4 @@
-import path from 'path';
+import path, { resolve } from 'path';
 
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
@@ -8,9 +8,9 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { PwaConfig } from './scripts/pwa';
 
 export default defineConfig(({ mode, command }) => {
-  const isSSR = command === 'build' && process.env.BUILD_TARGET === 'server';
-  const isClient = command === 'build' && process.env.BUILD_TARGET === 'client';
-  console.log('mode:', mode);
+  const isSSR = process.env.BUILD_TARGET === 'server';
+  const isClient = process.env.BUILD_TARGET === 'client';
+  const isSPA = process.env.BUILD_TARGET === 'spa';
 
   const outDir = isSSR
     ? '../dist/server'
@@ -25,13 +25,17 @@ export default defineConfig(({ mode, command }) => {
     plugins: [
       react(),
       VitePWA(PwaConfig),
-      createHtmlPlugin({
-        inject: {
-          data: {
-            title: 'Monika Tools',
-          },
-        },
-      }),
+      ...(isClient || isSPA
+        ? [
+            createHtmlPlugin({
+              inject: {
+                data: {
+                  title: 'Monika Tools',
+                },
+              },
+            }),
+          ]
+        : []),
     ],
     resolve: {
       alias: {
@@ -48,16 +52,15 @@ export default defineConfig(({ mode, command }) => {
       sourcemap: mode === 'development',
       outDir,
       assetsDir: '.',
-      ssrManifest: isClient ? true : undefined,
+      ssrManifest: isClient || isSPA ? true : undefined,
       emptyOutDir: true,
       rollupOptions: {
-        input: isSSR ? './src/entry-server.tsx' : './src/entry-client.tsx',
+        input: isSSR
+          ? './src/entry-server.tsx'
+          : isSPA
+            ? resolve(__dirname, 'index.html')
+            : './src/entry-client.tsx',
         output: {
-          // manualChunks: {
-          //   react: ['react'],
-          //   'react-dom': ['react-dom'],
-          //   'react-router-dom': ['react-router-dom'],
-          // },
           dir: outDir,
           entryFileNames: isSSR ? '[name].js' : undefined,
           chunkFileNames: '[name]-[hash].js',
@@ -79,13 +82,6 @@ export default defineConfig(({ mode, command }) => {
       host: '0.0.0.0',
       port: 3000,
       open: true,
-      // proxy: {
-      //   "/api": {
-      //     target: "http://localhost:5000",
-      //     changeOrigin: true,
-      //     rewrite: (path) => path.replace(/^\/api/, ""),
-      //   },
-      // },
     },
     optimizeDeps: {
       include: ['react', 'react-dom', 'react-router-dom'],

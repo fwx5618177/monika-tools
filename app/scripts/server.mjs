@@ -73,6 +73,7 @@ app.get('*', async (req, res) => {
     } = await render(url, ssrManifest);
 
     const fullHtml = template
+      .replace(`{{ title }}`, 'Monica Tools')
       .replace(`<!--app-head-->`, `${helmet?.head || ''}${preloadLinks || ''}`)
       .replace(`<!--app-html-->`, html || '');
 

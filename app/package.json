@@ -7,9 +7,10 @@
     "dev": "vite",
     "dev:ssr": "pnpm build && node ./scripts/server.mjs",
     "build": "pnpm run build:client && pnpm run build:server",
+    "build:spa": "cross-env BUILD_TARGET=spa vite build",
     "build:client": "cross-env BUILD_TARGET=client vite build",
     "build:server": "cross-env BUILD_TARGET=server vite build",
-    "preview": "cross-env NODE_ENV=production node ./scripts/server.mjs",
+    "start:ssr": "cross-env NODE_ENV=production node ./scripts/server.mjs",
     "postbuild": "node ./scripts/run.mjs"
   },
   "dependencies": {
