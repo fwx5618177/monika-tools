@@ -7,11 +7,16 @@ import { useRoutes } from 'react-router-dom';
 
 function App() {
   const routing = useRoutes(routes);
+  const isSSG = process.env.BUILD_TARGET === 'ssg';
 
   return (
     <HelmetProvider>
       <ErrorBoundary>
-        <Suspense fallback={<Loading />}>{routing}</Suspense>
+        {isSSG ? (
+          <>{routing}</>
+        ) : (
+          <Suspense fallback={<Loading />}>{routing}</Suspense>
+        )}
       </ErrorBoundary>
     </HelmetProvider>
   );

@@ -48,6 +48,7 @@ app.get('*', async (req, res) => {
 
     let template;
     let render;
+    let stream;
 
     if (!isProduction) {
       // In development, always read fresh template
@@ -65,19 +66,44 @@ app.get('*', async (req, res) => {
       render = entryServerModule.render;
     }
 
-    const {
-      html,
-      helmet,
-      preloadLinks,
-      statusCode = 200,
-    } = await render(url, ssrManifest);
+    const result = await render(url, ssrManifest);
+    const { html, helmet, preloadLinks, statusCode = 200 } = result;
 
-    const fullHtml = template
-      .replace(`{{ title }}`, 'Monica Tools')
-      .replace(`<!--app-head-->`, `${helmet?.head || ''}${preloadLinks || ''}`)
-      .replace(`<!--app-html-->`, html || '');
+    if (result.stream) {
+      stream = result.stream;
+      res.status(statusCode).set({
+        'Content-Type': 'text/html',
+      });
 
-    res.status(statusCode).set({ 'Content-Type': 'text/html' }).send(fullHtml);
+      res.write(
+        template
+          .replace(
+            `<!--app-head-->`,
+            `${helmet?.head || ''}${preloadLinks || ''}`
+          )
+          .replace(`<!--app-html-->`, '')
+      );
+
+      stream.pipe(res, { end: false });
+
+      stream.on('end', () => {
+        res.write('</div></body></html>');
+        res.end();
+      });
+    } else {
+      const fullHtml = template
+        .replace(`{{ title }}`, 'Monica Tools')
+        .replace(
+          `<!--app-head-->`,
+          `${helmet?.head || ''}${preloadLinks || ''}`
+        )
+        .replace(`<!--app-html-->`, html || '');
+
+      res
+        .status(statusCode)
+        .set({ 'Content-Type': 'text/html' })
+        .send(fullHtml);
+    }
   } catch (error) {
     if (!isProduction && vite) {
       vite.ssrFixStacktrace(error);

@@ -1,5 +1,4 @@
 import path, { resolve } from 'path';
-
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
@@ -11,21 +10,26 @@ export default defineConfig(({ mode, command }) => {
   const isSSR = process.env.BUILD_TARGET === 'server';
   const isClient = process.env.BUILD_TARGET === 'client';
   const isSPA = process.env.BUILD_TARGET === 'spa';
+  const isSSG = process.env.BUILD_TARGET === 'ssg';
 
   const outDir = isSSR
     ? '../dist/server'
     : isClient
       ? '../dist/client'
-      : '../dist';
+      : isSSG
+        ? '../dist/ssg'
+        : '../dist/ssg';
 
   return {
     define: {
       'process.env.VITE_APP_TITLE': JSON.stringify(process.env.VITE_APP_TITLE),
+      'process.env.isSSR': isSSR,
+      'process.env.isSSG': isSSG,
     },
     plugins: [
       react(),
       VitePWA(PwaConfig),
-      ...(isClient || isSPA
+      ...(isClient || isSPA || isSSG
         ? [
             createHtmlPlugin({
               inject: {
@@ -49,15 +53,17 @@ export default defineConfig(({ mode, command }) => {
       },
     },
     build: {
-      sourcemap: mode === 'development',
+      // sourcemap: mode === 'development',
+      sourcemap: true,
+      minify: false,
       outDir,
       assetsDir: '.',
-      ssrManifest: isClient || isSPA ? true : undefined,
+      ssrManifest: isClient || isSPA || isSSG ? true : undefined,
       emptyOutDir: true,
       rollupOptions: {
         input: isSSR
           ? './src/entry-server.tsx'
-          : isSPA
+          : isSPA || isSSG
             ? resolve(__dirname, 'index.html')
             : './src/entry-client.tsx',
         output: {
