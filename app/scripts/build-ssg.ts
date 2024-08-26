@@ -50,13 +50,18 @@ async function generateStaticPages() {
       .replace(`<!--app-head-->`, `${helmet?.head || ''}${preloadLinks || ''}`)
       .replace(`<!--app-html-->`, html || '');
 
-    const filePath =
-      url === '/404'
-        ? resolve(ssgDir, '404.html')
-        : resolve(
-            ssgDir,
-            `${url === '/' ? 'index' : url.replace('/', '')}.html`
-          );
+    let filePath;
+    if (url === '/404') {
+      filePath = resolve(ssgDir, '404.html');
+    } else if (url === '/error') {
+      filePath = resolve(ssgDir, 'error.html');
+    } else {
+      filePath = resolve(
+        ssgDir,
+        `${url === '/' ? 'index' : url.replace('/', '')}.html`
+      );
+    }
+
     await fs.mkdir(dirname(filePath), { recursive: true });
     await fs.writeFile(filePath, fullHtml);
   }

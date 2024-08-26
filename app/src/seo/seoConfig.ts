@@ -13,7 +13,7 @@ export interface SeoConfig {
 }
 
 export type Lang = 'en' | 'es' | 'zh';
-export type PageKey = 'common' | 'home';
+export type PageKey = 'common' | 'home' | 'about';
 
 export const defaultSeoConfig: Record<
   Lang,
