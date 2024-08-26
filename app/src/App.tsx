@@ -5,7 +5,7 @@ import { ssgRoutes } from '@config/routes.ssg';
 import { Suspense } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { useRoutes } from 'react-router-dom';
-import '@styles/global.css';
+import '@styles/global.scss';
 
 function App({ helmetContext }: { helmetContext?: any }) {
   const isSSG = process.env.isSSG as unknown as boolean;
