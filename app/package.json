@@ -10,7 +10,7 @@
     "build:spa": "cross-env BUILD_TARGET=spa vite build",
     "build:client": "cross-env BUILD_TARGET=client vite build",
     "build:server": "cross-env BUILD_TARGET=server vite build",
-    "build:ssg": "pnpm build && cross-env BUILD_TARGET=ssg vite build && tsx ./scripts/build-ssg.ts",
+    "build:ssg": "cross-env BUILD_TARGET=ssg vite build && vite-node ./scripts/build-ssg.ts",
     "start:ssr": "cross-env NODE_ENV=production node ./scripts/server.mjs",
     "postbuild": "node ./scripts/run.mjs"
   },
@@ -31,7 +31,7 @@
     "@types/react-dom": "^18.3.0",
     "express": "^4.19.2",
     "sass": "^1.77.8",
-    "tsx": "^4.18.0",
+    "vite-node": "^2.0.5",
     "vite-plugin-html": "^3.2.2",
     "vite-plugin-pwa": "^0.20.1"
   }

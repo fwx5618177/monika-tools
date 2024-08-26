@@ -39,7 +39,10 @@ if (!isProduction) {
   const compression = (await import('compression')).default;
   const sirv = (await import('sirv')).default;
   app.use(compression());
-  app.use(base, sirv(distDir, { extensions: [] }));
+  app.use(
+    base,
+    sirv(distDir, { extensions: ['html', 'js', 'css'], single: true })
+  );
 }
 
 app.get('*', async (req, res) => {
@@ -72,16 +75,26 @@ app.get('*', async (req, res) => {
     if (result.stream) {
       stream = result.stream;
       res.status(statusCode).set({
-        'Content-Type': 'text/html',
+        'Content-Type': 'application/javascript',
       });
-      res.write(
-        template
-          .replace(
-            `<!--app-head-->`,
-            `${helmet?.head || ''}${preloadLinks || ''}`
+
+      const streamTemplate = template
+        .replace(
+          `<!--app-head-->`,
+          `${helmet?.head || ''}${preloadLinks || ''}`
+        )
+        .replace(`<!--app-html-->`, '');
+
+      if (isProduction) {
+        res.write(
+          streamTemplate.replace(
+            `<script type="module" src="/src/entry-client.tsx"></script>`,
+            ''
           )
-          .replace(`<!--app-html-->`, '')
-      );
+        );
+      } else {
+        res.write(streamTemplate);
+      }
 
       stream.pipe(res, { end: false });
 
@@ -98,10 +111,18 @@ app.get('*', async (req, res) => {
         )
         .replace(`<!--app-html-->`, html || '');
 
-      res
-        .status(statusCode)
-        .set({ 'Content-Type': 'text/html' })
-        .send(fullHtml);
+      if (isProduction) {
+        const prd = fullHtml.replace(
+          `<script type="module" src="/src/entry-client.tsx"></script>`,
+          ''
+        );
+        res.status(statusCode).set({ 'Content-Type': 'text/html' }).send(prd);
+      } else {
+        res
+          .status(statusCode)
+          .set({ 'Content-Type': 'text/html' })
+          .send(fullHtml);
+      }
     }
   } catch (error) {
     if (!isProduction && vite) {

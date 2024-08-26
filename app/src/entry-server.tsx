@@ -31,7 +31,6 @@ export function render(
         {
           onShellReady() {
             if (res) {
-              (res as any)?.setHeader('Content-Type', 'text/html');
               stream.pipe(res as any);
             } else {
               resolve({ stream, helmetContext });

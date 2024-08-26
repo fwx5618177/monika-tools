@@ -6,7 +6,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 import { PwaConfig } from './scripts/pwa';
 
-export default defineConfig(({ mode, command }) => {
+export default defineConfig(({ mode }) => {
   const isSSR = process.env.BUILD_TARGET === 'server';
   const isClient = process.env.BUILD_TARGET === 'client';
   const isSPA = process.env.BUILD_TARGET === 'spa';
@@ -21,6 +21,7 @@ export default defineConfig(({ mode, command }) => {
         : '../dist';
 
   return {
+    base: './',
     define: {
       'process.env.isSSR': isSSR,
       'process.env.isSSG': isSSG,
@@ -51,18 +52,29 @@ export default defineConfig(({ mode, command }) => {
         '@utils': path.resolve(__dirname, './src/utils'),
       },
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import "@styles/variables.scss";`,
+        },
+      },
+    },
     build: {
-      // sourcemap: mode === 'development',
-      sourcemap: true,
-      minify: false,
+      sourcemap: mode === 'development',
+      // sourcemap: true,
+      // minify: false,
       outDir,
       assetsDir: '.',
       ssrManifest: isClient || isSPA || isSSG ? true : undefined,
       manifest: isClient || isSPA || isSSG ? true : undefined,
-      emptyOutDir: isSSG ? true : false,
+      emptyOutDir: true,
       rollupOptions: {
-        input:
-          isSSR || isSSG
+        input: isSSG
+          ? {
+              index: resolve(__dirname, 'index.html'), // index.html 入口
+              server: './src/entry-server.tsx', // entry-server 入口
+            }
+          : isSSR
             ? './src/entry-server.tsx'
             : isSPA
               ? resolve(__dirname, 'index.html')

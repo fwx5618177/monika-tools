@@ -5,17 +5,22 @@ import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { ssgRoutes } from '../src/config/routes.ssg';
 
+require.extensions['.scss'] = () => ({});
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const outDir = resolve(__dirname, '..', '..', 'dist');
+const ssgDir = resolve(outDir, 'ssg');
 
 async function generateStaticPages() {
-  const render = (await import(resolve(outDir, 'ssg', 'entry-server.js')))
-    .render;
+  console.log('Generating Static Pages...');
+  const render = (await import(resolve(ssgDir, 'server.js'))).render;
+
   const ssrManifest = JSON.parse(
-    await fs.readFile(
-      resolve(outDir, 'ssg', '.vite', 'ssr-manifest.json'),
-      'utf-8'
-    )
+    await fs.readFile(resolve(ssgDir, '.vite', 'ssr-manifest.json'), 'utf-8')
+  );
+
+  const manifest = JSON.parse(
+    await fs.readFile(resolve(ssgDir, '.vite', 'manifest.json'), 'utf-8')
   );
 
   const templateHtml = await fs.readFile(
@@ -27,34 +32,31 @@ async function generateStaticPages() {
     const url = route.path === '*' ? '/404' : (route.path as string); // 为 404 页设置路径
     const { html, helmet, preloadLinks } = await render(url, ssrManifest);
 
-    const headContent = [
-      helmet?.title?.toString(),
-      helmet?.meta?.toString(),
-      helmet?.link?.toString(),
-      helmet?.style?.toString(),
-      helmet?.script?.toString(),
-      preloadLinks,
-    ]
-      .filter(Boolean)
-      .join('');
-    console.log('Generating:', helmet, headContent);
+    // const headContent = [
+    //   helmet?.title?.toString(),
+    //   helmet?.meta?.toString(),
+    //   helmet?.link?.toString(),
+    //   helmet?.style?.toString(),
+    //   helmet?.script?.toString(),
+    //   preloadLinks,
+    // ]
+    //   .filter(Boolean)
+    //   .join('');
+    // console.log('Generating:', helmet, headContent);
 
     // 用渲染后的内容替换模板中的占位符
     const fullHtml = templateHtml
       .replace(`<title>{{ title }}</title>`, '')
-      .replace(`<!--app-head-->`, `${headContent || ''}${preloadLinks || ''}`)
+      .replace(`<!--app-head-->`, `${helmet?.head || ''}${preloadLinks || ''}`)
       .replace(`<!--app-html-->`, html || '');
 
     const filePath =
       url === '/404'
-        ? resolve(outDir, 'ssg', '404.html')
+        ? resolve(ssgDir, '404.html')
         : resolve(
-            outDir,
-            'ssg',
+            ssgDir,
             `${url === '/' ? 'index' : url.replace('/', '')}.html`
           );
-
-    console.log('filePath:', url, filePath);
     await fs.mkdir(dirname(filePath), { recursive: true });
     await fs.writeFile(filePath, fullHtml);
   }
@@ -63,7 +65,9 @@ async function generateStaticPages() {
 generateStaticPages()
   .then(() => {
     console.log('SSG Complete');
+    process.exit(0);
   })
   .catch((error) => {
     console.error('SSG Generation Error:', error);
+    process.exit(1);
   });

@@ -1,3 +1,4 @@
+import Button from '@components/Button';
 import { useSeo } from '@seo/useSeo';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +12,8 @@ const ErrorPage: React.FC = () => {
       {SeoComponent}
       <h1>Something went wrong.</h1>
       <p>We encountered an unexpected error. Please try again later.</p>
-      <button onClick={() => navigate('/')}>Go to Home</button>
+
+      <Button onClick={() => navigate('/')}>Go to Home</Button>
     </div>
   );
 };
