@@ -1,20 +1,20 @@
-/* video.module.scss */
-
 $primary-color: #4a90e2;
 $secondary-color: #50e3c2;
 $background-color: #f7f7f7;
 $text-color: #333;
 
 .container {
+    width: 100%;
+
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: $background-color;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    align-items: center;
+
+    header {
+        h2 {
+            font-size: 2.8rem;
+        }
+    }
 }
 
 .processor {

@@ -3,6 +3,7 @@ import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { toBlobURL, fetchFile } from '@ffmpeg/util';
 import { ArrayBufferTarget, Muxer } from 'webm-muxer';
 import styles from './video.module.scss';
+import Upload from '@components/Upload';
 
 const VideoPage: React.FC = () => {
   const [ffmpegVideoUrl, setFfmpegVideoUrl] = useState<string | null>(null);
@@ -253,6 +254,29 @@ const VideoPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <header>
+        <h2>Create Video</h2>
+        <p>Upload your images and audio to create a video.</p>
+      </header>
+      <div>
+        <div>
+          <div>
+            <h3>Images</h3>
+            <input type="file" accept="image/*" multiple />
+
+            <Upload
+              accept="image/*"
+              showInfo
+              triggerType="button"
+              displayType="thumbnail"
+            />
+          </div>
+        </div>
+        <div>
+          <h3>Audio</h3>
+          <input type="file" accept="audio/*" />
+        </div>
+      </div>
       <div className={styles.processor}>
         <h2 className={styles.title}>FFmpeg Image to Video</h2>
         <button

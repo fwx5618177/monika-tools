@@ -1,0 +1,212 @@
+$primary-color: #4a90e2;
+$secondary-color: #50e3c2;
+$background-color: #f7f7f7;
+$text-color: #333;
+$overlay-color: rgba(0, 0, 0, 0.8);
+$transparent-background: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc),
+    linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
+
+$transparent-background-size: 20px 20px;
+$transparent-background-position: 0 0, 10px 10px;
+
+.imagePreviewer {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.thumbnailContainer {
+    display: flex;
+    gap: 10px;
+}
+
+.thumbnail {
+    position: relative;
+    width: 12rem;
+    height: 15rem;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+
+    .imageBackground {
+        width: 100%;
+        height: 100%;
+        background: $transparent-background;
+        background-size: $transparent-background-size;
+        background-position: $transparent-background-position;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .info {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 0.5rem;
+        font-size: 0.8rem;
+        text-align: center;
+        display: none; // 默认隐藏
+    }
+
+    &:hover .info {
+        display: block;
+    }
+
+    .tooltip {
+        position: absolute;
+        bottom: 110%; // 向上偏移
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: $overlay-color;
+        color: white;
+        padding: 5px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        white-space: nowrap; // 防止内容换行
+        z-index: 10; // 保证在最上层显示
+    }
+
+    &:hover .tooltip {
+        opacity: 1;
+        pointer-events: all;
+    }
+}
+
+.navBoxLeft,
+.navBoxRight {
+    width: 30px;
+    height: 30px;
+    background-color: $primary-color;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.navBoxLeft {
+    left: -40px;
+}
+
+.navBoxRight {
+    right: -40px;
+}
+
+.focusMode {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.modal {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    width: 80%;
+    max-width: 900px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modalContent {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.imageContainer {
+    width: 70%;
+
+    .imageBackground {
+        width: 100%;
+        height: 100%;
+        background: $transparent-background;
+        background-size: $transparent-background-size;
+        background-position: $transparent-background-position;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+}
+
+.details {
+    width: 25%;
+    padding-left: 20px;
+    color: white;
+
+    h3 {
+        margin-bottom: 10px;
+    }
+
+    p {
+        margin: 5px 0;
+    }
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+}
+
+.navButtons {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+
+    button {
+        background-color: $primary-color;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background 0.3s;
+
+        &:hover {
+            background-color: darken($primary-color, 10%);
+        }
+    }
+}
