@@ -15,6 +15,10 @@ export const routes: RouteObject[] = [
     element: <LazyWrapper component={lazy(() => import('@pages/Home'))} />,
   },
   {
+    path: '/video',
+    element: <LazyWrapper component={lazy(() => import('@pages/Video'))} />,
+  },
+  {
     path: '/about',
     element: <LazyWrapper component={lazy(() => import('@pages/About'))} />,
   },

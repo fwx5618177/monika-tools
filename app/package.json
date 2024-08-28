@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "cross-env BUILD_TARGET=spa vite",
     "dev:ssr": "pnpm build && node ./scripts/server.mjs",
     "build": "pnpm run build:client && pnpm run build:server",
     "build:spa": "cross-env BUILD_TARGET=spa vite build",
@@ -15,6 +15,10 @@
     "postbuild": "node ./scripts/run.mjs"
   },
   "dependencies": {
+    "@ffmpeg/core": "^0.12.6",
+    "@ffmpeg/ffmpeg": "^0.12.10",
+    "@ffmpeg/util": "^0.12.1",
+    "@types/jmuxer": "^2.0.7",
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "react": "^18.3.1",
@@ -22,7 +26,8 @@
     "react-helmet-async": "^2.0.5",
     "react-router-dom": "^6.26.1",
     "sirv": "^2.0.4",
-    "sitemap": "^8.0.0"
+    "sitemap": "^8.0.0",
+    "webm-muxer": "^5.0.0"
   },
   "devDependencies": {
     "@types/compression": "^1.7.5",

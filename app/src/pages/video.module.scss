@@ -1,0 +1,65 @@
+/* video.module.scss */
+
+$primary-color: #4a90e2;
+$secondary-color: #50e3c2;
+$background-color: #f7f7f7;
+$text-color: #333;
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: $background-color;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.processor {
+    flex: 1;
+    text-align: center;
+}
+
+.title {
+    color: $primary-color;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.uploadButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-bottom: 1rem;
+
+    &:hover {
+        background-color: darken($primary-color, 10%);
+    }
+}
+
+.fileInput {
+    display: none;
+}
+
+.videoContainer {
+    margin-top: 1rem;
+}
+
+.video {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.message {
+    margin-top: 1rem;
+    color: $text-color;
+}

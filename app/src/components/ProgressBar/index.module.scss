@@ -1,0 +1,27 @@
+$highlight-color: #50e3c2;
+$text-color: #333;
+
+.progressBar {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progressFill {
+    height: 20px;
+    background-color: $highlight-color;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    transition: width 0.3s ease;
+}
+
+.progressText {
+    line-height: 20px;
+    color: $text-color;
+    font-size: 0.8rem;
+    position: relative;
+    z-index: 1;
+}

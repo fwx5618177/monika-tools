@@ -12,6 +12,8 @@ export default defineConfig(({ mode }) => {
   const isSPA = process.env.BUILD_TARGET === 'spa';
   const isSSG = process.env.BUILD_TARGET === 'ssg';
 
+  console.log('isSPA:', isSPA, isClient);
+
   const outDir = isSSR
     ? '../dist/server'
     : isClient
@@ -27,8 +29,6 @@ export default defineConfig(({ mode }) => {
       'process.env.isSSG': isSSG,
     },
     plugins: [
-      react(),
-      VitePWA(PwaConfig),
       ...(isClient || isSPA || isSSG
         ? [
             createHtmlPlugin({
@@ -40,6 +40,8 @@ export default defineConfig(({ mode }) => {
             }),
           ]
         : []),
+      react(),
+      VitePWA(PwaConfig),
     ],
     resolve: {
       alias: {
@@ -95,15 +97,20 @@ export default defineConfig(({ mode }) => {
     },
     ssr: {
       external: ['react', 'react-dom', 'react-router-dom'],
-      noExternal: ['react-helmet-async'],
+      noExternal: ['react-helmet-async', '@ffmpeg/ffmpeg', '@ffmpeg/util'],
     },
     server: {
       host: '0.0.0.0',
       port: 3000,
       open: true,
+      headers: {
+        'Cross-Origin-Opener-Policy': 'same-origin',
+        'Cross-Origin-Embedder-Policy': 'require-corp',
+      },
     },
     optimizeDeps: {
       include: ['react', 'react-dom', 'react-router-dom'],
+      exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'],
     },
   };
 });
