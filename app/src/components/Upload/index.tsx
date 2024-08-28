@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import ImagePreviewer from '@components/ImagePreviewer';
+import { getImageResolution } from '@utils/common';
 
 import styles from './index.module.scss';
 
@@ -17,7 +18,7 @@ const Upload: React.FC<UploadProps> = ({
   triggerType = 'button',
 }) => {
   const [uploadedFiles, setUploadedFiles] = useState<
-    { file: File; src: string }[]
+    { file: File; src: string; resolution?: string }[]
   >([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -25,12 +26,20 @@ const Upload: React.FC<UploadProps> = ({
     inputRef.current?.click();
   };
 
-  const handleFilesUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFilesUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const files = Array.from(event.target.files || []);
-    const filesWithSrc = files.map((file) => ({
-      file,
-      src: URL.createObjectURL(file),
-    }));
+    const filesWithSrc = await Promise.all(
+      files.map(async (file) => {
+        const resolution = await getImageResolution(file);
+        return {
+          file,
+          src: URL.createObjectURL(file),
+          resolution: `${resolution.width}x${resolution.height}`,
+        };
+      })
+    );
     setUploadedFiles(filesWithSrc);
   };
 
