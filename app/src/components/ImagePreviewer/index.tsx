@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ZoomableImage from '@components/ZoomableImage';
 import styles from './index.module.scss';
 
 interface ImagePreviewerProps {
@@ -89,11 +90,10 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({ images }) => {
               &times;
             </div>
             <div className={styles.modalContent}>
-              <div className={styles.imageContainer}>
-                <div className={styles.imageBackground}>
-                  <img src={currentImage.src} alt={currentImage.file.name} />
-                </div>
-              </div>
+              <ZoomableImage
+                src={currentImage.src}
+                alt={currentImage.file.name}
+              />
               <div className={styles.details}>
                 <h3>{currentImage.file.name}</h3>
                 <p>
