@@ -27,7 +27,8 @@
       "@config/*": ["src/config/*"],
       "@seo/*": ["src/seo/*"],
       "@utils/*": ["src/utils/*"]
-    }
+    },
+    "types": ["./src/types/vite-env.d.ts", "@webgpu/types"]
   },
-  "include": ["src", "./src/types/vite-env.d.ts"]
+  "include": ["src"]
 }

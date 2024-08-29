@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ZoomableImage from '@components/ZoomableImage';
+import ThumbnailPreview from '@components/ThumbnailPreview';
 import styles from './index.module.scss';
 
 interface ImagePreviewerProps {
@@ -10,6 +11,7 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const currentImage = images[currentIndex];
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
@@ -22,18 +24,6 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({ images }) => {
       document.removeEventListener('keydown', handleEsc);
     };
   }, []);
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-  };
 
   const handleThumbnailClick = (index: number) => {
     setCurrentIndex(index);
@@ -50,7 +40,14 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({ images }) => {
   return (
     <div className={styles.imagePreviewer}>
       {images.length > 4 && !isFocused && (
-        <div className={styles.navBoxLeft} onClick={handlePrev}>
+        <div
+          className={styles.navBoxLeft}
+          onClick={() =>
+            setCurrentIndex((prev) =>
+              prev === 0 ? images.length - 1 : prev - 1
+            )
+          }
+        >
           &#10094;
         </div>
       )}
@@ -78,7 +75,14 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({ images }) => {
         ))}
       </div>
       {images.length > 4 && !isFocused && (
-        <div className={styles.navBoxRight} onClick={handleNext}>
+        <div
+          className={styles.navBoxRight}
+          onClick={() =>
+            setCurrentIndex((prev) =>
+              prev === images.length - 1 ? 0 : prev + 1
+            )
+          }
+        >
           &#10095;
         </div>
       )}
@@ -108,25 +112,23 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({ images }) => {
                 </p>
               </div>
             </div>
-            <div className={styles.thumbnailPreview}>
-              {images.map((img, index) => (
-                <div
-                  key={index}
-                  className={`${styles.thumbnail} ${currentIndex === index ? styles.active : ''}`}
-                  onClick={() => handleThumbnailClick(index)}
-                >
-                  <div className={styles.imageBackground}>
-                    <img src={img.src} alt={img.file.name} />
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className={styles.navButtons}>
-              <button onClick={handlePrev}>&#10094;</button>
-              <button onClick={handleNext}>&#10095;</button>
-            </div>
+            <ThumbnailPreview
+              images={images}
+              currentIndex={currentIndex}
+              onThumbnailClick={handleThumbnailClick}
+              onPrev={() =>
+                setCurrentIndex((prev) =>
+                  prev === 0 ? images.length - 1 : prev - 1
+                )
+              }
+              onNext={() =>
+                setCurrentIndex((prev) =>
+                  prev === images.length - 1 ? 0 : prev + 1
+                )
+              }
+            />
           </div>
-          <div className={styles.overlay} onClick={closeFocusMode}></div>
+          <div className={styles.overlay} ref={overlayRef}></div>
         </div>
       )}
     </div>

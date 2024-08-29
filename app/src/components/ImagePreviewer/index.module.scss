@@ -179,18 +179,36 @@ $transparent-background-position: 0 0, 0.625rem 0.625rem;
 .thumbnailPreview {
     display: flex;
     gap: 0.625rem;
-    margin-top: 1.25rem;
-    overflow-x: auto;
-    padding-bottom: 0.625rem;
+    overflow-x: overlay;
+    padding: 0.625rem 0;
     width: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 0.5rem;
 
     .thumbnail {
         width: 3.75rem;
         height: 3.75rem;
         cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.25rem;
+        }
 
         &.active {
             border: 0.125rem solid $primary-color;
+            transform: scale(1.1); // 选中时放大
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+        }
+
+        &:hover {
+            transform: scale(1.05); // 悬停时轻微放大
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
         }
     }
 }
@@ -219,24 +237,4 @@ $transparent-background-position: 0 0, 0.625rem 0.625rem;
     font-size: 1.5rem;
     cursor: pointer;
     color: white;
-}
-
-.navButtons {
-    display: flex;
-    gap: 1.25rem;
-    margin-top: 0.625rem;
-
-    button {
-        background-color: rgba(0, 0, 0, 0.6);
-        color: white;
-        border: none;
-        padding: 0.625rem;
-        cursor: pointer;
-        border-radius: 0.5rem;
-        transition: background 0.3s ease;
-
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-    }
 }
