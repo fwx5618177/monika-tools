@@ -8,9 +8,8 @@ interface ImagePreviewerProps {
 }
 
 const ImagePreviewer: React.FC<ImagePreviewerProps> = ({ images }) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [selectedImage, setSelectedImage] = useState(images[0]);
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const currentImage = images[currentIndex];
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,8 +24,8 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({ images }) => {
     };
   }, []);
 
-  const handleThumbnailClick = (index: number) => {
-    setCurrentIndex(index);
+  const handleThumbnailClick = (image: { file: File; src: string }) => {
+    setSelectedImage(image);
   };
 
   const toggleFocusMode = () => {
@@ -37,28 +36,42 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({ images }) => {
     setIsFocused(false);
   };
 
+  const handlePrev = () => {
+    const currentIndex = images.findIndex(
+      (img) => img.src === selectedImage.src
+    );
+    const newIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+    setSelectedImage(images[newIndex]);
+  };
+
+  const handleNext = () => {
+    const currentIndex = images.findIndex(
+      (img) => img.src === selectedImage.src
+    );
+    const newIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+    setSelectedImage(images[newIndex]);
+  };
+
   return (
     <div className={styles.imagePreviewer}>
       {images.length > 4 && !isFocused && (
-        <div
-          className={styles.navBoxLeft}
-          onClick={() =>
-            setCurrentIndex((prev) =>
-              prev === 0 ? images.length - 1 : prev - 1
-            )
-          }
-        >
-          &#10094;
-        </div>
+        <>
+          <div className={styles.navBoxLeft} onClick={handlePrev}>
+            &#10094;
+          </div>
+          <div className={styles.navBoxRight} onClick={handleNext}>
+            &#10095;
+          </div>
+        </>
       )}
       <div className={styles.thumbnailContainer}>
-        {images.slice(0, 4).map((img, index) => (
+        {images.slice(0, 4).map((img) => (
           <div
-            key={index}
+            key={img.src}
             className={styles.thumbnail}
             onClick={() => {
               toggleFocusMode();
-              handleThumbnailClick(index);
+              handleThumbnailClick(img);
             }}
           >
             <div className={styles.imageBackground}>
@@ -69,23 +82,11 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({ images }) => {
               <p className={styles.fileSize}>
                 {(img.file.size / 1024 / 1024).toFixed(2)} MB
               </p>
-              <p>{currentImage.resolution || 'Loading...'}</p>
+              <p>{img.resolution || 'Loading...'}</p>
             </div>
           </div>
         ))}
       </div>
-      {images.length > 4 && !isFocused && (
-        <div
-          className={styles.navBoxRight}
-          onClick={() =>
-            setCurrentIndex((prev) =>
-              prev === images.length - 1 ? 0 : prev + 1
-            )
-          }
-        >
-          &#10095;
-        </div>
-      )}
 
       {isFocused && (
         <div className={styles.focusMode}>
@@ -95,37 +96,27 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({ images }) => {
             </div>
             <div className={styles.modalContent}>
               <ZoomableImage
-                src={currentImage.src}
-                alt={currentImage.file.name}
+                src={selectedImage.src}
+                alt={selectedImage.file.name}
               />
               <div className={styles.details}>
-                <h3>{currentImage.file.name}</h3>
+                <h3>{selectedImage.file.name}</h3>
                 <p>
-                  大小: {(currentImage.file.size / 1024 / 1024).toFixed(2)} MB
+                  大小: {(selectedImage.file.size / 1024 / 1024).toFixed(2)} MB
                 </p>
-                <p>分辨率: {currentImage.resolution || 'Loading...'}</p>
-                <p>类型: {currentImage.file.type}</p>
-                <p>文件类型: {currentImage.file.type}</p>
+                <p>分辨率: {selectedImage.resolution || 'Loading...'}</p>
+                <p>类型: {selectedImage.file.type}</p>
+                <p>文件类型: {selectedImage.file.type}</p>
                 <p>
                   上传时间:{' '}
-                  {new Date(currentImage.file.lastModified).toLocaleString()}
+                  {new Date(selectedImage.file.lastModified).toLocaleString()}
                 </p>
               </div>
             </div>
             <ThumbnailPreview
               images={images}
-              currentIndex={currentIndex}
+              selectedImage={selectedImage}
               onThumbnailClick={handleThumbnailClick}
-              onPrev={() =>
-                setCurrentIndex((prev) =>
-                  prev === 0 ? images.length - 1 : prev - 1
-                )
-              }
-              onNext={() =>
-                setCurrentIndex((prev) =>
-                  prev === images.length - 1 ? 0 : prev + 1
-                )
-              }
             />
           </div>
           <div className={styles.overlay} ref={overlayRef}></div>
