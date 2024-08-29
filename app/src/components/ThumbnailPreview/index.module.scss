@@ -9,6 +9,13 @@ $transparent-background: linear-gradient(45deg, #ccc 25%, transparent 25%, trans
 $transparent-background-size: 1.25rem 1.25rem;
 $transparent-background-position: 0 0, 0.625rem 0.625rem;
 
+.thumbnailPreviewContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
 .thumbnailPreview {
     display: flex;
     gap: 1rem;
@@ -68,23 +75,22 @@ $transparent-background-position: 0 0, 0.625rem 0.625rem;
     }
 }
 
+.navButton {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    padding: 0.625rem .8rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: background 0.3s ease;
 
-.navButtons {
-    display: flex;
-    gap: 1.25rem;
-    margin-top: 0.625rem;
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 1px solid #fff;
+    }
 
-    button {
-        background-color: rgba(0, 0, 0, 0.6);
-        color: white;
-        border: none;
-        padding: 0.625rem;
-        cursor: pointer;
-        border-radius: 0.5rem;
-        transition: background 0.3s ease;
-
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
+    &:focus,
+    &:focus-visible {
+        outline: none;
     }
 }
