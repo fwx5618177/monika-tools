@@ -1,0 +1,60 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #121212;
+
+    .topSection {
+        display: flex;
+        flex: 1 1 auto;
+        border-bottom: 2px solid #333;
+        overflow-y: auto;
+        /* 处理溢出内容 */
+
+        .leftColumn {
+            flex: 1;
+            padding: clamp(1rem, 2vw, 2rem);
+            background-color: #1e1e1e;
+            border-right: 2px solid #333;
+        }
+
+        .rightColumn {
+            flex: 2;
+            display: flex;
+            gap: clamp(0.5rem, 1vw, 1rem);
+            background-color: #2a2a2a;
+
+            .rightLeftColumn {
+                flex: 1;
+                max-width: 200px;
+                background-color: #333;
+                border-right: 2px solid #444;
+                padding: 0;
+                overflow: auto;
+                /* 处理溢出内容 */
+            }
+
+            .rightRightColumn {
+                flex: 3;
+                min-width: 0;
+                margin: clamp(0.5rem, 1vw, 1rem);
+                background-color: #3a3a3a;
+                overflow: auto;
+                /* 处理溢出内容 */
+            }
+        }
+    }
+
+    .bottomSection {
+        flex: 0 1 300px;
+        min-height: 350px;
+        padding: clamp(1rem, 2vw, 2rem);
+        background-color: #181818;
+        border-top: 2px solid #333;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        /* 处理溢出内容 */
+    }
+}

@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { VitePWA } from 'vite-plugin-pwa';
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
+import commonjs from 'vite-plugin-commonjs';
 
 import { PwaConfig } from './scripts/pwa';
 
@@ -41,6 +43,7 @@ export default defineConfig(({ mode }) => {
           ]
         : []),
       react(),
+      commonjs(),
       VitePWA(PwaConfig),
     ],
     resolve: {
@@ -52,6 +55,7 @@ export default defineConfig(({ mode }) => {
         '@config': path.resolve(__dirname, './src/config'),
         '@seo': path.resolve(__dirname, './src/seo'),
         '@utils': path.resolve(__dirname, './src/utils'),
+        buffer: 'buffer',
       },
     },
     css: {
@@ -94,6 +98,10 @@ export default defineConfig(({ mode }) => {
         },
         mangle: false,
       },
+      commonjsOptions: {
+        // 确保支持 CommonJS 模块的 require
+        include: [/node_modules/], // 确保 node_modules 中的模块都被处理
+      },
     },
     ssr: {
       external: ['react', 'react-dom', 'react-router-dom'],
@@ -109,8 +117,19 @@ export default defineConfig(({ mode }) => {
       },
     },
     optimizeDeps: {
-      include: ['react', 'react-dom', 'react-router-dom'],
+      include: ['react', 'react-dom', 'react-router-dom', 'natural'],
       exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'],
+      esbuildOptions: {
+        define: {
+          global: 'globalThis',
+        },
+        plugins: [
+          NodeGlobalsPolyfillPlugin({
+            process: true,
+            buffer: true,
+          }),
+        ],
+      },
     },
   };
 });

@@ -1,0 +1,23 @@
+.fileSystemManager {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    .title {
+        font-size: clamp(.3rem, 2vw, 1rem);
+        font-weight: bold;
+    }
+
+    .fileList {
+        list-style-type: none;
+        padding: 0;
+
+        .fileItem {
+            padding: 5px 0;
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+}
