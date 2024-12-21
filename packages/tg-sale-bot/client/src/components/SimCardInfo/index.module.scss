@@ -1,0 +1,60 @@
+.simCardInfo {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: clamp(0.2rem, 2vw, .6rem) 0;
+    padding: clamp(0.5rem, 2vw, 1rem);
+    border-radius: clamp(0.5rem, 2vw, 1rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(0.5rem, 2vw, 1rem);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+
+    @media (max-width: 325px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .infoBox {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        .infoBlock {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            gap: clamp(.4rem, 2vw, 1.2rem);
+            font-size: clamp(.8rem, 3vw, 1rem);
+
+            text-transform: capitalize;
+
+            strong {
+                width: clamp(3.5em, 20vw, 4rem);
+                font-weight: 600;
+                color: #ffffff;
+                text-align: left;
+            }
+
+            p {
+                color: rgba(255, 255, 255, 0.7);
+            }
+        }
+    }
+
+    .deleteButton {
+        padding: clamp(.2rem, 3vw, 0.5rem) clamp(.5rem, 3vw, .8rem);
+        background-color: #ff4d4f;
+        color: #ffffff;
+        border: none;
+        border-radius: .5rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #ff7875;
+        }
+    }
+}

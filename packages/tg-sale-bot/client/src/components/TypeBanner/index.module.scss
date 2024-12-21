@@ -1,0 +1,160 @@
+.card {
+    position: relative;
+    margin: .5rem auto;
+    padding: 15px;
+    width: 100%;
+    max-width: clamp(300px, 100vw, 600px);
+    min-height: 110px;
+    background-color: #1B2033;
+    border-radius: 15px;
+
+    .type {
+        position: absolute;
+        right: 0;
+        top: -8px;
+        padding: 5px;
+        color: #ffffff;
+        font-weight: 400;
+        border-radius: 15px;
+        text-transform: capitalize;
+
+        font-size: 12px;
+
+        @include respond-to(xs) {
+            font-size: 10px;
+        }
+
+        @include respond-to(sm) {
+            font-size: 11px;
+        }
+
+        @include respond-to(md) {
+            font-size: 12px;
+        }
+
+        @include respond-to(lg) {
+            font-size: 13px;
+        }
+
+        @include respond-to(xl) {
+            font-size: 14px;
+        }
+    }
+
+    .typeSky {
+        color: #000;
+        background: linear-gradient(269.95deg, #1FB4FF 2.56%, #9DF19D 40.95%, #FFF40E 93.32%);
+    }
+
+    .typeTotal {
+        background: linear-gradient(270deg, #E446FF 0%, #53A5FF 95.12%);
+    }
+
+    .title {
+        font-weight: 400;
+        color: #ffffff;
+        font-size: 14px;
+
+        @include respond-to(sm) {
+            font-size: 16px;
+        }
+
+        @include respond-to(xxl) {
+            font-size: 18px;
+        }
+    }
+
+    .content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        color: rgba(#ffffff, 0.5);
+
+        font-size: 14px;
+        font-weight: 400;
+
+        @include respond-to(sm) {
+            font-size: 12px;
+        }
+
+        @include respond-to(xxl) {
+            font-size: 18px;
+        }
+
+        @media (min-width: 0px) and (max-width: 280px) {
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+
+            .icons {
+                width: 100%;
+            }
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 5px;
+
+            .infoItem {
+                span:nth-last-child(1) {
+                    margin-left: 5px;
+                }
+            }
+
+            .detail {
+                color: #0198E9;
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                    color: #0198e9cc;
+                }
+            }
+        }
+
+        .icons {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            font-weight: 400;
+            font-size: 14px;
+
+            @include respond-to(xs) {
+                font-size: 12px;
+            }
+
+            @include respond-to(sm) {
+                font-size: 13px;
+            }
+
+            @include respond-to(md) {
+                font-size: 14px;
+            }
+
+            @include respond-to(lg) {
+                font-size: 15px;
+            }
+
+            @include respond-to(xl) {
+                font-size: 16px;
+            }
+
+            .mention {
+                color: rgba(#ffffff, 0.5);
+            }
+
+            .currency {
+                display: flex;
+                align-items: center;
+
+                img {
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+}

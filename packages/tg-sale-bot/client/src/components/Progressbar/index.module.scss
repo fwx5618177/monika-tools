@@ -1,0 +1,73 @@
+.progressBarContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    gap: 10px;
+}
+
+.progressTrack {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 10px;
+    background: rgba(#ffffff, 0.5);
+    border-radius: 5px;
+}
+
+.progressBar {
+    height: 100%;
+    background-image: linear-gradient(45deg, #ff9800 25%, transparent 25%, transparent 50%, #ff9800 50%, #ff9800 75%, transparent 75%, transparent);
+    background-size: 20px 20px;
+    animation: stripeAnimation 1s linear infinite;
+}
+
+@keyframes stripeAnimation {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 20px 0;
+    }
+}
+
+.progressCircle {
+    position: absolute;
+    top: -12px;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle, #007bff 30%, #dc9df7 70%, #007bff 70%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: $breakpoint-sm) {
+    .progressTrack {
+        max-width: 300px;
+        height: 8px;
+    }
+
+    .progressCircle {
+        width: 24px;
+        height: 24px;
+        top: -10px;
+    }
+}
+
+@media (min-width: $breakpoint-lg) {
+    .progressTrack {
+        max-width: 600px;
+        height: 12px;
+    }
+
+    .progressCircle {
+        width: 36px;
+        height: 36px;
+        top: -14px;
+    }
+}

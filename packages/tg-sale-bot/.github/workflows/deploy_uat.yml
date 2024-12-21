@@ -1,0 +1,91 @@
+name: Deploy to uat
+
+on:
+  push:
+    branches:
+      - uat
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      APP_NAME: tg-ai-sim
+      DOCKER_IMAGE: ${{ github.repository }}
+      SERVER_USERNAME: ${{ secrets.SERVER_USERNAME_UAT }}
+      SERVER_HOST: ${{ secrets.SERVER_HOST_UAT }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_UAT }}
+      ENV_FILE: .env
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set up SSH on PRODUCTION
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_UAT }}
+
+      - name: Generate .env file
+        run: |
+          echo "Creating .env file"
+          echo "${{ secrets.ENV_COMMON }}" > .env
+          echo "Using .env uat"
+          echo "${{ secrets.ENV_UAT }}" > ./client/.env
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.10.0"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+          pnpm install
+
+      - name: Build the uat package
+        run: |
+          pnpm run build
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ env.APP_NAME }}:latest .
+
+      - name: Save Docker Image
+        run: |
+          docker save ${{ env.APP_NAME }} > ${{ env.APP_NAME }}.tar
+
+      # 确保服务器上存在目标目录
+      - name: Ensure target directory exists on server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOST }} "mkdir -p /home/${{ env.SERVER_USERNAME }}/apps/${{ env.APP_NAME }}"
+
+      # 复制 Docker 镜像到服务器
+      - name: Copy files to the server
+        run: |
+          scp -o StrictHostKeyChecking=no ${{ env.APP_NAME }}.tar ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOST }}:/home/${{ env.SERVER_USERNAME }}/apps/${{ env.APP_NAME }}
+
+      # 在服务器上运行 Docker 容器
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOST }} << 'EOF'
+            cd /home/${{ env.SERVER_USERNAME }}/apps/${{ env.APP_NAME }}
+            
+            # 停止并删除现有容器
+            docker ps -q --filter "name=${{ env.APP_NAME }}" | grep -q . && docker stop ${{ env.APP_NAME }} && docker rm ${{ env.APP_NAME }}
+
+            # 删除旧的镜像
+            docker images -q ${{ env.APP_NAME }} | grep -q . && docker rmi ${{ env.APP_NAME }}
+
+            # 加载新的镜像
+            docker load -i ${{ env.APP_NAME }}.tar
+
+            # 启动新的容器
+            docker run -d --name ${{ env.APP_NAME }} -p 1800:80 ${{ env.APP_NAME }}
+
+            # 清理多余的 Docker 镜像
+            docker system prune -f
+          EOF

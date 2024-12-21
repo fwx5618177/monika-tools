@@ -1,0 +1,85 @@
+.profile {
+    position: relative;
+    width: 100%;
+    max-width: clamp(300px, 100vw, 600px);
+    margin: clamp(0.2rem, 2vw, 1rem) auto;
+    padding: clamp(.5rem, 2vw, 1rem);
+
+    display: flex;
+    flex-direction: column;
+    background: rgba(62, 67, 92, 0.5);
+    color: #ffffff;
+
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+
+    .header {
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .avatar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-transform: capitalize;
+
+            .avatarImage {
+                // 为图片定义特定的样式类
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                border: 2px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .username {
+                // 为用户名定义特定的样式类
+                font-size: 1.25rem;
+                font-weight: 600;
+                white-space: nowrap; // 防止换行
+                overflow: hidden; // 隐藏溢出部分
+                text-overflow: ellipsis; // 添加省略号
+                max-width: 200px; // 根据需要设置最大宽度
+            }
+        }
+
+        .appendButton {
+            display: flex;
+            align-items: center;
+            gap: clamp(0.2rem, 1.5vw, 0.75rem);
+            padding: clamp(0.2rem, 1.5vw, 0.75rem) clamp(0.5rem, 1.5vw, 1rem);
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            background-color: #0198e9;
+            color: #ffffff;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #007bbf;
+            }
+
+            .plus {
+                width: clamp(.6rem, 2vw, 1rem);
+                height: clamp(.6rem, 2vw, 1rem);
+            }
+        }
+    }
+
+    .list {
+        width: 100%;
+        max-height: clamp(80px, 20vw, 200px);
+        overflow-y: auto;
+    }
+
+    .empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+}

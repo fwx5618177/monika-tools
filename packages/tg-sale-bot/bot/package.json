@@ -1,0 +1,17 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx ./bot.ts"
+  },
+  "devDependencies": {
+    "@telegraf/types": "^7.1.0",
+    "https-proxy-agent": "^7.0.5",
+    "tsx": "^4.16.2"
+  },
+  "dependencies": {
+    "node-fetch": "^3.0.0",
+    "telegraf": "^4.16.3"
+  }
+}

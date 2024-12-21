@@ -1,0 +1,72 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background-color: #050d1d;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 2vw, 3rem) clamp(10rem, 20vw, 12rem);
+    color: #fff;
+    text-align: left;
+    overflow-x: hidden;
+    z-index: 1;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/invite_code_bg.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: brightness(50%) contrast(120%) blur(2px);
+        z-index: -1;
+    }
+
+    .header {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .backIcon {
+            cursor: pointer;
+
+            img {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+
+        .title {
+            margin: 0.5rem auto;
+            font-size: clamp(1.125rem, 4vw, 1.75rem); // 18px-28px,自适应
+            font-weight: 600;
+        }
+    }
+
+    .list {
+        width: 100%;
+        margin: 1.5625rem 0; // 25px -> rem
+        display: flex;
+        flex-direction: column;
+        gap: 0.625rem; // 10px -> rem
+    }
+
+    @media (min-width: 800px) {
+        justify-content: center;
+        align-items: center;
+    }
+
+    @media (max-height: 600px) {
+        padding: 1rem;
+        justify-content: flex-start;
+
+        .header .title {
+            font-size: clamp(1rem, 3vw, 1.25rem); // 自适应处理小屏字体大小
+        }
+    }
+}

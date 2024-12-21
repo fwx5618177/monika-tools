@@ -1,0 +1,69 @@
+.card {
+    padding: 30px 15px;
+    margin: .5rem auto;
+    margin-bottom: 20px;
+
+    background-color: #1b1f31fa;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(#ffffff, 0.1);
+    border-radius: 15px;
+    width: 100%;
+    max-width: 550px;
+    min-height: 100px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+
+    .left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+
+        .itemName {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 20px;
+            color: rgba(#ffffff, 0.5);
+        }
+
+        .itemVolume {
+            margin-top: 25px;
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 35px;
+            color: #ffffff;
+        }
+    }
+
+    .right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 5px;
+
+        font-size: 14px;
+        font-weight: 400;
+
+        .mention {
+            color: rgba(#ffffff, 0.5);
+        }
+
+        .currency {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+        }
+
+        .buy {
+            margin-top: 5px;
+            background: linear-gradient(316.33deg, #0198E9 40.57%, #45DCF3 92.08%);
+            padding: 5px 20px;
+            border-radius: 15px;
+        }
+    }
+}

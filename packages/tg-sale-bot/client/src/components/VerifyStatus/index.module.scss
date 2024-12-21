@@ -1,0 +1,105 @@
+.status {
+    padding: clamp(0.2rem, 3vw, 0.2rem);
+    font-size: clamp(0.5rem, 8vw, 0.7rem);
+    font-weight: 800;
+    border: 0.1rem solid rgba(#fff, 0.8);
+    border-radius: 0.4rem;
+    color: #fff;
+    text-transform: capitalize;
+
+    &.verified {
+        background-color: #28a745;
+        cursor: url('/success.svg'), auto;
+    }
+
+    &.pending {
+        background-color: #dc3545;
+        cursor: pointer;
+    }
+}
+
+.info {
+    font-size: clamp(0.3rem, 2vw, 0.5rem);
+    max-width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+
+    @media (min-width: 768px) {
+        max-width: 50px;
+    }
+}
+
+.content {
+    padding: clamp(0.5rem, 2vw, 1rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(0.5rem, 2vw, 1rem);
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.5rem, 2vw, 1rem);
+
+        .email {
+            display: inline-block;
+            text-decoration: underline;
+
+            &:hover {
+                color: #0198E9;
+            }
+        }
+
+        .verificationActions {
+            display: flex;
+            gap: clamp(0.5rem, 2vw, 1rem);
+            justify-content: space-between;
+
+            .sendCodeButton {
+                width: 48%;
+                padding: clamp(0.75rem, 2vw, 1.25rem) clamp(1.5rem, 3vw, 2.5rem);
+                background: linear-gradient(270deg, #FFE0B2 0%, #FF2CDF 34.85%, #016BE9 67.98%, #00E4FF 100%);
+                color: #fff;
+                border: none;
+                border-radius: 25px;
+                font-size: clamp(0.875rem, 2vw, 1rem);
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover:not(.disabled) {
+                    background: linear-gradient(120deg, #FFE0B2 0%, #FF2CDF 34.85%, #016BE9 67.98%, #00E4FF 100%);
+                }
+
+                &.disabled {
+                    background: #28272783;
+                    cursor: not-allowed;
+                }
+            }
+
+            .confirm {
+                width: 48%;
+                padding: clamp(0.75rem, 2vw, 1.25rem) clamp(1.5rem, 3vw, 2.5rem);
+                background: linear-gradient(270deg, #FFE0B2 0%, #FF2CDF 34.85%, #016BE9 67.98%, #00E4FF 100%);
+                color: #fff;
+                border: none;
+                border-radius: 25px;
+                font-size: clamp(0.875rem, 2vw, 1rem);
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background: linear-gradient(120deg, #FFE0B2 0%, #FF2CDF 34.85%, #016BE9 67.98%, #00E4FF 100%);
+                }
+
+                &:disabled {
+                    background: #28272783;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}

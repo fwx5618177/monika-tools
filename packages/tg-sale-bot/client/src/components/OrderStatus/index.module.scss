@@ -1,0 +1,52 @@
+.status {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .label {
+        position: absolute;
+        transform: rotate(-32deg);
+        font-size: 10px;
+        text-transform: capitalize;
+    }
+}
+
+.canceled {
+
+    .icon,
+    .label {
+        color: #9e9e9e;
+    }
+}
+
+.success {
+
+    .icon,
+    .label {
+        color: #4caf50; // 绿色
+    }
+}
+
+.pending {
+
+    .icon,
+    .label {
+        color: #ffc107; // 黄色
+    }
+}
+
+.failed {
+
+    .icon,
+    .label {
+        color: #f44336; // 红色
+    }
+}

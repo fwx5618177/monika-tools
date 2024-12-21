@@ -1,0 +1,172 @@
+.container {
+    width: 100%;
+    max-width: clamp(300px, 100vw, 600px);
+    max-height: 120px;
+    margin: 2.5rem auto 0 auto;
+    padding: 16px;
+    background-color: rgba(#fff, 0.1);
+    border: 1px solid rgba(#fff, 0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+
+    .avatar {
+        width: 65px;
+        height: 65px;
+        border-radius: 15px;
+        background: #d8d8d8;
+        border: 1px solid #979797;
+    }
+
+    .instro {
+        flex: 1;
+        margin-left: 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: 0.9rem;
+        font-weight: 400;
+        overflow: hidden;
+
+        .relation {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #0198e9;
+        }
+
+        .desc {
+            font-size: 0.8rem;
+            font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* 超出部分用省略号表示 */
+        }
+    }
+}
+
+// 多端适配
+@include respond-to(xs) {
+    .container {
+        padding: 12px;
+        max-height: 100px;
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+        }
+
+        .instro {
+            margin-left: 10px;
+            font-size: 0.7rem;
+
+            .relation {
+                font-size: 0.8rem;
+            }
+
+            .name {
+                font-size: 1rem;
+            }
+
+            .desc {
+                font-size: 0.7rem;
+            }
+        }
+    }
+}
+
+@include respond-to(sm) {
+    .container {
+        padding: 14px;
+        max-height: 110px;
+
+        .avatar {
+            width: 55px;
+            height: 55px;
+        }
+
+        .instro {
+            margin-left: 12px;
+            font-size: 0.8rem;
+
+            .relation {
+                font-size: 0.9rem;
+            }
+
+            .name {
+                font-size: 1.1rem;
+            }
+
+            .desc {
+                font-size: 0.75rem;
+            }
+        }
+    }
+}
+
+@include respond-to(md) {
+    .container {
+        padding: 16px;
+        max-height: 120px;
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+        }
+
+        .instro {
+            margin-left: 14px;
+            font-size: 0.9rem;
+
+            .relation {
+                font-size: 1rem;
+            }
+
+            .name {
+                font-size: 1.2rem;
+            }
+
+            .desc {
+                font-size: 0.8rem;
+            }
+        }
+    }
+}
+
+@include respond-to(lg) {
+    .container {
+        padding: 16px;
+        max-height: 120px;
+
+        .avatar {
+            width: 65px;
+            height: 65px;
+        }
+
+        .instro {
+            margin-left: 14px;
+            font-size: 1rem;
+
+            .relation {
+                font-size: 1rem;
+            }
+
+            .name {
+                font-size: 1.2rem;
+            }
+
+            .desc {
+                font-size: 0.8rem;
+            }
+        }
+    }
+}

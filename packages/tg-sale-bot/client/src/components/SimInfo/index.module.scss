@@ -1,0 +1,328 @@
+.esimCard {
+    position: relative;
+    width: 100%;
+    max-width: clamp(18.75rem, 100vw, 37.5rem);
+    margin: clamp(1rem, 2vw, 2rem) auto;
+    padding: 1.25rem;
+
+    background-color: #1b1f31c5;
+    border-radius: 0.9375rem;
+    border: 0.0625rem solid transparent;
+    box-shadow: 0 0 0 0.0625rem transparent;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0.9375rem;
+        padding: 0.05rem;
+
+        backdrop-filter: blur(5px);
+        background: linear-gradient(129.33deg, #FFFFFF 4.73%, rgba(255, 255, 255, 0.0001) 24.67%, rgba(255, 255, 255, 0.0001) 83.36%, #FFFFFF 95.41%);
+        opacity: 0.5;
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+        mask-composite: exclude;
+
+        z-index: -1;
+    }
+
+    .cardHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h2 {
+            font-size: clamp(1.375rem, 3vw, 1.75rem);
+            font-weight: 600;
+            color: #0198E9;
+            text-transform: capitalize;
+            text-transform: uppercase;
+        }
+
+        .phoneNumber {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: #ffffff;
+        }
+    }
+
+    .cardBody {
+        width: 100%;
+        margin-top: 0.9375rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.625rem;
+
+        .item {
+            width: 100%;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .itemName {
+                color: rgba(255, 255, 255, 0.5);
+                font-size: 0.75rem;
+                font-weight: 400;
+                text-transform: capitalize;
+            }
+
+            .timeSection {
+                font-size: 0.75rem;
+                font-weight: 400;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                justify-content: center;
+
+                .leftTime {
+                    font-size: 0.75rem;
+                    font-weight: 400;
+
+                    &.green {
+                        color: #4caf50;
+                    }
+
+                    &.yellow {
+                        color: #ffeb3b;
+                    }
+
+                    &.red {
+                        color: #f44336;
+                    }
+
+                    &.gray {
+                        color: rgba(255, 255, 255, 0.5);
+                    }
+                }
+            }
+
+            .online {
+                display: flex;
+                align-items: center;
+                gap: 0.3125rem;
+                background: rgba(86, 237, 105, 0.2);
+                color: #56ED69;
+                border-radius: 1.25rem;
+                padding: 0.0625rem 0.625rem;
+
+                .circle {
+                    width: 0.625rem;
+                    height: 0.625rem;
+                    background-color: #56ED69;
+                    border-radius: 50%;
+                    margin-right: 0.3125rem;
+                }
+            }
+
+            .offline {
+                display: flex;
+                align-items: center;
+                gap: 0.3125rem;
+                background: rgba(255, 0, 0, 0.2);
+                color: #FF0000;
+                border-radius: 1.25rem;
+                padding: 0.0625rem 0.625rem;
+
+                .circle {
+                    width: 0.625rem;
+                    height: 0.625rem;
+                    background-color: #FF0000;
+                    border-radius: 50%;
+                    margin-right: 0.3125rem;
+                }
+            }
+
+            .unregister {
+                display: flex;
+                align-items: center;
+                gap: 0.3125rem;
+                background: rgba(255, 255, 255, 0.2);
+                color: #ffffff;
+                border-radius: 1.25rem;
+                padding: 0.0625rem 0.625rem;
+
+                .circle {
+                    width: 0.625rem;
+                    height: 0.625rem;
+                    background-color: #a1a1a1;
+                    border-radius: 50%;
+                    margin-right: 0.3125rem;
+                }
+            }
+        }
+
+        .dataInfo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #262A3D;
+            width: 100%;
+            min-height: 6.25rem;
+            margin: 0.5rem auto;
+            padding: 0.75rem 0.9375rem;
+            border-radius: 0.9375rem;
+
+            .roaming {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 0.75rem;
+
+                p {
+                    font-size: clamp(1rem, 4vw, 1.75rem);
+                    font-weight: 600;
+                }
+
+                .dataName {
+                    font-size: 0.75rem;
+                    font-weight: 400;
+                    color: rgba(255, 255, 255, 0.5);
+                }
+            }
+
+            .rightSide {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: flex-end;
+                gap: 0.75rem;
+
+                font-size: 0.75rem;
+                font-weight: 400;
+                color: #0198E9;
+
+                span {
+                    text-transform: capitalize;
+                    cursor: pointer;
+
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+
+                .remainedVolume {
+                    font-size: clamp(1rem, 4vw, 1.75rem);
+                    font-weight: 600;
+                    color: rgba(255, 255, 255, 0.5);
+
+                    &.green {
+                        color: #4caf50;
+                    }
+
+                    &.yellow {
+                        color: #ffeb3b;
+                    }
+
+                    &.red {
+                        color: #f44336;
+                    }
+
+                    &.gray {
+                        color: rgba(255, 255, 255, 0.5);
+                    }
+                }
+            }
+        }
+
+        .topUp {
+            width: 100%;
+            padding: clamp(0.5rem, 2vw, 1rem) 0;
+            background-color: #0198E9;
+            border-radius: 0.9375rem;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+
+    .countryList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        max-height: 400px; // 限制高度
+        overflow-y: auto; // 允许滚动
+        padding: 1rem;
+
+
+        .countryItem {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: calc(50% - 0.5rem); // 两列布局
+        }
+
+        .countryFlag {
+            width: 30px;
+            height: 20px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .countryName {
+            font-size: 14px;
+            color: #fff;
+        }
+    }
+
+    @media (max-width: 280px) {
+        .cardHeader {
+            flex-direction: column;
+        }
+
+        .item {
+            flex-direction: column;
+            align-items: flex-start !important;
+            text-align: left !important;
+
+            .timeSection {
+                align-items: flex-start !important;
+            }
+        }
+
+        .dataInfo {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.625rem;
+
+            .roaming {
+                align-items: center !important;
+                text-align: center !important;
+            }
+
+            .rightSide {
+                align-items: center !important;
+                text-align: center !important;
+            }
+        }
+    }
+
+    @media (min-width: 800px) {
+        justify-content: center;
+        align-items: center;
+    }
+
+    @media (max-height: 600px) {
+        padding: 1rem;
+        justify-content: flex-start;
+        margin-bottom: 1rem;
+
+        .cardHeader h2 {
+            font-size: clamp(1.375rem, 3vw, 1.5rem);
+        }
+    }
+}

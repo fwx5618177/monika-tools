@@ -1,0 +1,8 @@
+.taskStatus {
+    margin-left: clamp(.2rem, 2vw, .4rem);
+    display: flex;
+
+    span {
+        cursor: pointer;
+    }
+}

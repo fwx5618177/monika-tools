@@ -1,0 +1,94 @@
+.container {
+    padding: 20px;
+    background-color: #17171e; // 深色背景
+    color: #e0e0e0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    .backIcon {
+        font-size: 1.5rem;
+        margin: 1rem 0;
+        cursor: pointer;
+        color: #ffffff;
+        align-self: flex-start;
+    }
+
+    .title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 21px;
+        text-align: center;
+        color: #ffffff;
+    }
+
+    .termsContent {
+        background: #1b2033;
+        border-radius: 15px;
+        padding: 20px 15px;
+        width: 100%;
+        max-width: 600px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        overflow-y: auto;
+
+        h1,
+        h2,
+        h3 {
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.5rem;
+            margin-bottom: 1rem;
+            color: #e0e0e0;
+        }
+    }
+}
+
+@include respond-to(xs) {
+    .container {
+        padding: 12px;
+
+        .title {
+            font-size: 1.4rem;
+        }
+
+        .termsContent {
+            padding: 1rem;
+        }
+    }
+}
+
+@include respond-to(sm) {
+    .container {
+        padding: 14px;
+
+        .title {
+            font-size: 1.6rem;
+        }
+
+        .termsContent {
+            padding: 1.25rem;
+        }
+    }
+}
+
+@include respond-to(md) {
+    .container {
+        padding: 16px;
+
+        .title {
+            font-size: 1.8rem;
+        }
+
+        .termsContent {
+            padding: 1.5rem;
+        }
+    }
+}

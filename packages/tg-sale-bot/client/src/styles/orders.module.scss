@@ -1,0 +1,154 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background-color: #050d1d;
+    padding: clamp(1.5rem, 4vw, 2rem) clamp(1rem, 3vw, 2rem) clamp(10rem, 5vw, 12rem);
+    color: #fff;
+    text-align: left;
+    text-transform: capitalize;
+    overflow-x: hidden;
+    z-index: 1;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/set_meal.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: brightness(50%) contrast(120%) blur(2px);
+        z-index: -1;
+    }
+
+    .header {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .backIcon {
+            cursor: pointer;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+        }
+
+        .title {
+            margin: clamp(0.5rem, 2vw, 1rem) auto;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+        }
+    }
+
+    .orderTitle {
+        margin: clamp(0.75rem, 1.5vw, 1rem) 0;
+        font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+        font-weight: 600;
+
+        @media (min-width: 650px) {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            text-align: center;
+        }
+    }
+
+    .orderInfo {
+        width: 100%;
+        max-width: clamp(300px, 100vw, 600px);
+        background-color: #1B2033;
+        border-radius: 15px;
+        margin: clamp(1rem, 2vw, 2rem) auto;
+        padding: clamp(1rem, 2.5vw, 1.5rem);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.75rem, 1.5vw, 1rem);
+
+        .itemName {
+            color: #0198E9;
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            font-weight: 400;
+        }
+
+        .itemInfo {
+            font-size: clamp(0.75rem, 1.5vw, 1rem);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .icons {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.5rem, 1vw, 1rem);
+            font-size: clamp(0.875rem, 2vw, 1rem);
+
+            .currency {
+                display: flex;
+                align-items: center;
+
+                img {
+                    margin-right: clamp(0.25rem, 1vw, 0.5rem);
+                }
+            }
+        }
+    }
+
+    .cardList {
+        width: 100%;
+        margin: clamp(0.75rem, 1.5vw, 1rem) 0;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.75rem, 1.5vw, 1rem);
+    }
+
+    .buttons {
+        width: 100%;
+        margin: clamp(1rem, 2vw, 2rem) 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(1rem, 2vw, 2rem);
+
+        .button {
+            width: 100%;
+            max-width: clamp(300px, 100vw, 600px);
+            padding: clamp(0.75rem, 2vw, 1.25rem) clamp(2.5rem, 5vw, 4rem);
+            width: 100%;
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            font-weight: 600;
+            border-radius: 25px;
+            text-transform: capitalize;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .buttonDisabled {
+            background-color: #1B2033;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+        }
+
+        .purchased {
+            background-color: #0198E9;
+            color: #ffffff;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background-color: #0198e9c3;
+            }
+        }
+
+        .confirm {
+            background: linear-gradient(270deg, #FFE0B2 0%, #FF2CDF 34.85%, #016BE9 67.98%, #00E4FF 100%);
+            color: #fff;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: linear-gradient(120deg, #FFE0B2 0%, #FF2CDF 34.85%, #016BE9 67.98%, #00E4FF 100%);
+            }
+        }
+    }
+}

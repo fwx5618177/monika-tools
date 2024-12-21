@@ -1,0 +1,22 @@
+.box {
+    margin: clamp(.2rem, 3vw, .5rem);
+    width: 100%;
+    max-width: 37rem;
+    text-align: left;
+    font-size: clamp(.5rem, 3vw, 1.2rem);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+
+        .phoneNumber {
+            font-weight: 600;
+        }
+    }
+}

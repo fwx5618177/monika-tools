@@ -1,0 +1,86 @@
+.navbar {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    background: rgba(#ffffff, 0.1);
+    border-radius: 100px;
+    left: 5%;
+    width: 90%;
+    margin: clamp(0.5rem, 2vw, 1rem) auto;
+    border: 0.0625rem solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(2px);
+    padding: clamp(0.625rem, 2vw, 1rem) clamp(1rem, 2vw, 1.5rem);
+    z-index: 20;
+
+    .navItem {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        flex: 1;
+
+        &:hover svg {
+            color: #00bcd4;
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+
+        &.selected {
+            svg {
+                color: #00bcd4;
+            }
+
+            span {
+                color: #00bcd4;
+            }
+        }
+
+        a {
+            display: flex;
+            flex-direction: column;
+        }
+
+        span {
+            font-size: clamp(0.75rem, 1.5vw, 1rem);
+            line-height: 1;
+            white-space: nowrap;
+        }
+    }
+
+    .earn {
+        margin-top: clamp(-2rem, -5vw, -2.5rem);
+        gap: clamp(0.5rem, 1vw, 0.625rem);
+        padding: clamp(0.5rem, 1vw, 0.625rem);
+
+        .earnIcon {
+            position: relative;
+            width: clamp(3rem, 10vw, 4rem);
+            height: clamp(3rem, 10vw, 4rem);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .circle {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(140.02deg, #FFE0B2 13.39%, #FF2CDF 28.57%, #1833DF 52.95%, #00A5FD 77.06%, #00A6FF 87.49%);
+                border-radius: 50%;
+                border: clamp(0.0625rem, 1vw, 0.1rem) solid;
+            }
+
+            .earnImg {
+                width: clamp(1.25rem, 3vw, 1.5rem);
+                height: clamp(1.25rem, 3vw, 1.5rem);
+                z-index: 10;
+            }
+
+            &:hover {
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 0.625rem rgba(0, 0, 0, 0.5));
+            }
+        }
+    }
+}

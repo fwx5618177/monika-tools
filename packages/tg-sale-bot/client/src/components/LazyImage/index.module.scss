@@ -1,0 +1,7 @@
+.flag {
+    width: 100%;
+    height: clamp(50px, 10vw, 80px);
+    margin-bottom: clamp(0.5rem, 1vw, 1rem);
+    object-fit: contain;
+    border-radius: 5px;
+}

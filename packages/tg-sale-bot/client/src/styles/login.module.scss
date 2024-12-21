@@ -1,0 +1,255 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('/invite_code_bg.png');
+    background-size: contain;
+    background-position: center;
+    padding: 2rem;
+    color: #fff;
+    text-align: center;
+    box-sizing: border-box;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        filter: brightness(70%) saturate(120%);
+        z-index: -1;
+    }
+
+    .backIcon {
+        position: absolute;
+        top: clamp(1rem, 2vw, 2rem);
+        left: clamp(0.5rem, 1vw, 1.5rem);
+        font-size: clamp(1.25rem, 2vw, 2rem);
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(10px, 2vw, 16px);
+    }
+
+    .toggle {
+        margin: 10px 0;
+        width: 100%;
+        max-width: 480px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: clamp(16px, 1.5vw, 18px);
+
+        span {
+            cursor: pointer;
+
+            &:hover {
+                color: #ffffff;
+            }
+        }
+    }
+
+    .failIcon,
+    .successIcon {
+        width: clamp(120px, 25vw, 230px);
+        height: clamp(120px, 20vw, 175px);
+    }
+
+    .failIcon {
+        transform: scale(1.3);
+    }
+
+    .successText {
+        margin: clamp(20px, 4vw, 28px);
+
+        .title {
+            font-size: clamp(18px, 2.5vw, 24px);
+            font-weight: 600;
+        }
+
+        .text {
+            margin: clamp(20px, 3vw, 30px);
+            font-size: clamp(14px, 2vw, 16px);
+            font-weight: 600;
+        }
+    }
+
+    .text {
+        margin: clamp(.5rem, 2vw, 21.5rem);
+        font-size: clamp(.8rem, 2vw, 1.2rem);
+        font-weight: 400;
+        line-height: 1.6;
+    }
+
+    .submitButton {
+        margin-top: clamp(.4rem, 2vw, 2rem);
+        padding: clamp(10px, 2vw, 15px);
+        width: 100%;
+        max-width: 450px;
+        background: linear-gradient(88.48deg, #20EEFF 1.22%, #4E8EFF 38.7%, #FC57FF 66.73%, #FFE2C7 98.71%);
+        color: #ffffff;
+        font-size: clamp(16px, 1.5vw, 18px);
+        font-weight: 600;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        text-align: center;
+
+        &:hover {
+            background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
+        }
+    }
+
+    .cancelButton {
+        margin-top: 18px;
+        padding: clamp(10px, 1.5vw, 15px);
+        width: 100%;
+        max-width: 450px;
+        background: linear-gradient(172.61deg, #B3BBC7 15.01%, #CACFD7 47.75%, #A9B1BD 80.44%);
+        color: #000;
+        border-radius: 30px;
+        font-size: clamp(16px, 1.5vw, 18px);
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+            background: #cccccc;
+        }
+    }
+
+    .inputField {
+        margin-top: clamp(15px, 3vw, 20px);
+        width: 100%;
+        max-width: 300px;
+        padding: clamp(8px, 2vw, 12px);
+        background-color: #1b1b1d;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        color: #9e9e9e;
+
+        .icon {
+            margin-right: 10px;
+        }
+
+        input {
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            color: #e0e0e0;
+            font-size: clamp(14px, 1.5vw, 16px);
+            outline: none;
+
+            &::placeholder {
+                color: #9e9e9e;
+            }
+        }
+    }
+
+    .autoSkip {
+        margin: 15px auto;
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+
+    .modalContent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        .modalActions {
+            margin: 20px;
+            width: 100%;
+            min-height: clamp(100px, 20vw, 200px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        button {
+            width: 100%;
+            max-width: clamp(300px, 100vw, 600px);
+            padding: clamp(0.75rem, 2vw, 1.25rem) clamp(2.5rem, 5vw, 4rem);
+            width: 100%;
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            font-weight: 600;
+            border-radius: 25px;
+            text-transform: capitalize;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .cancel {
+            border: 1px solid #0198E9;
+            background-color: transparent;
+            color: #0198E9;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background-color: #0198E9;
+                color: #fff;
+            }
+        }
+
+        .confirm {
+            background: linear-gradient(270deg, #FFE0B2 0%, #FF2CDF 34.85%, #016BE9 67.98%, #00E4FF 100%);
+            color: #fff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+
+            &:hover {
+                background: linear-gradient(120deg, #FFE0B2 0%, #FF2CDF 34.85%, #016BE9 67.98%, #00E4FF 100%);
+            }
+        }
+    }
+
+
+
+    @media (max-height: 600px) {
+        padding: 1rem;
+        justify-content: flex-start;
+
+        .failIcon,
+        .successIcon {
+            width: 50%;
+        }
+
+        .backIcon {
+            font-size: 1.25rem;
+        }
+
+        .text {
+            font-size: 1rem;
+        }
+
+        .submitButton,
+        .cancelButton {
+            font-size: 1rem;
+            padding: 12px;
+        }
+    }
+
+    @media (min-width: 800px) {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+}

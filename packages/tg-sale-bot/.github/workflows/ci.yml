@@ -1,0 +1,46 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - "*" # Push events to all branches
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code from your repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Node.js using the specified version from your engines field
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.10.0"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      # Install dependencies using pnpm
+      - name: Install dependencies
+        run: pnpm install
+
+      # Prepare husky hooks
+      - name: Setup Husky
+        run: pnpm preinstall
+
+      # Lint the code using ESLint
+      - name: Lint the code
+        run: pnpm lint
+
+      # Build the project using the build script
+      - name: Build the project
+        run: pnpm run build:prod

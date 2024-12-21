@@ -1,0 +1,195 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: clamp(1rem, 2vw, 2rem);
+    width: 100%;
+    overflow-x: hidden; // 确保x轴不会出现scroll
+    background-image: url('/welcome_bg1.png');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    z-index: 1;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        filter: brightness(70%) saturate(120%);
+        z-index: -1;
+    }
+
+    .topBg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('/welcome_bg1.png') no-repeat center center;
+        background-size: cover;
+        z-index: -1;
+        filter: brightness(90%);
+    }
+
+    .content {
+        margin-top: clamp(2rem, 5vw, 3rem);
+        width: 100%;
+        max-width: clamp(300px, 100vw, 600px);
+        text-align: left;
+
+        .title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 400;
+
+            .highlight {
+                background: linear-gradient(114.56deg, #FFE0B2 19.82%, #5F2CE7 38.23%, #0198E9 56.76%, #00FFF0 83.84%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+    }
+
+    .actions {
+        margin: clamp(1rem, 4vw, 2rem) 0;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.75rem, 2vw, 1rem);
+        width: 100%;
+        max-width: 450px;
+
+        .joinButton,
+        .inviteButton {
+            width: 100%;
+            padding: clamp(0.75rem, 2vw, 1.25rem);
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-align: center;
+
+            &:hover {
+                background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
+            }
+        }
+
+        .joinButton {
+            background: linear-gradient(88.48deg, #20EEFF 1.22%, #4E8EFF 38.7%, #FC57FF 66.73%, #FFE2C7 98.71%);
+            color: #ffffff;
+        }
+
+        .inviteButton {
+            background: linear-gradient(172.61deg, #B3BBC7 15.01%, #CACFD7 47.75%, #A9B1BD 80.44%);
+            color: #333333;
+        }
+    }
+
+    .footer {
+        width: 100%;
+        margin-top: clamp(1rem, 2vw, 2rem);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: clamp(0.5rem, 1vw, 1rem);
+        font-size: clamp(0.8rem, 2vw, 1rem);
+        text-align: center;
+
+        word-wrap: break-word;
+        white-space: normal;
+        text-align: left;
+
+        .check {
+            position: relative;
+            display: flex;
+            align-items: center;
+
+            &.invalid input[type="checkbox"] {
+                border: 1px solid rgba(#ff0000, 0.2);
+                background-color: rgba(#ff0000, 0.3);
+            }
+
+            input[type="checkbox"] {
+                appearance: none;
+                width: clamp(1rem, 2vw, 1.25rem);
+                height: clamp(1rem, 2vw, 1.25rem);
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+
+                &:checked {
+                    background: linear-gradient(227.88deg,
+                            #ffe0b2 -39.83%,
+                            #7630ed 26.6%,
+                            #0198e9 65.07%,
+                            #00fff0 106.27%);
+
+                    &+.checkIcon {
+                        display: block;
+                    }
+                }
+
+                &:focus-visible {
+                    outline: none;
+                }
+            }
+
+            .checkIcon {
+                display: none;
+                position: absolute;
+                font-size: clamp(0.75rem, 2vw, 1rem);
+                color: white;
+                pointer-events: none;
+                top: 3px;
+                left: 3px;
+            }
+        }
+
+        a {
+            color: #00c6ff;
+            text-decoration: underline;
+        }
+    }
+
+    @media (min-height: 600px) {
+        height: 100vh;
+    }
+
+    @media (max-height: 600px) {
+        height: auto;
+        justify-content: flex-start;
+    }
+
+    @media (min-width: 800px) {
+        justify-content: center;
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20%,
+    60% {
+        transform: translateX(-10px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(10px);
+    }
+}
+
+.shake {
+    animation: shake 0.5s;
+}

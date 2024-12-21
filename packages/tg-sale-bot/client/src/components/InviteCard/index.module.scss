@@ -1,0 +1,206 @@
+.inviteCard {
+    position: relative;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    margin: clamp(1.25rem, 3vw, 2rem) auto;
+    width: 100%;
+    max-width: clamp(300px, 100vw, 600px);
+    background-color: rgba(62, 67, 92, 0.5);
+    border-radius: 0.875rem;
+    border: 0.0625rem solid transparent;
+    box-shadow: 0 0 0 0.0625rem transparent;
+    z-index: 1;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0.875rem;
+        padding: 0.0375rem;
+        background: linear-gradient(129.33deg, #FFFFFF 4.73%, rgba(255, 255, 255, 0.0001) 24.67%, rgba(255, 255, 255, 0.0001) 83.36%, #FFFFFF 95.41%);
+        opacity: 0.5;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+        mask-composite: exclude;
+        z-index: -1;
+    }
+
+    .inviteHeader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: clamp(0.25rem, 1vw, 0.3125rem);
+        font-size: clamp(1rem, 2vw, 1.125rem);
+        font-weight: 700;
+    }
+
+    .invite {
+        margin: clamp(1rem, 2vw, 1.25rem) 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        font-size: clamp(0.875rem, 1.5vw, 1rem);
+        font-weight: 400;
+
+        .invitationCode {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 600;
+        }
+
+        .invitationLink {
+            display: flex;
+            align-items: center;
+            gap: clamp(0.25rem, 1vw, 0.3125rem);
+
+            .link {
+                width: clamp(0.875rem, 1.5vw, 1rem);
+                height: clamp(0.875rem, 1.5vw, 1rem);
+            }
+        }
+    }
+
+    .inviteButtonBox {
+        margin: clamp(0.625rem, 1.5vw, 1rem) 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: clamp(0.625rem, 1.5vw, 1rem);
+
+        .inviteButton {
+            width: 90%;
+            color: #fff;
+            background: linear-gradient(270deg, #FFE0B2 0%, #FF2CDF 34.85%, #016BE9 67.98%, #00E4FF 100%);
+            border: none;
+            border-radius: 0.5rem;
+            padding: clamp(0.625rem, 1.5vw, 1rem) 0;
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+        .copy {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(0.75rem, 1.5vw, 1rem);
+            background: linear-gradient(314.46deg, #FFE0B2 2.67%, #FF2CDF 30.32%, #016BE9 76.8%, #00E4FF 103.64%);
+            border-radius: 0.875rem;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+
+    .inviteStats {
+        display: flex;
+        justify-content: space-around;
+        gap: clamp(0.625rem, 1.5vw, 1rem);
+
+        @media (max-width: 20rem) {
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+        .item {
+            flex-basis: 45%;
+            padding: clamp(0.375rem, 1vw, 0.5rem) clamp(0.75rem, 1.5vw, 0.75rem);
+            background: #3A4362;
+            border-radius: 0.875rem;
+            font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+            & span:nth-child(1) {
+                color: rgba(255, 255, 255, 0.5);
+            }
+
+            & span:nth-child(2) {
+                font-size: clamp(0.875rem, 1.5vw, 1rem);
+                color: #ffffff;
+            }
+        }
+    }
+
+    .invitedFriends {
+        margin-top: clamp(1rem, 2vw, 1.5rem);
+
+        .friendHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+
+            span {
+                font-size: clamp(1rem, 2vw, 1.125rem);
+                font-weight: bold;
+            }
+
+            img {
+                transition: transform 0.3s ease;
+            }
+
+            .expanded {
+                transform: rotate(180deg);
+            }
+        }
+
+        .recharge {
+            margin-top: clamp(0.625rem, 1.5vw, 0.75rem);
+            overflow-y: auto;
+            max-height: clamp(12.5rem, 30vh, 15rem);
+            padding-right: clamp(0.625rem, 1vw, 1rem);
+
+            .rechargeHeader {
+                position: sticky;
+                top: 0;
+                z-index: 1; // 确保 header 在其他内容上方
+                padding: 0 clamp(0.625rem, 1vw, 1rem);
+                background-color: #26273e; // 与父背景色一致
+                color: #0198e9;
+                font-weight: 600;
+                font-size: clamp(0.875rem, 1.5vw, 1rem);
+                display: flex;
+            }
+
+            .rechargeRow {
+                margin: clamp(0.375rem, 1vw, 0.5rem) 0;
+                padding: clamp(0.9375rem, 2vw, 1rem) clamp(0.625rem, 1vw, 1rem);
+                background-color: #3A4362;
+                font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+                font-weight: 400;
+                border-radius: 0.875rem;
+            }
+
+            .rechargeHeader,
+            .rechargeRow {
+                display: flex;
+
+                span {
+                    flex-basis: 33.33%;
+                    text-align: center;
+
+                    &:first-child {
+                        text-align: left;
+                    }
+
+                    &:last-child {
+                        text-align: right;
+                    }
+                }
+            }
+        }
+    }
+}

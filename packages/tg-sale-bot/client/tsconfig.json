@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "paths": {
+      "@styles/*": ["styles/*"],
+      "@components/*": ["components/*"],
+      "@i18n/*": ["i18n/*"],
+      "@pages/*": ["pages/*"],
+      "@utils/*": ["utils/*"],
+      "@config/*": ["config/*"],
+      "@apis/*": ["apis/*"],
+      "@interfaces/*": ["interfaces/*"],
+      "@constants/*": ["constants/*"],
+      "@providers/*": ["providers/*"],
+      "@store/*": ["store/*"],
+      "@hooks/*": ["hooks/*"]
+    },
+    "types": ["./src/vite-env.d.ts", "@types/node"]
+  }
+}

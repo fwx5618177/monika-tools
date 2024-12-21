@@ -1,0 +1,112 @@
+.points {
+    position: relative;
+    width: 100%;
+    max-width: clamp(300px, 100vw, 600px);
+    margin: clamp(.2rem, 2vw, 1rem) auto;
+    padding: clamp(.2rem, 2vw, 1rem) 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(#3E435C, 0.5);
+    color: #ffffff;
+
+    border-radius: 0.75rem;
+    border: 0.0625rem solid transparent;
+    box-shadow: 0 0 0 0.0625rem transparent;
+    z-index: 1;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0.75rem;
+        padding: 0.05rem;
+
+        background: linear-gradient(129.33deg, #FFFFFF 4.73%, rgba(255, 255, 255, 0.0001) 24.67%, rgba(255, 255, 255, 0.0001) 83.36%, #FFFFFF 95.41%);
+        opacity: 0.5;
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+        mask-composite: exclude;
+        z-index: -1;
+    }
+
+    .current {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        font-weight: 400;
+    }
+
+    .exactPoint {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(0.5rem, 1.5vw, 0.75rem);
+
+        .coinIcon {
+            width: clamp(2rem, 5vw, 2.75rem);
+            height: clamp(2rem, 5vw, 2.75rem);
+        }
+
+        .pointsValue {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 600;
+        }
+
+        @media (min-width: 0rem) and (max-width: 18.125rem) {
+            .pointsValue {
+                font-size: clamp(1.25rem, 3vw, 1.5rem);
+            }
+
+            .coinIcon {
+                width: clamp(1.5rem, 4vw, 2rem);
+                height: clamp(1.5rem, 4vw, 2rem);
+            }
+        }
+    }
+}
+
+.charge {
+    flex-direction: row;
+    justify-content: space-around;
+    border-radius: 6.25rem;
+
+    &::before {
+        border-radius: 6.25rem;
+    }
+}
+
+.effect {
+    position: absolute;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: bold;
+    color: #ffcc00; // 你可以根据需要更改颜色
+    pointer-events: none;
+    transition: transform 1s ease-out, opacity 1s ease-out;
+    z-index: 10;
+    animation: riseUp 1s forwards;
+}
+
+@keyframes riseUp {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+}
+
+.fadeOut {
+    opacity: 0;
+}

@@ -1,0 +1,194 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    background-color: #050d1d;
+    padding: clamp(20px, 5vw, 30px) clamp(10px, 3vw, 20px) clamp(80px, 5vw, 100px) clamp(10px, 3vw, 20px);
+    color: #fff;
+    box-sizing: border-box;
+    z-index: 1;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/index_left_top_bg.svg'), url('/index_right_top_bg.svg');
+        background-size: cover, cover;
+        background-position: center, left top;
+        background-repeat: no-repeat, no-repeat;
+        z-index: -1;
+    }
+
+    .header {
+        width: 100%;
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        font-weight: 700;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .logo {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+
+        img {
+            transform: rotate(30deg);
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 3vw, 3rem);
+            font-weight: 900;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    .rocketBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .rocket {
+            width: clamp(15rem, 70%, 30rem);
+            transition: transform 0.3s ease;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+
+        @media (max-width: 800px) {
+            flex-grow: 1;
+        }
+    }
+
+    .instro {
+        text-align: center;
+        padding: clamp(0.5rem, 2vw, 1rem);
+
+        h2 {
+            font-size: clamp(1.25rem, 2vw, 2rem);
+            font-weight: 600;
+        }
+
+        span {
+            font-size: clamp(1rem, 1.5vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
+
+    .stepNext {
+        margin: clamp(.3rem, 2vw, 1.5rem) auto;
+        padding: clamp(0.75rem, 1vw, 1.25rem) clamp(0.5rem, 1vw, 1rem);
+
+        width: 100%;
+        max-width: clamp(100px, 20vw, 320px);
+        background-color: #0198e9;
+        border-radius: 0.75rem;
+        font-size: clamp(1rem, 1.5vw, 1.5rem);
+        font-weight: 600;
+        border: none;
+        color: #ffffff;
+
+        &:hover {
+            background-color: #0072ff;
+        }
+
+        &:focus,
+        &:focus-visible,
+        &:focus-within {
+            outline: none;
+        }
+    }
+
+    .mention {
+        text-align: center;
+        padding: 0.5rem;
+
+        h2 {
+            font-size: clamp(0.75rem, 1vw, 1.25rem);
+            font-weight: 600;
+        }
+
+        span {
+            font-size: clamp(0.625rem, 1vw, 1rem);
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
+
+    @media (max-height: 600px) {
+        padding: 1rem;
+
+        .rocketBox {
+            .rocket {
+                width: 50%;
+            }
+        }
+
+        .logo h2 {
+            font-size: clamp(1.25rem, 2.5vw, 2rem);
+        }
+
+        .instro h2 {
+            font-size: clamp(1rem, 1.5vw, 1.5rem);
+        }
+
+        .instro span {
+            font-size: clamp(0.75rem, 1vw, 1rem);
+        }
+
+        .stepNext {
+            font-size: clamp(0.75rem, 1vw, 1rem);
+            padding: 0.5rem 0.75rem;
+        }
+
+        .mention h2 {
+            font-size: 0.75rem;
+        }
+
+        .mention span {
+            font-size: 0.625rem;
+        }
+    }
+
+    @media (min-width: 800px) {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        .header {
+            position: absolute;
+            right: 5rem;
+            top: 5rem;
+
+            .arrow {
+                width: 2rem;
+                height: 2rem;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+
+        .rocketBox {
+            .rocket {
+                width: clamp(60%, 80%, 35rem);
+            }
+        }
+    }
+}

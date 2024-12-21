@@ -1,0 +1,143 @@
+.card {
+    position: relative;
+    width: 100%;
+    max-width: clamp(300px, 100vw, 600px);
+    min-height: 100px;
+    background-color: #1B2033;
+    border-radius: 15px;
+    margin: clamp(1rem, 2vw, 2rem) auto;
+    padding: 14px 16px;
+
+    .banner {
+        position: absolute;
+        right: -8px;
+        top: 8px;
+        background-color: #EC3B3B;
+        padding: 2px 8px;
+        font-size: 10px;
+        transform: rotate(45deg);
+        border-radius: 15px;
+    }
+
+    .item {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        color: #ffffff;
+        font-size: 12px; // 默认字体大小
+        font-weight: 400;
+
+        &:nth-child(1) {
+            margin-top: 0;
+        }
+
+        .itemName {
+            color: rgba(#ffffff, 0.5);
+        }
+    }
+
+    .itemPackageName {
+        font-size: 22px; // 默认字体大小
+        font-weight: 600;
+        color: #0198E9;
+    }
+
+    .footer {
+        margin-top: 10px;
+        text-align: right;
+        font-size: 12px; // 默认字体大小
+        font-weight: 400;
+        color: rgba(#ffffff, 0.5);
+    }
+
+    // 响应式文字大小调整
+    @include respond-to(xs) {
+        .item {
+            font-size: 10px;
+        }
+
+        .itemPackageName {
+            font-size: 18px;
+        }
+
+        .footer {
+            font-size: 10px;
+        }
+    }
+
+    @include respond-to(sm) {
+        .item {
+            font-size: 12px; // 中小屏幕的 item 字体大小
+        }
+
+        .itemPackageName {
+            font-size: 20px; // 中小屏幕的 package 名称字体大小
+        }
+
+        .footer {
+            font-size: 12px;
+        }
+    }
+
+    @include respond-to(md) {
+        .item {
+            font-size: 12px; // 中等屏幕的 item 字体大小
+        }
+
+        .itemPackageName {
+            font-size: 22px; // 中等屏幕的 package 名称字体大小
+        }
+
+        .footer {
+            font-size: 12px;
+        }
+    }
+
+    @include respond-to(lg) {
+        .item {
+            font-size: 14px; // 大屏幕的 item 字体大小
+        }
+
+        .itemPackageName {
+            font-size: 24px; // 大屏幕的 package 名称字体大小
+        }
+
+        .footer {
+            font-size: 14px;
+        }
+    }
+
+    @include respond-to(xl) {
+        .item {
+            font-size: 16px; // 更大屏幕的 item 字体大小
+        }
+
+        .itemPackageName {
+            font-size: 26px; // 更大屏幕的 package 名称字体大小
+        }
+
+        .footer {
+            font-size: 16px;
+        }
+    }
+
+    @include respond-to(xxl) {
+        .item {
+            font-size: 18px; // 超大屏幕的 item 字体大小
+        }
+
+        .itemPackageName {
+            font-size: 28px; // 超大屏幕的 package 名称字体大小
+        }
+
+        .footer {
+            font-size: 16px;
+        }
+    }
+}
+
+.selected {
+    border: 1px solid #0198E9;
+}

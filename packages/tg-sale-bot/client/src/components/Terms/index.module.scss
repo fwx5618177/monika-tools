@@ -1,0 +1,93 @@
+.footer {
+    margin-top: clamp(.2rem, 3vw, .5rem);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: clamp(2px, 1vw, 5px);
+    font-size: clamp(.7rem, 1.5vw, 1rem);
+    font-weight: 400;
+
+    @media (min-width: 520px) {
+        justify-content: center;
+    }
+
+
+    .check {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.invalid input[type="checkbox"] {
+            border: 1px solid rgba(#ff0000, 0.2);
+            background-color: rgba(#ff0000, 0.3);
+        }
+
+        input[type="checkbox"] {
+            position: relative;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+
+            &:checked {
+                background: linear-gradient(227.88deg,
+                        #ffe0b2 -39.83%,
+                        #7630ed 26.6%,
+                        #0198e9 65.07%,
+                        #00fff0 106.27%);
+
+                &+.checkIcon {
+                    display: block;
+                }
+
+                &:focus-visible {
+                    outline: none;
+                }
+            }
+        }
+
+        .checkIcon {
+            display: none;
+            position: absolute;
+            font-size: 12px;
+            color: white;
+            pointer-events: none;
+            top: 5px;
+            left: clamp(.28rem, 2vw, .3rem);
+        }
+    }
+
+    a {
+        margin-left: .3rem;
+        color: #00c6ff;
+        text-decoration: underline;
+        font-size: clamp(.8rem, 1.5vw, 1.2rem);
+    }
+}
+
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20%,
+    60% {
+        transform: translateX(-10px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(10px);
+    }
+}
+
+.shake {
+    animation: shake 0.5s ease;
+}

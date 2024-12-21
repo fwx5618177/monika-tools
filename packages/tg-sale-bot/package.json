@@ -1,0 +1,39 @@
+{
+  "name": "tg-sale-bot",
+  "version": "1.0.0",
+  "description": "这个项目包括一个 Telegram 机器人和一个集成了 TON 支付的小程序。项目分为三个主要部分：客户端、机器人和后端。",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "start:client": "pnpm --filter client run dev",
+    "mock": "pnpm --filter mock run mock",
+    "start:bot": "pnpm --filter bot run dev",
+    "start:backend": "pnpm --filter backend run start",
+    "start": "concurrently \"pnpm start:client\" \"pnpm start:bot\" \"pnpm start:backend\"",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
+    "clean": "rimraf **/node_modules && rimraf ./node_modules",
+    "build": "pnpm --filter client build",
+    "build:prod": "pnpm --filter client build:prod"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.11",
+    "@types/numeral": "^2.0.5",
+    "@types/react-copy-to-clipboard": "^5.0.7",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "concurrently": "^8.2.2",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "i18next": "^23.12.1",
+    "moment": "^2.30.1",
+    "numeral": "^2.0.6",
+    "react-copy-to-clipboard": "^5.1.0",
+    "ts-node": "^10.9.2"
+  }
+}
