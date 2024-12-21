@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Farcaster Data Fetcher",
+  "version": "1.0",
+  "description": "Fetch Farcaster user data and calculate scores.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "https://api.farcaster.xyz/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "index.html"
+  },
+  "host_permissions": [
+    "https://api.farcaster.xyz/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ]
+}

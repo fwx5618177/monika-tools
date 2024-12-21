@@ -1,0 +1,12 @@
+body {
+    width: 375px;
+    height: 667px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#root {
+    width: 100%;
+    height: 100%;
+}
