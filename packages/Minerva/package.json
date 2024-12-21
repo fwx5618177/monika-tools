@@ -3,7 +3,7 @@
   "description": "",
   "scripts": {
     "release": "pnpm run release -r ./lib-core",
-    "dev": "pnpm --filter @minerva/sample dev",
+    "dev:sample": "pnpm --filter @minerva/sample dev",
     "serve": "pnpm --filter @minerva/sample serve",
     "build": "pnpm -r build",
     "test": "pnpm -r test",

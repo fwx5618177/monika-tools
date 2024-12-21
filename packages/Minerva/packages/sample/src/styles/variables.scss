@@ -1,3 +1,5 @@
+@use "sass:map";
+
 // 字体变量
 $font-family-base: "Helvetica Neue", "Arial", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", "sans-serif"; // 基础字体
 $font-size-base: 1rem; // 基础字体大小，使用 rem 单位
@@ -38,33 +40,33 @@ $breakpoints: (
 );
 
 // 字体大小响应式支持
-@media (max-width: map-get($breakpoints, sm)) {
+@media (max-width: map.get($breakpoints, sm)) {
   :root {
-    --font-size-base: #{map-get($font-sizes, xs)}; // 小屏幕字体大小
+    --font-size-base: #{map.get($font-sizes, xs)}; // 小屏幕字体大小
   }
 }
 
-@media (min-width: map-get($breakpoints, sm)) and (max-width: map-get($breakpoints, md)) {
+@media (min-width: map.get($breakpoints, sm)) and (max-width: map.get($breakpoints, md)) {
   :root {
-    --font-size-base: #{map-get($font-sizes, sm)}; // 中小屏幕字体大小
+    --font-size-base: #{map.get($font-sizes, sm)}; // 中小屏幕字体大小
   }
 }
 
-@media (min-width: map-get($breakpoints, md)) and (max-width: map-get($breakpoints, lg)) {
+@media (min-width: map.get($breakpoints, md)) and (max-width: map.get($breakpoints, lg)) {
   :root {
-    --font-size-base: #{map-get($font-sizes, md)}; // 中屏幕字体大小
+    --font-size-base: #{map.get($font-sizes, md)}; // 中屏幕字体大小
   }
 }
 
-@media (min-width: map-get($breakpoints, lg)) and (max-width: map-get($breakpoints, xl)) {
+@media (min-width: map.get($breakpoints, lg)) and (max-width: map.get($breakpoints, xl)) {
   :root {
-    --font-size-base: #{map-get($font-sizes, lg)}; // 大屏幕字体大小
+    --font-size-base: #{map.get($font-sizes, lg)}; // 大屏幕字体大小
   }
 }
 
-@media (min-width: map-get($breakpoints, xl)) {
+@media (min-width: map.get($breakpoints, xl)) {
   :root {
-    --font-size-base: #{map-get($font-sizes, xl)}; // 超大屏幕字体大小
+    --font-size-base: #{map.get($font-sizes, xl)}; // 超大屏幕字体大小
   }
 }
 
@@ -73,6 +75,7 @@ $breakpoints: (
   from {
     height: 0;
   }
+
   to {
     height: var(--radix-accordion-content-height);
   }
@@ -82,6 +85,7 @@ $breakpoints: (
   from {
     height: var(--radix-accordion-content-height);
   }
+
   to {
     height: 0;
   }

@@ -3,6 +3,7 @@ import styles from '@/styles/error.boundary.module.scss';
 import { FaExclamationTriangle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@minerva/lib-core';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -45,15 +46,15 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
           <h1 className={styles.title}>{t('error-title')}</h1>
           <p className={styles.message}>{t('error-description')}</p>
           <div className={styles.buttonGroup}>
-            <button onClick={this.handleRetry} className={styles.retryButton}>
+            <Button onClick={this.handleRetry} variant="retry">
               {t('retry')}
-            </button>
-            <button
-              onClick={this.props.navigateToHome}
-              className={styles.homeButton}
-            >
+            </Button>
+            <Button onClick={this.props.navigateToHome} variant="back">
               {t('back-to-home')}
-            </button>
+            </Button>
+            <Button variant="disabled" onClick={() => window.history.back()}>
+              {t('back')}
+            </Button>
           </div>
         </div>
       );

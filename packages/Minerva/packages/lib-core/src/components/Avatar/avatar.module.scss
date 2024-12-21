@@ -44,3 +44,7 @@
     font-size: calc(var(--font-size-base) * 0.875 * map-get($scale-multiplier, xs));
   }
 }
+
+.stacked {
+  margin-left: -0.5rem;
+}

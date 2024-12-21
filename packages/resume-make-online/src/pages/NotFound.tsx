@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaChevronLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import Button from '@/components/Button';
+import { Button } from '@minerva/lib-core';
 import styles from '@/styles/notfound.module.scss';
 import { useTranslation } from 'react-i18next';
 

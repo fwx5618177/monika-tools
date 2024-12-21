@@ -2,6 +2,8 @@ import React from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
+import { Button } from '@minerva/lib-core';
+
 import Logo from '@/components/Logo';
 import { useTranslation } from 'react-i18next';
 import styles from '@/styles/app.module.scss';
@@ -39,9 +41,13 @@ const App = () => {
         </span>
       </div>
 
-      <button className={styles.stepNext} onClick={handleNext}>
+      <Button variant="primary" size="xlarge">
         Step
-      </button>
+      </Button>
+
+      <Button variant="warning" size="medium">
+        Step
+      </Button>
 
       <div className={styles.mention}>
         <h2>July 18</h2>

@@ -1,6 +1,6 @@
 import React from "react";
 import { mount, render, shallow } from "enzyme";
-import { Avatar } from "@components/index";
+import { Avatar, AvatarGroup } from "@components/index";
 
 describe("Avatar", () => {
   it("should support square and circle", () => {
@@ -19,7 +19,7 @@ describe("Avatar", () => {
 
   it("should omit long chars automatically", () => {
     const avatar = mount(<Avatar text="texttexttexttext" />);
-    const text = avatar.find(".avatar-text").text();
+    const text = avatar.find(".avatarText").text();
     expect(text.length).toBeLessThan(4);
   });
 
@@ -27,30 +27,32 @@ describe("Avatar", () => {
     const avatar = shallow(<Avatar src="/images/avatar.png" stacked />);
     expect(() => avatar.unmount()).not.toThrow();
   });
+});
 
+describe("AvatarGroup", () => {
   it("group component should render all children", () => {
     const group = mount(
-      <Avatar.Group>
+      <AvatarGroup>
         <Avatar />
         <Avatar />
-      </Avatar.Group>,
+      </AvatarGroup>,
     );
     expect(group.find(".avatar")).toHaveLength(2);
   });
 
   it("should stacked when avatars are in a group", () => {
     const group = render(
-      <Avatar.Group>
+      <AvatarGroup>
         <Avatar />
         <Avatar />
-      </Avatar.Group>,
+      </AvatarGroup>,
     );
     expect(group).toMatchSnapshot();
   });
 
   it("should show count in group", () => {
     const count = 20;
-    const group = render(<Avatar.Group count={count} />);
+    const group = render(<AvatarGroup count={count} />);
     const text = group.find(".count").text();
     expect(text).toMatch(`${count}`);
   });

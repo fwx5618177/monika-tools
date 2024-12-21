@@ -10,11 +10,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": true,
-    "baseUrl": ".",
     "resolveJsonModule": true,
     "emitDeclarationOnly": true,
     "outDir": "./dist",
     "rootDir": "./src",
+    "baseUrl": ".",
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "@components/*": ["src/components/*"],

@@ -9,6 +9,7 @@
   "scripts": {
     "release": "standard-version",
     "build": "vite build",
+    "watch": "vite build --watch",
     "test": "jest --config .jest.config.js --no-cache --coverage",
     "clean": "rimraf dist node_modules",
     "clean:cache": "rimraf dist src/dist src/**/dist src/**/**/dist",
@@ -17,5 +18,12 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "sass": "^1.77.8",
+    "vite-plugin-dts": "^4.4.0"
+  }
 }

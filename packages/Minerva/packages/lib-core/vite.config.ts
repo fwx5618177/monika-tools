@@ -1,21 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import typescript from "@rollup/plugin-typescript";
+import dts from "vite-plugin-dts";
 import path from "path";
 
 export default defineConfig({
-  plugins: [
-    react(),
-    {
-      ...typescript({
-        tsconfig: path.resolve(__dirname, "tsconfig.json"),
-        declaration: true,
-        declarationDir: path.resolve(__dirname, "dist"),
-        rootDir: path.resolve(__dirname, "src"),
-      }),
-      apply: "build",
-    },
-  ],
+  plugins: [react(), dts()],
   resolve: {
     alias: {
       "@components": path.resolve(__dirname, "src/components"),
@@ -28,6 +17,7 @@ export default defineConfig({
     },
   },
   build: {
+    emptyOutDir: true,
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
       name: "MinervaComponentLibrary",
@@ -41,8 +31,8 @@ export default defineConfig({
           react: "React",
           "react-dom": "ReactDOM",
         },
-        entryFileNames: "index.[format].js",
-        chunkFileNames: "chunks/[name]-[hash].js",
+        entryFileNames: "[name].[format].js",
+        chunkFileNames: "[name].[hash].js",
         dir: "dist",
         exports: "named",
       },
@@ -53,7 +43,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@styles/variables.scss";`,
+        additionalData: `@use "sass:map"; @use "@styles/variables.scss" as *;`,
         includePaths: [path.resolve(__dirname, "src/styles")],
       },
     },
