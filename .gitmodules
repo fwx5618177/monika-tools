@@ -34,3 +34,6 @@
 [submodule "packages/pixi-zombie-game"]
 	path = packages/pixi-zombie-game
 	url = git@github.com:fwx5618177/pixi-zombie-game.git
+[submodule "packages/mid-platform"]
+	path = packages/mid-platform
+	url = git@github.com:fwx5618177/mid-platform.git
