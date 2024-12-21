@@ -25,3 +25,12 @@
 [submodule "packages/express"]
 	path = packages/express
 	url = git@github.com:fwx5618177/express.git
+[submodule "packages/pixijs-evm"]
+	path = packages/pixijs-evm
+	url = git@github.com:fwx5618177/pixijs-evm.git
+[submodule "packages/pixi-graph"]
+	path = packages/pixi-graph
+	url = git@github.com:zakjan/pixi-graph.git
+[submodule "packages/pixi-zombie-game"]
+	path = packages/pixi-zombie-game
+	url = git@github.com:fwx5618177/pixi-zombie-game.git
