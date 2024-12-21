@@ -1,0 +1,24 @@
+:root {
+    --background-color: #0D0D0D;
+    /* 更深的背景色 */
+    --text-color: #E0E0E0;
+    /* 亮色文本 */
+    --primary-color: #007BFF;
+    /* 蓝色主题色，替换为亮蓝色 */
+    --secondary-color: #1E1E1E;
+    /* 辅助背景色，深灰 */
+    --border-color: #303030;
+    /* 边框颜色 */
+    --hover-color: #0056b3;
+    /* 按钮等元素的悬停状态颜色 */
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    overflow-x: hidden;
+}

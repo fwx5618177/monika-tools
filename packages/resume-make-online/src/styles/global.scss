@@ -1,0 +1,100 @@
+@use './theme/dark.scss' as *;
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+button,
+input {
+    border: none;
+
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+        outline: none;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0px 1000px #1b1b1d inset;
+        -webkit-text-fill-color: #e0e0e0;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+}
+
+/* 全局的 SCSS 样式，用于自定义滚动条，兼容 macOS 和 Windows，适用于暗黑模式 */
+
+html {
+    scrollbar-width: thin;
+    /* 对 Firefox 生效 */
+    background-color: transparent;
+    /* 对 Firefox 生效 */
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    /* 滚动条背景色，适合暗黑模式 */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #4c4c4c;
+    /* 滚动条的滑块颜色 */
+    border-radius: 10px;
+    border: 2px solid #1e1e1e;
+    /* 保留滚动条间的距离 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #6c6c6c;
+    /* 滑块悬停时的颜色 */
+}
+
+::-webkit-scrollbar-corner {
+    background-color: #1e1e1e;
+    /* 两个滚动条交汇处的颜色 */
+}
+
+/* 针对 macOS 的滚动条样式自定义 */
+@media screen and (-webkit-min-device-pixel-ratio: 1.5),
+(min-resolution: 144dpi) {
+    ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #555555;
+        /* 提高滑块可见度 */
+    }
+}
+
+/* 针对 Windows 的滚动条样式自定义 */
+@media screen and (min-device-width: 960px) {
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #4c4c4c;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #5f5f5f;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}

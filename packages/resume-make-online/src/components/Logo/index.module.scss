@@ -1,0 +1,25 @@
+.logoContainer {
+    display: inline-block;
+
+    &.small {
+        width: 40px;
+        height: 40px;
+    }
+
+    &.medium {
+        width: 80px;
+        height: 80px;
+    }
+
+    &.large {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+.logoImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: contrast(0。6);
+}
