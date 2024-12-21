@@ -1,0 +1,18 @@
+{
+    "restartable": "rs",
+    "verbose": true,
+    "watch": [
+        ".env",
+        "package.json",
+        "tsconfig.json",
+        "src",
+        "tests"
+    ],
+    "ignore": [
+        "**/*.{spec,test}.ts",
+        "logs/*"
+    ],
+    "delay": "1000",
+    "exec": "tsx ./src/main.ts",
+    "ext": "ts,ejs,yml,json,js"
+}
