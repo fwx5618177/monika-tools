@@ -10,3 +10,6 @@
 [submodule "packages/novel-rating"]
 	path = packages/novel-rating
 	url = git@github.com:fwx5618177/novel-rating.git
+[submodule "packages/remark-excalidraw"]
+	path = packages/remark-excalidraw
+	url = git@github.com:fwx5618177/remark-excalidraw.git
