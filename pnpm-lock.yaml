@@ -2247,6 +2247,34 @@ importers:
         specifier: ^11.0.4
         version: 11.0.5
 
+  packages/resume-make-online:
+    dependencies:
+      less:
+        specifier: ^4.2.0
+        version: 4.2.1
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.2
+        version: 18.3.18
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.5(@types/react@18.3.18)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.4
+        version: 4.3.4(vite@6.0.5(@types/node@22.10.2)(jiti@2.4.2)(less@4.2.1)(lightningcss@1.22.1)(sass@1.83.0)(stylus@0.54.8)(sugarss@2.0.0)(terser@5.31.6)(tsx@4.19.2)(yaml@2.6.1))
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
+      vite:
+        specifier: ^6.0.5
+        version: 6.0.5(@types/node@22.10.2)(jiti@2.4.2)(less@4.2.1)(lightningcss@1.22.1)(sass@1.83.0)(stylus@0.54.8)(sugarss@2.0.0)(terser@5.31.6)(tsx@4.19.2)(yaml@2.6.1)
+
   packages/simple-blog:
     dependencies:
       '@next/swc-darwin-arm64':
@@ -33121,7 +33149,7 @@ snapshots:
   cookie-session@2.0.0:
     dependencies:
       cookies: 0.8.0
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       on-headers: 1.0.2
       safe-buffer: 5.2.1
     transitivePeerDependencies:
@@ -35018,7 +35046,7 @@ snapshots:
 
   eslint-import-resolver-node@0.3.9:
     dependencies:
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       is-core-module: 2.15.1
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -35058,7 +35086,7 @@ snapshots:
 
   eslint-import-resolver-webpack@0.13.10(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1))(webpack@4.47.0):
     dependencies:
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       enhanced-resolve: 0.9.1
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-webpack@0.13.10)(eslint@8.57.1)
       find-root: 1.1.0
@@ -35075,7 +35103,7 @@ snapshots:
 
   eslint-module-utils@2.12.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.2.0(eslint@9.9.0(jiti@2.4.2))(typescript@5.5.4))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
     optionalDependencies:
       '@typescript-eslint/parser': 6.21.0(eslint@8.57.1)(typescript@5.7.2)
       eslint: 8.57.1
@@ -35086,7 +35114,7 @@ snapshots:
 
   eslint-module-utils@2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-webpack@0.13.10(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1))(webpack@4.47.0))(eslint@8.57.1):
     dependencies:
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
     optionalDependencies:
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.7.2)
       eslint: 8.57.1
@@ -35097,7 +35125,7 @@ snapshots:
 
   eslint-module-utils@2.12.0(@typescript-eslint/parser@8.18.1(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint@8.57.1):
     dependencies:
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
     optionalDependencies:
       '@typescript-eslint/parser': 8.18.1(eslint@8.57.1)(typescript@5.7.2)
       eslint: 8.57.1
@@ -35107,7 +35135,7 @@ snapshots:
 
   eslint-module-utils@2.12.0(@typescript-eslint/parser@8.18.1(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint@9.17.0(jiti@2.4.2)):
     dependencies:
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
     optionalDependencies:
       '@typescript-eslint/parser': 8.18.1(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2)
       eslint: 9.17.0(jiti@2.4.2)
@@ -35117,7 +35145,7 @@ snapshots:
 
   eslint-module-utils@2.12.0(@typescript-eslint/parser@8.2.0(eslint@9.9.0(jiti@2.4.2))(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint@8.45.0):
     dependencies:
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
     optionalDependencies:
       '@typescript-eslint/parser': 8.2.0(eslint@9.9.0(jiti@2.4.2))(typescript@5.5.4)
       eslint: 8.45.0
@@ -35127,7 +35155,7 @@ snapshots:
 
   eslint-module-utils@2.12.0(@typescript-eslint/parser@8.2.0(eslint@9.9.0(jiti@2.4.2))(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint@8.57.1):
     dependencies:
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
     optionalDependencies:
       '@typescript-eslint/parser': 8.2.0(eslint@9.9.0(jiti@2.4.2))(typescript@5.5.4)
       eslint: 8.57.1
@@ -35137,7 +35165,7 @@ snapshots:
 
   eslint-module-utils@2.8.1(@typescript-eslint/parser@8.2.0(eslint@9.9.0(jiti@2.4.2))(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint@9.9.0(jiti@2.4.2)):
     dependencies:
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
     optionalDependencies:
       '@typescript-eslint/parser': 8.2.0(eslint@9.9.0(jiti@2.4.2))(typescript@5.5.4)
       eslint: 9.9.0(jiti@2.4.2)
@@ -35176,7 +35204,7 @@ snapshots:
       array.prototype.findlastindex: 1.2.5
       array.prototype.flat: 1.3.2
       array.prototype.flatmap: 1.3.2
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       doctrine: 2.1.0
       eslint: 9.9.0(jiti@2.4.2)
       eslint-import-resolver-node: 0.3.9
@@ -35204,7 +35232,7 @@ snapshots:
       array.prototype.findlastindex: 1.2.5
       array.prototype.flat: 1.3.2
       array.prototype.flatmap: 1.3.2
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
@@ -35233,7 +35261,7 @@ snapshots:
       array.prototype.findlastindex: 1.2.5
       array.prototype.flat: 1.3.2
       array.prototype.flatmap: 1.3.2
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
@@ -35262,7 +35290,7 @@ snapshots:
       array.prototype.findlastindex: 1.2.5
       array.prototype.flat: 1.3.2
       array.prototype.flatmap: 1.3.2
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
@@ -35291,7 +35319,7 @@ snapshots:
       array.prototype.findlastindex: 1.2.5
       array.prototype.flat: 1.3.2
       array.prototype.flatmap: 1.3.2
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       doctrine: 2.1.0
       eslint: 9.17.0(jiti@2.4.2)
       eslint-import-resolver-node: 0.3.9
@@ -35320,7 +35348,7 @@ snapshots:
       array.prototype.findlastindex: 1.2.5
       array.prototype.flat: 1.3.2
       array.prototype.flatmap: 1.3.2
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       doctrine: 2.1.0
       eslint: 8.45.0
       eslint-import-resolver-node: 0.3.9
@@ -35349,7 +35377,7 @@ snapshots:
       array.prototype.findlastindex: 1.2.5
       array.prototype.flat: 1.3.2
       array.prototype.flatmap: 1.3.2
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
@@ -37946,7 +37974,7 @@ snapshots:
       mime: 1.6.0
       minimist: 1.2.8
       opener: 1.5.2
-      portfinder: 1.0.32
+      portfinder: 1.0.32(supports-color@6.1.0)
       secure-compare: 3.0.1
       union: 0.5.0
       url-join: 4.0.1
@@ -39574,7 +39602,7 @@ snapshots:
       '@leancloud/platform-adapters-node': 1.6.0(bufferutil@4.0.8)
       '@leancloud/platform-adapters-weapp': 1.6.3
       base64-arraybuffer: 0.1.5
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       eventemitter3: 3.1.2
       javascript-state-machine: 2.4.0
       lodash: 4.17.21
@@ -39588,7 +39616,7 @@ snapshots:
 
   leancloud-storage@3.15.0(bufferutil@4.0.8):
     dependencies:
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       es6-promise: 4.2.3
       eventemitter3: 2.0.3
       leancloud-realtime: 5.0.0-rc.8(bufferutil@4.0.8)
@@ -41458,7 +41486,7 @@ snapshots:
       '@cypress/request-promise': 5.0.0(@cypress/request@3.0.7)(request@2.88.2)
       array.prototype.findindex: 2.2.4
       bl: 1.2.3
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       eventemitter3: 3.1.2
       file-type: 3.9.0
       mime: 1.6.0
@@ -42417,14 +42445,6 @@ snapshots:
     dependencies:
       async: 0.9.0
       mkdirp: 0.5.6
-
-  portfinder@1.0.32:
-    dependencies:
-      async: 2.6.4
-      debug: 3.2.7(supports-color@5.5.0)
-      mkdirp: 0.5.6
-    transitivePeerDependencies:
-      - supports-color
 
   portfinder@1.0.32(supports-color@6.1.0):
     dependencies:
@@ -47161,7 +47181,7 @@ snapshots:
     dependencies:
       component-emitter: 1.3.1
       cookiejar: 2.1.4
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       extend: 3.0.2
       form-data: 2.5.2
       formidable: 1.2.6
@@ -50141,7 +50161,7 @@ snapshots:
   write-file-webpack-plugin@4.5.1:
     dependencies:
       chalk: 2.4.2
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       filesize: 3.6.1
       lodash: 4.17.21
       mkdirp: 0.5.6
