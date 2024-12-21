@@ -13,3 +13,9 @@
 [submodule "packages/remark-excalidraw"]
 	path = packages/remark-excalidraw
 	url = git@github.com:fwx5618177/remark-excalidraw.git
+[submodule "packages/remark-codesandbox-sandpack"]
+	path = packages/remark-codesandbox-sandpack
+	url = git@github.com:fwx5618177/remark-codesandbox-sandpack.git
+[submodule "packages/remark"]
+	path = packages/remark
+	url = git@github.com:fwx5618177/remark.git

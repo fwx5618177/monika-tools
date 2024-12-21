@@ -1,0 +1,30 @@
+{
+    "extensions": [
+        "ts"
+    ],
+    "require": [
+        "@babel/register",
+        "regenerator-runtime/runtime"
+    ],
+    "spec": [
+        "tests/**/*.spec.ts"
+    ],
+    "watch-files": [
+        "src/**/*.ts",
+        "tests/**/*.ts"
+    ],
+    "watch-ignore": [
+        "node_modules"
+    ],
+    "node-options": [
+        "--require ts-node/register"
+    ],
+    "exit": true,
+    "recursive": true,
+    "reporter": "spec",
+    "timeout": "60000",
+    "colors": true,
+    "bail": true,
+    "slow": 75,
+    "full-trace": true
+}

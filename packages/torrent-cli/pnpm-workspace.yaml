@@ -1,0 +1,5 @@
+name: 'torrent-cli'
+packages:
+    - 'packages/*'
+    - '!**/test/**'
+    - 'benchmark/*'
