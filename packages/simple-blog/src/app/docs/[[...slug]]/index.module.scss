@@ -1,0 +1,102 @@
+.articles {
+    line-height: 3rem;
+
+    header {
+        margin: 1.6rem 0;
+    }
+
+    // h1::before,
+    // h2::before,
+    // h3::before,
+    // h4::before,
+    // h5::before,
+    // h6::before {
+    //     content: '-';
+    //     left: 0;
+    //     top: 0;
+    // }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-top: .8rem;
+        font-weight: 800;
+    }
+
+    h2 {
+        font-size: 1.6em;
+        margin: .5rem 0;
+        font-weight: 600;
+    }
+
+    li {
+        position: relative;
+        padding-left: 1.6rem;
+
+        &::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #999;
+            border-radius: 50%;
+            top: calc(50% - 5px);
+            left: 0;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, .3);
+
+        }
+    }
+
+
+    // pre {
+    //     position: relative;
+    //     background-color: #000;
+    //     margin: 1.2rem 0;
+    //     padding: 2rem;
+    //     color: #fff;
+    //     border-radius: 6px;
+    //     // border: .1rem solid #03A9F4;
+
+
+    //     code {}
+
+    //     &::before {
+    //         content: '';
+    //         position: absolute;
+
+    //         top: 5px;
+    //         left: 5px;
+    //         width: 10px;
+    //         height: 10px;
+    //         border-radius: 50%;
+    //         background-color: #03A9F4;
+    //         border: 1.2px solid #fff;
+    //     }
+
+    //     &::after {
+    //         content: 'Code';
+    //         position: absolute;
+    //         top: 0;
+    //         right: 0;
+    //         padding: .2rem 1.4rem;
+    //         background-color: #03A9F4;
+    //         border-radius: 0 0 0 6px;
+    //         cursor: pointer;
+    //     }
+    // }
+}
+
+.highlight {
+    margin: 0 2px 0 2px;
+    padding: 5px 10px;
+    background-color: #444;
+    border-radius: 6px;
+
+    color: #ff0077;
+    text-align: center;
+    text-transform: lowercase;
+    cursor: pointer;
+
+    &::selection {
+        user-select: none;
+    }
+}
