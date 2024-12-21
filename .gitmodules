@@ -1,0 +1,6 @@
+[submodule "packages/prettier-plugin-tact"]
+	path = packages/prettier-plugin-tact
+	url = git@github.com:fwx5618177/prettier-plugin-tact.git
+[submodule "packages/babylonjs-diamond-sphere"]
+	path = packages/babylonjs-diamond-sphere
+	url = git@github.com:RolandCsibrei/babylonjs-diamond-sphere.git
