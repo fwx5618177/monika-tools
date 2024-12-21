@@ -1,0 +1,37 @@
+.heading {
+    position: relative;
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: bold;
+    line-height: 1.2;
+    word-spacing: normal;
+    word-break: break-all;
+    word-wrap: break-word;
+    text-transform: capitalize;
+
+    &:hover {
+        color: #56B6C2;
+
+        .anchor {
+            visibility: visible;
+        }
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px; // 分割线高度
+        background-color: #e5e7eb; // 分割线颜色
+        bottom: -8px; // 调整分割线位置
+        left: 0;
+    }
+
+    .anchor {
+        position: relative;
+        margin-left: 1.2em;
+        text-decoration: none;
+        visibility: hidden;
+        color: inherit;
+    }
+}

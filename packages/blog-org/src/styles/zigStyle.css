@@ -1,0 +1,66 @@
+.hljs-keyword {
+    color: #8a3ab9;
+}
+
+.hljs-punctuation {
+    color: #d23669;
+}
+
+.hljs-optional {
+    color: #ac6d1f;
+}
+
+.hljs-errorhandling {
+    color: #e57373;
+}
+
+.hljs-macro {
+    color: #61afef;
+    font-weight: bold;
+}
+
+.hljs-function {
+    color: #4c8eda;
+}
+
+.hljs-function-call {
+    color: #a31515;
+}
+
+.hljs-params {
+    color: #b22d2d;
+}
+
+.hljs-operator {
+    color: #ca8142;
+}
+
+.hljs-number {
+    color: #db3dff;
+}
+
+.hljs-string {
+    color: #db4c3f;
+}
+
+.hljs-comment {
+    color: #6b717d;
+}
+
+.hljs-comment-todo {
+    color: #ca8142;
+    font-weight: bold;
+}
+
+.hljs-meta-event {
+    color: #e667af;
+    font-weight: bold;
+}
+
+.hljs-literal {
+    color: #e57373;
+}
+
+.hljs-multiline {
+    color: #e67e22;
+}

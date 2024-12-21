@@ -1,0 +1,24 @@
+.circle-hover {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: #369188;
+    border-radius: 50%;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &::after {
+        content: '';
+        display: inline-block;
+        margin-top: 45%;
+        margin-left: 43%;
+        transition: all .5s ease-in-out;
+    }
+
+    &:hover::after {
+        width: 10px;
+        height: 10px;
+        background-color: #000;
+        border-radius: 50%;
+    }
+}

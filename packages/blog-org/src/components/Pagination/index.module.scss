@@ -1,0 +1,53 @@
+$pagination-button-bg: #f0f0f0;
+$pagination-button-hover-bg: #ff6d0b;
+$pagination-button-active-bg: #17a2b8;
+$pagination-button-disabled-opacity: 0.5;
+$button-padding: 5px 10px;
+$button-margin: 0 5px;
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+        padding: $button-padding;
+        margin: $button-margin;
+        border: none;
+        background-color: $pagination-button-bg;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        border-radius: 12px;
+
+        &:hover {
+            background-color: $pagination-button-hover-bg;
+        }
+
+        &.active {
+            background-color: $pagination-button-active-bg;
+            border-radius: 12px;
+            color: white;
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: $pagination-button-disabled-opacity;
+        }
+    }
+
+    span {
+        padding: $button-padding;
+        margin: $button-margin;
+    }
+
+    input {
+        padding: 5px;
+        margin: $button-margin;
+        width: 50px;
+    }
+
+    select {
+        padding: 5px;
+        margin: $button-margin;
+    }
+}

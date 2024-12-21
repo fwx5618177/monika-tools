@@ -1,0 +1,59 @@
+.edit-tag {
+    cursor: pointer;
+
+    &:hover {
+        background-color: #108ee9 !important;
+        color: #fff !important;
+    }
+}
+
+.tag-input {
+    width: 93px !important;
+    height: 100% !important;
+
+    font-size: 12px !important;
+
+    border: 1px solid #d9d9d9 !important;
+    background-color: #87d068 !important;
+    /* 与Tag颜色一致 */
+    color: #fff !important;
+    /* 根据需要调整 */
+    border-radius: 6px !important;
+    /* 根据Tag的圆角调整 */
+    margin-right: 8px !important;
+    /* 与Tag间隔一致 */
+    box-shadow: none;
+    /* 移除阴影 */
+    padding: 4px 8px !important;
+    /* 调整内边距以匹配Tag的外观 */
+}
+
+.tag-input-add {
+    width: 93px;
+    color: #fff;
+    border: 1px solid #d9d9d9 !important;
+    box-shadow: none !important;
+
+    &:hover {
+        background-color: #40a9ff !important;
+    }
+
+    &::placeholder {
+        color: #fff !important;
+        font-size: 12px;
+    }
+
+    &:focus {
+        background-color: #87d068 !important;
+    }
+}
+
+.site-tag-plus {
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        color: #fff !important;
+        background-color: #40a9ff !important;
+    }
+}

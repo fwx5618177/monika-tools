@@ -1,0 +1,40 @@
+.dropdownContainer {
+    position: relative;
+    user-select: none;
+
+    .dropdownList {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 140px;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        max-height: 200px;
+        overflow: auto;
+        animation: slideDown 0.3s ease forwards;
+        transform-origin: top;
+        z-index: 999;
+    }
+
+    .dropdownItem {
+        padding: 10px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}

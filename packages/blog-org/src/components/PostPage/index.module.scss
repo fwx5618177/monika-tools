@@ -1,0 +1,110 @@
+$common-word-color: #00c4b6;
+$word-select-color: #f7f7f7;
+
+.post-page-container {
+    // width: 100%;
+    margin: 20px 30px;
+
+    .post-page-article {
+        color: #4c4948;
+        font-size: 14px;
+        line-height: 2;
+        word-spacing: 12px;
+
+        .post-page-article-header {
+            box-sizing: border-box;
+            position: relative;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 3px solid $common-word-color;
+            border-style: dashed;
+
+            &>h1 {
+                margin-bottom: 5px;
+                font-size: 2.1rem;
+                font-weight: 600;
+                line-height: 1.4;
+                transition: color .6s ease-in-out;
+                cursor: pointer;
+
+                &:hover {
+                    color: $common-word-color;
+                }
+            }
+
+            &>span {
+                margin: 2px 5px 5px 0px;
+                padding: 5px 8px;
+
+                color: $common-word-color;
+                border: 1px solid $common-word-color;
+                border-radius: 12px;
+
+                font-size: .9rem;
+                font-weight: 600;
+                font-family: 'Roboto', sans-serif;
+
+                transition: color .6s ease-in-out, background-color .6s ease-in-out;
+                cursor: pointer;
+
+                &:hover {
+                    color: $word-select-color;
+                    background-color: $common-word-color;
+                }
+            }
+
+            .post-page-article-header-time {
+                position: absolute;
+                bottom: 16px;
+                right: 5px;
+
+                font-weight: 700;
+                font-size: .8rem;
+
+                line-height: 1.5;
+                word-spacing: normal;
+
+                color: #99a9bf;
+
+                cursor: pointer;
+
+                &:hover {
+                    color: $common-word-color;
+                }
+            }
+        }
+
+        .post-page-article-body {
+            box-sizing: border-box;
+
+            margin: 8px 0;
+            padding: 5px 0;
+            width: 100%;
+
+            .post-page-article-body-excerpt {
+                padding: 12px 15px;
+                border-left: 3px solid $common-word-color;
+                color: #6a737d;
+                background-color: #49b1f51a;
+                word-spacing: normal;
+            }
+        }
+    }
+
+    *::selection {
+        background-color: $common-word-color;
+        color: $word-select-color;
+    }
+
+    .post-page-relative-article {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+
+        border-top: 3px solid $common-word-color;
+        border-style: dashed;
+        margin-top: 16px;
+        padding: 20px 0px;
+    }
+}

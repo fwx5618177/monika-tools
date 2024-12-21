@@ -1,0 +1,36 @@
+.comment-container {
+    margin: 32px 0;
+    width: 100%;
+
+    border-top: 3px solid #00c4b6;
+    border-style: dashed;
+
+    .recommend-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        margin: 32px 0px;
+
+        font-size: 1.5rem;
+        font-weight: 600;
+        transition: color .6s ease-in-out;
+
+        &:hover {
+            color: #00c4b6;
+        }
+
+
+        .recommend-header-icon {
+            color: #444;
+            font-size: 1.5rem;
+        }
+
+    }
+
+
+    .comment-body {
+        width: 100%;
+        padding: 0 10px;
+    }
+}

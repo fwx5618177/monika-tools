@@ -1,0 +1,50 @@
+.step {
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+
+    .content {
+        margin-left: -20px;
+        padding: 5px 30px;
+        width: 100%;
+        min-height: 300px;
+        border-left: 1px solid #000;
+
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+        .title {
+            font-size: 1.4rem;
+            color: #369188;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #54545487;
+        }
+
+        .text {
+            font-size: 1rem;
+            color: #54545487;
+        }
+
+        .seqTitle {
+            position: relative;
+            font-size: 1.4rem;
+            font-weight: 600;
+
+            display: flex;
+            align-items: center;
+
+            .miniCircle {
+                position: absolute;
+                left: -38px;
+                width: 15px;
+                height: 15px;
+                background-color: #000;
+                border-radius: 50%;
+            }
+        }
+    }
+}

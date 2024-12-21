@@ -1,0 +1,9 @@
+.empty-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f3f4f6; // 使用浅灰色背景
+    border: 1px dashed #d1d5db; // 边框设为虚线
+    border-radius: 8px; // 轻微的边框圆角
+    padding: 16px; // 内边距
+}

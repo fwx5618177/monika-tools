@@ -1,0 +1,21 @@
+.synchronizedIDBox {
+    display: flex;
+    align-items: center;
+
+    .synchronized-id {
+        margin-right: 32px;
+
+        padding: 2px 5px;
+        color: #fff;
+        background-color: #108ee9;
+        border-radius: 6px;
+        cursor: pointer;
+
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            color: #fff;
+            background-color: #ff5500;
+        }
+    }
+}

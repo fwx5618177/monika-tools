@@ -1,0 +1,57 @@
+.copyright-container {
+    position: relative;
+    box-sizing: border-box;
+    margin: 40px 0 10px;
+    padding: 10px 16px;
+
+    width: 100%;
+    min-height: 85px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+
+    font-size: 14px;
+    line-height: 2;
+    color: #4c4948;
+    border-radius: 6px;
+
+    transition: box-shadow .3s ease-in-out;
+
+    & *::selection {
+        background-color: #00c4b6;
+        color: #f7f7f7;
+    }
+
+    &:hover {
+        box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6), 0 2px 4px 0 rgba(232, 237, 250, 0.5);
+    }
+
+    &>div {
+        color: #49b1f5;
+    }
+
+    & span {
+        color: #4c4948;
+    }
+
+    & a {
+        color: #99a9bf;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        transition: all .2s;
+
+        text-decoration: underline;
+        cursor: pointer;
+
+        &:hover {
+            color: #49b1f5;
+            text-decoration: none;
+        }
+    }
+
+    .icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 16px;
+    }
+}
