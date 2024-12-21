@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "priority": 1,
+        "action": {
+            "type": "redirect",
+            "redirect": {
+                "url": "https://example.com"
+            }
+        },
+        "condition": {
+            "urlFilter": "example.com/api/*",
+            "resourceTypes": [
+                "xmlhttprequest"
+            ]
+        }
+    }
+]
