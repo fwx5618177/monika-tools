@@ -4,3 +4,6 @@
 [submodule "packages/babylonjs-diamond-sphere"]
 	path = packages/babylonjs-diamond-sphere
 	url = git@github.com:RolandCsibrei/babylonjs-diamond-sphere.git
+[submodule "packages/diamond-react"]
+	path = packages/diamond-react
+	url = git@github.com:fwx5618177/babylon-diamond-react.git
