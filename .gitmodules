@@ -19,3 +19,6 @@
 [submodule "packages/remark"]
 	path = packages/remark
 	url = git@github.com:fwx5618177/remark.git
+[submodule "packages/codecrumbs"]
+	path = packages/codecrumbs
+	url = git@github.com:Bogdan-Lyashenko/codecrumbs.git
