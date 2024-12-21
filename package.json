@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "pnpm --filter app dev",
-    "build": "pnpm --filter app build",
-    "test": "pnpm --filter app test",
+    "dev:video-maker": "pnpm --filter video-maker dev",
+    "build:video-maker": "pnpm --filter video-maker build",
+    "test": "pnpm --filter video-maker test",
     "lint": "eslint . --fix --debug",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,scss,md}\""
   },
