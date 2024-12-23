@@ -7,10 +7,14 @@ import Header from "@components/Header/Header";
 
 import styles from "@styles/app.module.scss";
 import { useTranslation } from "react-i18next";
-import { Button } from "@minerva/lib-core";
+import { Button, SearchButton } from "@minerva/lib-core";
 
 const App: React.FC = () => {
   const { t } = useTranslation();
+
+  const handleSearchClick = () => {
+    console.log("Search button clicked");
+  };
 
   return (
     <Layout theme="light">
@@ -61,7 +65,7 @@ const App: React.FC = () => {
                   <Button size="small" variant="back">
                     Button
                   </Button>
-                  <Button size="small" variant="disabled">
+                  <Button size="small" disabled>
                     Button
                   </Button>
                 </div>
@@ -81,7 +85,7 @@ const App: React.FC = () => {
                   <Button size="medium" variant="back">
                     Button
                   </Button>
-                  <Button size="medium" variant="disabled">
+                  <Button size="medium" disabled>
                     Button
                   </Button>
                 </div>
@@ -101,7 +105,7 @@ const App: React.FC = () => {
                   <Button size="large" variant="back">
                     Button
                   </Button>
-                  <Button size="large" variant="disabled">
+                  <Button size="large" disabled>
                     Button
                   </Button>
                 </div>
@@ -121,9 +125,122 @@ const App: React.FC = () => {
                   <Button size="xlarge" variant="back">
                     Button
                   </Button>
-                  <Button size="xlarge" variant="disabled">
+                  <Button size="xlarge" disabled>
                     Button
                   </Button>
+                </div>
+
+                <h3>Border Radius</h3>
+                <div className={styles.buttonGroup}>
+                  <Button borderRadius="none">Button</Button>
+                  <Button borderRadius="small">Button</Button>
+                  <Button borderRadius="medium">Button</Button>
+                  <Button borderRadius="large">Button</Button>
+                  <Button borderRadius="circle">Button</Button>
+                  <Button borderRadius="square">Button</Button>
+                </div>
+              </div>
+
+              <h3>SearchButton</h3>
+              <p>
+                A button component with a search icon, used for search
+                functionality.
+              </p>
+              <div className={styles.buttonExamples}>
+                <h3>Search Text</h3>
+                <div className={styles.buttonGroup}>
+                  <SearchButton onClick={handleSearchClick}>
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} variant="error">
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} variant="warning">
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} variant="success">
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} variant="info">
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} shape="square">
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} shape="rounded">
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} animation="expand">
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} animation="shrink">
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} disabled>
+                    Search
+                  </SearchButton>
+                </div>
+                <h3>Search variant</h3>
+                <div className={styles.buttonGroup}>
+                  <SearchButton onClick={handleSearchClick} />
+                  <SearchButton onClick={handleSearchClick} variant="error" />
+                  <SearchButton onClick={handleSearchClick} variant="warning" />
+                  <SearchButton onClick={handleSearchClick} variant="success" />
+                  <SearchButton onClick={handleSearchClick} variant="info" />
+                </div>
+                <h3>Search Shape</h3>
+                <div className={styles.buttonGroup}>
+                  <SearchButton onClick={handleSearchClick} shape="square" />
+                  <SearchButton onClick={handleSearchClick} shape="rounded" />
+                  <SearchButton onClick={handleSearchClick} shape="circle" />
+                </div>
+                <h3>Search Animation</h3>
+                <div className={styles.buttonGroup}>
+                  <SearchButton onClick={handleSearchClick} />
+                  <SearchButton onClick={handleSearchClick} animation="none" />
+                  <SearchButton
+                    onClick={handleSearchClick}
+                    animation="expand"
+                  />
+                  <SearchButton
+                    onClick={handleSearchClick}
+                    animation="shrink"
+                  />
+                  <SearchButton onClick={handleSearchClick} animation="shake" />
+                </div>
+                <h3>Search Size</h3>
+                <div className={styles.buttonGroup}>
+                  <SearchButton onClick={handleSearchClick} size="small" />
+                  <SearchButton onClick={handleSearchClick} size="medium" />
+                  <SearchButton onClick={handleSearchClick} size="large" />
+                  <SearchButton onClick={handleSearchClick} size="xlarge" />
+                  <SearchButton onClick={handleSearchClick} />
+                </div>
+                <h3>Search Icon Color</h3>
+                <div className={styles.buttonGroup}>
+                  <SearchButton
+                    onClick={handleSearchClick}
+                    iconColor="#000000"
+                  />
+                  <SearchButton
+                    onClick={handleSearchClick}
+                    iconColor="#ff0000"
+                  />
+                  <SearchButton
+                    onClick={handleSearchClick}
+                    iconColor="#00ff00"
+                  />
+                  <SearchButton
+                    onClick={handleSearchClick}
+                    iconColor="#0000ff"
+                  />
+                </div>
+                <h3>Search Background Color</h3>
+                <div className={styles.buttonGroup}>
+                  <SearchButton onClick={handleSearchClick} bgColor="#000000" />
+                  <SearchButton onClick={handleSearchClick} bgColor="#ff0000" />
+                  <SearchButton onClick={handleSearchClick} bgColor="#00ff00" />
+                  <SearchButton onClick={handleSearchClick} bgColor="#0000ff" />
                 </div>
               </div>
             </div>
