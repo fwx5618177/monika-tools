@@ -1,5 +1,5 @@
 import React from "react";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaCheck } from "react-icons/fa";
 import styles from "./searchButton.module.scss";
 import { SearchButtonProps } from "./types";
 
@@ -13,8 +13,10 @@ import { SearchButtonProps } from "./types";
  * @param variant - The style of the button (primary, warning, error, success, info)
  * @param animation - The animation of the button (none, expand, shrink，shake)
  * @param size - The size of the button (small, medium, large)
+ * @param color - The color of text
  * @param iconColor - The color of the icon
  * @param bgColor - The background color of the button
+ * @param loading - Whether the button is in loading state
  * @param children - The content of the button
  * @returns A search button component
  */
@@ -27,8 +29,10 @@ const SearchButton: React.FC<SearchButtonProps> = ({
   variant = "primary", // 默认值为 primary
   animation = "none", // 默认值为 none
   size = "medium", // 默认值为 medium
+  color, // 添加 color 属性
   iconColor = "#ffffff", // 默认值为白色
   bgColor, // 添加 bgColor 属性
+  loading = false, // 添加 loading 属性
   children, // 添加 children 属性
 }) => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,18 +46,26 @@ const SearchButton: React.FC<SearchButtonProps> = ({
 
   return (
     <button
-      className={`${styles.searchButton} ${styles[adjustedShape]} ${styles[variant]} ${styles[size]} ${animation !== "none" ? styles[animation] : ""} ${className}`}
+      className={`${styles.searchButton} ${styles[adjustedShape]} ${styles[variant]} ${styles[size]} ${animation !== "none" ? styles[animation] : ""} ${loading ? styles.loading : ""} ${className}`}
       onClick={handleClick}
       aria-label={ariaLabel}
       role="button"
       tabIndex={0}
       disabled={disabled}
-      style={{ backgroundColor: bgColor }}
+      style={{
+        backgroundColor: bgColor,
+        color: color,
+        fill: iconColor,
+      }}
     >
-      <FaSearch className={styles.icon} color={iconColor} />
+      {loading ? (
+        <div className={styles.loader}></div>
+      ) : (
+        <FaSearch className={styles.icon} color={iconColor} />
+      )}
       {children && <span className={styles.children}>{children}</span>}
     </button>
   );
 };
 
-export default SearchButton;
+export default React.memo(SearchButton);

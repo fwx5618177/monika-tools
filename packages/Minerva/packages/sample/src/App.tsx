@@ -180,6 +180,33 @@ const App: React.FC = () => {
                     Search
                   </SearchButton>
                 </div>
+                <h3>Search Text Size</h3>
+                <div className={styles.buttonGroup}>
+                  <SearchButton onClick={handleSearchClick} size="small">
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} size="medium">
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} size="large">
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} size="xlarge">
+                    Search
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick}>
+                    Search
+                  </SearchButton>
+                </div>
+                <h3>Search Text Color</h3>
+                <div className={styles.buttonGroup}>
+                  <SearchButton onClick={handleSearchClick} color="#fff">
+                    Text
+                  </SearchButton>
+                  <SearchButton onClick={handleSearchClick} color="#000">
+                    Test case
+                  </SearchButton>
+                </div>
                 <h3>Search variant</h3>
                 <div className={styles.buttonGroup}>
                   <SearchButton onClick={handleSearchClick} />
@@ -187,6 +214,11 @@ const App: React.FC = () => {
                   <SearchButton onClick={handleSearchClick} variant="warning" />
                   <SearchButton onClick={handleSearchClick} variant="success" />
                   <SearchButton onClick={handleSearchClick} variant="info" />
+                  <SearchButton
+                    onClick={handleSearchClick}
+                    disabled
+                    iconColor="#fff"
+                  />
                 </div>
                 <h3>Search Shape</h3>
                 <div className={styles.buttonGroup}>
@@ -241,6 +273,41 @@ const App: React.FC = () => {
                   <SearchButton onClick={handleSearchClick} bgColor="#ff0000" />
                   <SearchButton onClick={handleSearchClick} bgColor="#00ff00" />
                   <SearchButton onClick={handleSearchClick} bgColor="#0000ff" />
+                </div>
+                <h3>Search Loading</h3>
+                <div className={styles.buttonGroup}>
+                  <SearchButton onClick={handleSearchClick} loading />
+                  <SearchButton
+                    onClick={handleSearchClick}
+                    loading
+                    variant="error"
+                  />
+                  <SearchButton
+                    onClick={handleSearchClick}
+                    loading
+                    variant="warning"
+                  />
+                  <SearchButton
+                    onClick={handleSearchClick}
+                    loading
+                    variant="success"
+                  />
+                  <SearchButton
+                    onClick={handleSearchClick}
+                    loading
+                    variant="info"
+                  />
+                  <SearchButton
+                    onClick={handleSearchClick}
+                    loading
+                    disabled
+                    iconColor="#000"
+                  />
+
+                  <SearchButton onClick={handleSearchClick} />
+                  <SearchButton onClick={handleSearchClick} variant="error" />
+                  <SearchButton onClick={handleSearchClick} variant="warning" />
+                  <SearchButton onClick={handleSearchClick} variant="success" />
                 </div>
               </div>
             </div>
