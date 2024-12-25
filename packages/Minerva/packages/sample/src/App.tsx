@@ -7,7 +7,7 @@ import Header from "@components/Header/Header";
 
 import styles from "@styles/app.module.scss";
 import { useTranslation } from "react-i18next";
-import { Button, SearchButton } from "@minerva/lib-core";
+import { Button, SearchButton, StatusIndicator } from "@minerva/lib-core";
 
 const App: React.FC = () => {
   const { t } = useTranslation();
@@ -308,6 +308,41 @@ const App: React.FC = () => {
                   <SearchButton onClick={handleSearchClick} variant="error" />
                   <SearchButton onClick={handleSearchClick} variant="warning" />
                   <SearchButton onClick={handleSearchClick} variant="success" />
+                </div>
+              </div>
+
+              <div className={styles.buttonExamples}>
+                <h3>Status Button</h3>
+                <div className={styles.buttonGroup}>
+                  <StatusIndicator status="success">Success</StatusIndicator>
+                  <StatusIndicator status="error">Error</StatusIndicator>
+                  <StatusIndicator status="warning">Warning</StatusIndicator>
+                  <StatusIndicator status="info">Info</StatusIndicator>
+
+                  <StatusIndicator status="success" shape="square">
+                    Success
+                  </StatusIndicator>
+                  <StatusIndicator status="error" shape="square">
+                    Error
+                  </StatusIndicator>
+                  <StatusIndicator status="warning" shape="square">
+                    Warning
+                  </StatusIndicator>
+                  <StatusIndicator status="info" shape="square">
+                    Info
+                  </StatusIndicator>
+                  <StatusIndicator status="success" shape="rounded">
+                    Success
+                  </StatusIndicator>
+                  <StatusIndicator status="error" shape="rounded">
+                    Error
+                  </StatusIndicator>
+                  <StatusIndicator status="warning" shape="rounded">
+                    Warning
+                  </StatusIndicator>
+                  <StatusIndicator status="info" shape="rounded">
+                    Info
+                  </StatusIndicator>
                 </div>
               </div>
             </div>
