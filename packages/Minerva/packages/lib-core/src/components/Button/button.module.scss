@@ -152,7 +152,17 @@
   }
 
   &.borderRadiusCircle {
+    font-size: clamp(0.3rem, 2vw, 0.8rem); /* 自适应字体大小 */
     border-radius: 50%;
+    width: clamp(2rem, 10vw, 3rem); /* 固定宽度 */
+    height: clamp(2rem, 10vw, 3rem); /* 固定高度 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* 移除内边距 */
+    overflow: hidden; /* 隐藏溢出内容 */
+    text-overflow: ellipsis; /* 显示省略号 */
+    white-space: nowrap; /* 禁止换行 */
   }
 
   &.borderRadiusSquare {

@@ -122,20 +122,12 @@
     transition: transform 0.5s ease;
   }
 
-  &.clicked.success .icon {
-    animation: successAnimation 1s ease;
+  &.clicked {
+    animation: clickedAnimation 1s ease;
   }
 
-  &.clicked.error .icon {
+  &.clicked.error {
     animation: errorAnimation 1s ease;
-  }
-
-  &.clicked.warning .icon {
-    animation: warningAnimation 1s ease;
-  }
-
-  &.clicked.info .icon {
-    animation: infoAnimation 1s ease;
   }
 
   .stars {
@@ -148,73 +140,37 @@
     transform: translate(-50%, -50%);
   }
 
-  &.clicked.success .stars::before,
-  &.clicked.success .stars::after,
-  &.clicked.error .stars::before,
-  &.clicked.error .stars::after,
-  &.clicked.warning .stars::before,
-  &.clicked.warning .stars::after,
-  &.clicked.info .stars::before,
-  &.clicked.info .stars::after {
+  &.clicked .stars::before,
+  &.clicked .stars::after {
     content: "";
     position: absolute;
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     background: gold;
     border-radius: 50%;
-    animation: starAnimation 2s ease;
+    animation: starAnimation 1.5s ease;
   }
 
-  &.clicked.success .stars::before {
-    left: -15px;
-    top: -15px;
+  &.clicked .stars::before {
+    left: -20px;
+    top: -20px;
   }
 
-  &.clicked.success .stars::after {
-    left: 15px;
-    top: -15px;
-  }
-
-  &.clicked.error .stars::before {
-    left: -15px;
-    top: -15px;
-  }
-
-  &.clicked.error .stars::after {
-    left: 15px;
-    top: -15px;
-  }
-
-  &.clicked.warning .stars::before {
-    left: -15px;
-    top: -15px;
-  }
-
-  &.clicked.warning .stars::after {
-    left: 15px;
-    top: -15px;
-  }
-
-  &.clicked.info .stars::before {
-    left: -15px;
-    top: -15px;
-  }
-
-  &.clicked.info .stars::after {
-    left: 15px;
-    top: -15px;
+  &.clicked .stars::after {
+    left: 20px;
+    top: -20px;
   }
 }
 
-@keyframes successAnimation {
+@keyframes clickedAnimation {
   0% {
-    transform: translateY(0) rotate(0);
+    transform: scale(1) translateY(0);
   }
   50% {
-    transform: translateY(-10px) rotate(10deg);
+    transform: scale(1.2) translateY(-10px);
   }
   100% {
-    transform: translateY(0) rotate(0);
+    transform: scale(1) translateY(0);
   }
 }
 
@@ -233,30 +189,6 @@
   }
   100% {
     transform: translateX(0);
-  }
-}
-
-@keyframes warningAnimation {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes infoAnimation {
-  0% {
-    transform: rotate(0);
-  }
-  50% {
-    transform: rotate(360deg);
-  }
-  100% {
-    transform: rotate(0);
   }
 }
 

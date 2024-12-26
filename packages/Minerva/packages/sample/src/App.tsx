@@ -7,7 +7,13 @@ import Header from "@components/Header/Header";
 
 import styles from "@styles/app.module.scss";
 import { useTranslation } from "react-i18next";
-import { Button, SearchButton, StatusIndicator } from "@minerva/lib-core";
+import {
+  Button,
+  SearchButton,
+  StatusIndicator,
+  Dropdown,
+  DropdownOption,
+} from "@minerva/lib-core";
 
 const App: React.FC = () => {
   const { t } = useTranslation();
@@ -314,36 +320,174 @@ const App: React.FC = () => {
               <div className={styles.buttonExamples}>
                 <h3>Status Button</h3>
                 <div className={styles.buttonGroup}>
-                  <StatusIndicator status="success">Success</StatusIndicator>
-                  <StatusIndicator status="error">Error</StatusIndicator>
-                  <StatusIndicator status="warning">Warning</StatusIndicator>
-                  <StatusIndicator status="info">Info</StatusIndicator>
+                  <StatusIndicator status="success" />
+                  <StatusIndicator status="error" />
+                  <StatusIndicator status="warning" />
+                  <StatusIndicator status="info" />
 
-                  <StatusIndicator status="success" shape="square">
-                    Success
-                  </StatusIndicator>
-                  <StatusIndicator status="error" shape="square">
-                    Error
-                  </StatusIndicator>
-                  <StatusIndicator status="warning" shape="square">
-                    Warning
-                  </StatusIndicator>
-                  <StatusIndicator status="info" shape="square">
-                    Info
-                  </StatusIndicator>
-                  <StatusIndicator status="success" shape="rounded">
-                    Success
-                  </StatusIndicator>
-                  <StatusIndicator status="error" shape="rounded">
-                    Error
-                  </StatusIndicator>
-                  <StatusIndicator status="warning" shape="rounded">
-                    Warning
-                  </StatusIndicator>
-                  <StatusIndicator status="info" shape="rounded">
-                    Info
-                  </StatusIndicator>
+                  <StatusIndicator status="success" shape="square" />
+                  <StatusIndicator status="error" shape="square" />
+                  <StatusIndicator status="warning" shape="square" />
+                  <StatusIndicator status="info" shape="square" />
+                  <StatusIndicator status="success" shape="rounded" />
+                  <StatusIndicator status="error" shape="rounded" />
+                  <StatusIndicator status="warning" shape="rounded" />
+                  <StatusIndicator status="info" shape="rounded" />
                 </div>
+              </div>
+            </div>
+            <div className={styles.buttonExamples}>
+              <h3>Dropdown direction</h3>
+              <div className={styles.buttonGroup}>
+                <Dropdown
+                  items={
+                    [
+                      { label: "Option 1", value: "option1" },
+                      { label: "Option 2", value: "option2" },
+                      { label: "Option 3", value: "option3" },
+                      { label: "Option 4", value: "option4" },
+                      { label: "Option 5", value: "option5" },
+                      { label: "Option 5", value: "option5" },
+                      { label: "Option 5", value: "option5" },
+                      { label: "Option 5", value: "option5" },
+                      { label: "Option 5", value: "option5" },
+                      { label: "Option 5", value: "option5" },
+                    ] as DropdownOption[]
+                  }
+                  onSelect={(item) => console.log("Selected:", item)}
+                  direction="down"
+                />
+                <Dropdown
+                  items={[
+                    { label: "Option 1", value: "option1" },
+                    { label: "Option 2", value: "option2" },
+                    { label: "Option 3", value: "option3" },
+                    { label: "Option 4", value: "option4" },
+                    { label: "Option 5", value: "option5" },
+                  ]}
+                  onSelect={(item) => console.log("Selected:", item)}
+                  direction="up"
+                />
+                <Dropdown
+                  items={[
+                    { label: "Option 1", value: "option1" },
+                    { label: "Option 2", value: "option2" },
+                    { label: "Option 3", value: "option3" },
+                    { label: "Option 4", value: "option4" },
+                    { label: "Option 5", value: "option5" },
+                  ]}
+                  onSelect={(item) => console.log("Selected:", item)}
+                  direction="left"
+                />
+                <Dropdown
+                  items={[
+                    { label: "Option 1", value: "option1" },
+                    { label: "Option 2", value: "option2" },
+                    { label: "Option 3", value: "option3" },
+                    { label: "Option 4", value: "option4" },
+                    { label: "Option 5", value: "option5" },
+                  ]}
+                  onSelect={(item) => console.log("Selected:", item)}
+                  direction="right"
+                />
+              </div>
+
+              <h3>Dropdown Menu Background Color</h3>
+              <div className={styles.buttonGroup}>
+                <Dropdown
+                  items={[
+                    { label: "Option 1", value: "option1" },
+                    { label: "Option 2", value: "option2" },
+                    { label: "Option 3", value: "option3" },
+                    { label: "Option 4", value: "option4" },
+                    { label: "Option 5", value: "option5" },
+                    { label: "Option 5", value: "option5" },
+                    { label: "Option 5", value: "option5" },
+                    { label: "Option 5", value: "option5" },
+                    { label: "Option 5", value: "option5" },
+                    { label: "Option 5", value: "option5" },
+                    { label: "Option 5", value: "option5" },
+                    { label: "Option 5", value: "option5" },
+                  ]}
+                  onSelect={(item) => console.log("Selected:", item)}
+                  menuBgColor="#000000"
+                  menuTextColor="#ffffff"
+                />
+                <Dropdown
+                  items={[
+                    { label: "Option 1", value: "option1" },
+                    { label: "Option 2", value: "option2" },
+                    { label: "Option 3", value: "option3" },
+                    { label: "Option 4", value: "option4" },
+                    { label: "Option 5", value: "option5" },
+                  ]}
+                  onSelect={(item) => console.log("Selected:", item)}
+                  menuBgColor="#ff0000"
+                  menuTextColor="#ffffff"
+                />
+              </div>
+
+              <h3>Dropdown Children, Disabled</h3>
+              <div className={styles.buttonGroup}>
+                <Dropdown
+                  items={[
+                    { label: "Option 1", value: "option1" },
+                    { label: "Option 2", value: "option2" },
+                    { label: "Option 3", value: "option3" },
+                    { label: "Option 4", value: "option4" },
+                    { label: "Option 5", value: "option5" },
+                  ]}
+                  onSelect={(item) => console.log("Selected:", item)}
+                >
+                  <span>Dropdown</span>
+                </Dropdown>
+
+                <Dropdown
+                  items={[
+                    { label: "Option 1", value: "option1" },
+                    { label: "Option 2", value: "option2" },
+                    { label: "Option 3", value: "option3" },
+                    { label: "Option 4", value: "option4" },
+                    { label: "Option 5", value: "option5" },
+                  ]}
+                  onSelect={(item) => console.log("Selected:", item)}
+                >
+                  <SearchButton />
+                </Dropdown>
+
+                <Dropdown
+                  items={[
+                    { label: "Option 1", value: "option1" },
+                    { label: "Option 2", value: "option2" },
+                    { label: "Option 3", value: "option3" },
+                    { label: "Option 4", value: "option4" },
+                    { label: "Option 5", value: "option5" },
+                  ]}
+                  onSelect={(item) => console.log("Selected:", item)}
+                >
+                  <Button borderRadius="circle">Menu</Button>
+                </Dropdown>
+
+                <Dropdown
+                  items={[
+                    { label: "Option 1", value: "option1" },
+                    {
+                      label: "Option 2",
+                      value: "option2",
+                      disabled: true,
+                    },
+                    { label: "Option 3", value: "option3" },
+                    { label: "Option 4", value: "option4" },
+                    { label: "Option 5", value: "option5" },
+                  ]}
+                  menuBgColor="#ff0000"
+                  menuTextColor="#ffffff"
+                  onSelect={(item) => console.log("Selected:", item)}
+                >
+                  <Button variant="warning" borderRadius="circle">
+                    Menu
+                  </Button>
+                </Dropdown>
               </div>
             </div>
             <div className={styles.componentCard}>
