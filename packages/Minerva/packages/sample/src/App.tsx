@@ -531,6 +531,21 @@ const App: React.FC = () => {
                 </Badge>
               </div>
             </div>
+
+            <div className={styles.buttonExamples}>
+              <h3>Status Badge</h3>
+              <div className={styles.buttonGroup}>
+                <Badge variant="success">Active</Badge>
+                <Badge
+                  variant="error"
+                  icon={<img src="error-icon.png" alt="Error" />}
+                >
+                  Error
+                </Badge>
+                <Badge variant="warning">Warning</Badge>
+                <Badge variant="info">Info</Badge>
+              </div>
+            </div>
             <div className={styles.componentCard}>
               <img src="/placeholder.svg" alt="Card" />
               <h3>Card</h3>

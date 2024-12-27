@@ -117,6 +117,13 @@
     font-size: 0.85rem; /* 调整大字体大小 */
   }
 
+  .icon {
+    margin-right: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   @media (max-width: 576px) {
     &.small {
       font-size: 0.45rem; /* 调整小字体大小 */

@@ -11,6 +11,7 @@ import styles from "./badge.module.scss";
  * @param ariaLabel - The aria-label attribute for the badge, used for accessibility
  * @param bgColor - Custom background color for the badge
  * @param textColor - Custom text color for the badge
+ * @param icon - The icon to be displayed (can be a TSX SVG component, image URL, or other ReactNode)
  * @returns A badge component
  */
 export const Badge: React.FC<BadgeProps> = ({
@@ -21,6 +22,7 @@ export const Badge: React.FC<BadgeProps> = ({
   ariaLabel,
   bgColor,
   textColor,
+  icon,
 }) => {
   return (
     <span
@@ -33,6 +35,7 @@ export const Badge: React.FC<BadgeProps> = ({
         color: textColor,
       }}
     >
+      {icon && <span className={styles.icon}>{icon}</span>}
       {children}
     </span>
   );
