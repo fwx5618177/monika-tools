@@ -13,6 +13,7 @@ import {
   StatusIndicator,
   Dropdown,
   DropdownOption,
+  Badge,
 } from "@minerva/lib-core";
 
 const App: React.FC = () => {
@@ -488,6 +489,46 @@ const App: React.FC = () => {
                     Menu
                   </Button>
                 </Dropdown>
+              </div>
+            </div>
+
+            <div className={styles.buttonExamples}>
+              <h3>Badge</h3>
+              <div className={styles.buttonGroup}>
+                <Badge>Badge</Badge>
+                <Badge variant="primary">Badge</Badge>
+                <Badge variant="secondary">Badge</Badge>
+                <Badge variant="success">Badge</Badge>
+                <Badge variant="danger">Badge</Badge>
+                <Badge variant="warning">Badge</Badge>
+                <Badge variant="info">Badge</Badge>
+                <Badge variant="light">Badge</Badge>
+                <Badge variant="dark">Badge</Badge>
+              </div>
+              <div className={styles.buttonGroup}>
+                <Badge size="small">Badge</Badge>
+                <Badge size="medium">Badge</Badge>
+                <Badge size="large">Badge</Badge>
+              </div>
+              <div className={styles.buttonGroup}>
+                <Badge bgColor="#ff0000" textColor="#ffffff">
+                  Badge
+                </Badge>
+                <Badge bgColor="#00ff00" textColor="#ffffff">
+                  Badge
+                </Badge>
+                <Badge bgColor="#0000ff" textColor="#ffffff">
+                  Badge
+                </Badge>
+                <Badge bgColor="#ffff00" textColor="#000000">
+                  Badge
+                </Badge>
+                <Badge bgColor="#ff00ff" textColor="#ffffff">
+                  Badge
+                </Badge>
+                <Badge bgColor="#00ffff" textColor="#000000">
+                  Badge
+                </Badge>
               </div>
             </div>
             <div className={styles.componentCard}>
