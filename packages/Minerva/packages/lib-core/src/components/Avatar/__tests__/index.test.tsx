@@ -27,6 +27,23 @@ describe("Avatar", () => {
     const avatar = shallow(<Avatar src="/images/avatar.png" stacked />);
     expect(() => avatar.unmount()).not.toThrow();
   });
+
+  it("should render icon element", () => {
+    const icon = (
+      <svg>
+        <circle cx="10" cy="10" r="10" />
+      </svg>
+    );
+    const iconAvatar = render(<Avatar icon={icon} />);
+    expect(iconAvatar).toMatchSnapshot();
+  });
+
+  it("should apply custom background and text color", () => {
+    const customAvatar = render(
+      <Avatar bgColor="#ff0000" textColor="#00ff00" text="A" />,
+    );
+    expect(customAvatar).toMatchSnapshot();
+  });
 });
 
 describe("AvatarGroup", () => {

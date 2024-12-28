@@ -1,6 +1,6 @@
 export interface AvatarProps {
   src?: string;
-  text?: string;
+  name?: string;
   isSquare?: boolean;
   className?: string;
   stacked?: boolean;
@@ -9,4 +9,5 @@ export interface AvatarProps {
 export interface AvatarGroupProps {
   count?: number;
   className?: string;
+  children?: React.ReactNode;
 }
