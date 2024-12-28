@@ -4,6 +4,7 @@ import {
   CardHeader,
   CardDescription,
   CardTitle,
+  CardFooter,
 } from "./Card";
 import type {
   CardProps,
@@ -11,6 +12,7 @@ import type {
   CardTitleProps,
   CardDescriptionProps,
   CardContentProps,
+  CardFooterProps,
 } from "./types";
 
 export {
@@ -19,11 +21,13 @@ export {
   CardHeader,
   CardDescription,
   CardTitle,
+  CardFooter,
   CardProps,
   CardHeaderProps,
   CardTitleProps,
   CardDescriptionProps,
   CardContentProps,
+  CardFooterProps,
 };
 
 export default Card;

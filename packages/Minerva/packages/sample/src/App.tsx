@@ -16,6 +16,7 @@ import {
   Badge,
 } from "@minerva/lib-core";
 import AvatarSection from "@components/Avatar";
+import CardSection from "@components/CardSection";
 
 const App: React.FC = () => {
   const { t } = useTranslation();
@@ -549,13 +550,14 @@ const App: React.FC = () => {
             </div>
 
             <AvatarSection />
+
             <div className={styles.componentCard}>
-              <img src="/placeholder.svg" alt="Card" />
               <h3>Card</h3>
               <p>
                 A versatile card component with header, content, and footer
                 sections.
               </p>
+              <CardSection />
             </div>
             <div className={styles.componentCard}>
               <img src="/placeholder.svg" alt="Dropdown" />
