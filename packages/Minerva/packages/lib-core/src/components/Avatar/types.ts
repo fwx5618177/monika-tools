@@ -1,7 +1,8 @@
 export interface AvatarProps {
   src?: string;
   name?: string;
-  isSquare?: boolean;
+  shape?: "circle" | "square" | "rounded";
+  size?: "small" | "medium" | "large";
   className?: string;
   stacked?: boolean;
 }

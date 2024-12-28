@@ -15,6 +15,7 @@ import {
   DropdownOption,
   Badge,
 } from "@minerva/lib-core";
+import AvatarSection from "@components/Avatar";
 
 const App: React.FC = () => {
   const { t } = useTranslation();
@@ -537,7 +538,7 @@ const App: React.FC = () => {
               <div className={styles.buttonGroup}>
                 <Badge variant="success">Active</Badge>
                 <Badge
-                  variant="error"
+                  variant="danger"
                   icon={<img src="error-icon.png" alt="Error" />}
                 >
                   Error
@@ -546,6 +547,8 @@ const App: React.FC = () => {
                 <Badge variant="info">Info</Badge>
               </div>
             </div>
+
+            <AvatarSection />
             <div className={styles.componentCard}>
               <img src="/placeholder.svg" alt="Card" />
               <h3>Card</h3>

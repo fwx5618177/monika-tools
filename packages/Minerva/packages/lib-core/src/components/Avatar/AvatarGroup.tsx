@@ -25,7 +25,7 @@ const AvatarGroup: React.FC<React.PropsWithChildren<AvatarGroupProps>> = ({
           {child}
         </div>
       ))}
-      {count && <span className={styles.count}>+{count}</span>}
+      {count && <div className={styles.count}>+{count}</div>}
     </div>
   );
 };

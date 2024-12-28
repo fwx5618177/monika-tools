@@ -4,18 +4,39 @@
   display: inline-block;
   position: relative;
   overflow: hidden;
-  border: var(--border-width) solid var(--border-color);
-  border-radius: 50%;
-  background-color: var(--avatar-bg-color-info);
-  width: 3rem;
-  height: 3rem;
+  border: 1px solid #e1e1e1; /* 替换为原生变量 */
+  background-color: #17a2b8; /* 替换为原生变量 */
   transition:
     background-color 0.3s ease,
-    border-color 0.3s ease;
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.1s ease;
 
-  @media (max-width: map-get($breakpoints, sm)) {
+  &.circle {
+    border-radius: 50%;
+  }
+
+  &.square {
+    border-radius: 0;
+  }
+
+  &.rounded {
+    border-radius: 0.25rem;
+  }
+
+  &.small {
     width: 2rem;
     height: 2rem;
+  }
+
+  &.medium {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  &.large {
+    width: 4rem;
+    height: 4rem;
   }
 
   &:hover {
@@ -31,13 +52,15 @@
     transform: translateY(2px);
   }
 
-  &.avatarSquare {
-    border-radius: 0.25rem;
-  }
-
   &.stacked {
     margin-left: -0.5rem;
-    border: 2px solid #fff;
+    border: 1px solid #fff;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+      z-index: 1;
+    }
   }
 
   .avatarImg {
@@ -53,14 +76,15 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    font-size: calc(var(--font-size-base) * 0.875);
+    font-size: clamp(2rem, 2vw, 2.8rem);
+    color: #ffffff;
     text-align: center;
     transform: translate(-50%, -50%) scale(0.65);
     white-space: nowrap;
     user-select: none;
 
-    @media (max-width: map-get($breakpoints, sm)) {
-      font-size: calc(var(--font-size-base) * 0.875 * map-get($scale-multiplier, xs));
+    @media (max-width: 576px) {
+      font-size: clamp(1.5rem, 1.5vw, 2rem);
     }
   }
 
