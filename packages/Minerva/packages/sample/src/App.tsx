@@ -17,6 +17,7 @@ import {
 } from "@minerva/lib-core";
 import AvatarSection from "@components/Avatar";
 import CardSection from "@components/CardSection";
+import TextFieldSection from "@components/TextFieldSection";
 
 const App: React.FC = () => {
   const { t } = useTranslation();
@@ -559,6 +560,8 @@ const App: React.FC = () => {
               </p>
               <CardSection />
             </div>
+
+            <TextFieldSection />
             <div className={styles.componentCard}>
               <img src="/placeholder.svg" alt="Dropdown" />
               <h3>Dropdown</h3>

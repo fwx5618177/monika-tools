@@ -1,0 +1,149 @@
+.container {
+  margin: 1rem 0;
+}
+
+.containerHideBorder {
+  border: none !important;
+  border-bottom: 1px solid #e1e1e1 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+
+  &:focus,
+  &:hover {
+    border-bottom-color: #ff9800 !important;
+  }
+}
+
+.defaultWidth {
+  width: 300px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.textField {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e1e1e1;
+  border-radius: 0.25rem;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &.focused {
+    border-color: #ff9800;
+    box-shadow: 0 0 0 0.2rem rgba(255, 152, 0, 0.25);
+
+    .label {
+      color: #ff9800;
+    }
+  }
+
+  &.filled {
+    .label {
+      color: #ff9800;
+    }
+  }
+
+  &.minimal {
+    border: none;
+    box-shadow: none;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e1e1e1;
+  }
+
+  &.error {
+    border-color: #dc3545;
+    border-width: 2px;
+
+    .label {
+      color: #dc3545;
+    }
+  }
+}
+
+.label {
+  position: absolute;
+  top: 0.75rem;
+  font-size: 1rem;
+  color: #6c757d;
+  transition: all 0.3s ease;
+  z-index: 1;
+  background: #fff;
+  padding: 0 0.25rem;
+  cursor: text;
+
+  &.shrink {
+    top: -0.5rem;
+    left: 0.75rem;
+    font-size: 0.75rem;
+    color: #ff9800;
+  }
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-radius: inherit;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  border-radius: inherit;
+  margin-left: 0.5rem;
+  background-color: transparent;
+
+  &::placeholder {
+    margin-left: 0.5rem;
+  }
+}
+
+.iconLeft {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0.75rem;
+  color: #6c757d;
+}
+
+.iconRight {
+  position: absolute;
+  right: 0.75rem;
+  color: #6c757d;
+}
+
+.clearIcon {
+  position: absolute;
+  right: 0.75rem;
+  color: #6c757d;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.errorIcon {
+  margin-right: 0.25rem;
+  color: #dc3545;
+}
+
+.errorMessage {
+  display: flex;
+  align-items: center;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.charCount {
+  position: absolute;
+  bottom: -1.5rem;
+  right: 0.75rem;
+  font-size: 0.75rem;
+  color: #6c757d;
+}
