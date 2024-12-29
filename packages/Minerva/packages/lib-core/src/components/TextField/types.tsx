@@ -16,4 +16,5 @@ export interface TextFieldProps {
   clearable?: boolean;
   fullWidth?: boolean;
   width?: string;
+  disabled?: boolean;
 }

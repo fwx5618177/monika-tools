@@ -11,6 +11,7 @@
   &:focus,
   &:hover {
     border-bottom-color: #ff9800 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 152, 0, 0.25);
   }
 }
 
@@ -62,6 +63,22 @@
       color: #dc3545;
     }
   }
+
+  &.shake {
+    animation: shake 0.5s ease-out;
+  }
+
+  &.disabled {
+    background-color: #c0c0c0;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.8;
+    box-shadow: none;
+
+    &:hover {
+      background-color: #a0a0a0;
+    }
+  }
 }
 
 .label {
@@ -100,8 +117,26 @@
   margin-left: 0.5rem;
   background-color: transparent;
 
+  &.hideBorder {
+    border: none;
+    box-shadow: none;
+  }
+
   &::placeholder {
     margin-left: 0.5rem;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #ff9800;
+    outline-offset: 2px;
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:focus-visible {
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    -webkit-text-fill-color: #000;
+    transition: background-color 5000s ease-in-out 0s;
   }
 }
 
@@ -114,9 +149,14 @@
 }
 
 .iconRight {
+  display: flex;
   position: absolute;
   right: 0.75rem;
   color: #6c757d;
+}
+
+.togglePasswordIcon {
+  cursor: pointer;
 }
 
 .clearIcon {
@@ -146,4 +186,21 @@
   right: 0.75rem;
   font-size: 0.75rem;
   color: #6c757d;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-10px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(10px);
+  }
 }

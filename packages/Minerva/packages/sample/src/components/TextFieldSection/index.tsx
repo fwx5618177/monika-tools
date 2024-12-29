@@ -75,6 +75,7 @@ const TextFieldSection: React.FC = () => {
           <h4>Minimal TextField</h4>
           <TextField
             label="Minimal TextField"
+            placeholder="Minimal version"
             value={username}
             onChange={handleUsernameChange}
             minimal
@@ -110,7 +111,6 @@ const TextFieldSection: React.FC = () => {
           <h4>Clearable TextField</h4>
           <TextField
             label="Email"
-            placeholder="Enter your email"
             value={email}
             onChange={handleEmailChange}
             icon={<FaEnvelope />}
@@ -136,13 +136,24 @@ const TextFieldSection: React.FC = () => {
           <h4>Custom Width TextField</h4>
           <TextField
             label="Custom Width"
-            placeholder="Enter text"
             value={username}
             onChange={handleUsernameChange}
             borderRadius="0.5rem"
             width="300px"
           />
           <p>展示自定义宽度的 TextField</p>
+        </div>
+        <div>
+          <h4>Disabled TextField</h4>
+          <TextField
+            label="Disabled"
+            placeholder="Disabled input"
+            value={username}
+            onChange={handleUsernameChange}
+            borderRadius="0.5rem"
+            disabled
+          />
+          <p>展示禁用状态的 TextField</p>
         </div>
       </div>
     </div>
