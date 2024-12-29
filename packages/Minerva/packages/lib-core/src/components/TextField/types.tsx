@@ -1,8 +1,9 @@
 export interface TextFieldProps {
-  label?: string;
+  name: string; // Name is required
+  label: string; // Label is required
+  value: string; // Value is required
+  onChange: (value: string) => void; // onChange is required
   placeholder?: string;
-  value?: string;
-  onChange?: (value: string) => void;
   error?: string;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
@@ -10,11 +11,11 @@ export interface TextFieldProps {
   hideBorder?: boolean;
   minimal?: boolean;
   borderRadius?: string;
-  name?: string;
   type?: string;
   showCharCount?: boolean;
   clearable?: boolean;
   fullWidth?: boolean;
   width?: string;
   disabled?: boolean;
+  ariaLabel?: string;
 }

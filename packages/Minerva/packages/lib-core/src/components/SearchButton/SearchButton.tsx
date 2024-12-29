@@ -1,5 +1,5 @@
 import React from "react";
-import { FaSearch, FaCheck } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import styles from "./searchButton.module.scss";
 import { SearchButtonProps } from "./types";
 

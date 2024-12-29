@@ -27,13 +27,14 @@ import { TextFieldProps } from "./types";
  * @param hideBorder - Whether to hide the border of the text field
  * @param minimal - Whether to use the minimal version of the text field
  * @param borderRadius - The border radius of the text field
- * @param name - The name attribute of the input
+ * @param name - The name attribute of the input (required)
  * @param type - The type attribute of the input
  * @param showCharCount - Whether to show the character count
  * @param clearable - Whether to show the clear icon
  * @param fullWidth - Whether the text field should take the full width of its container
  * @param width - The width of the text field (e.g., "200px", "50%")
  * @param disabled - Whether the text field is disabled
+ * @param ariaLabel - The aria-label attribute for accessibility
  * @returns A text field component
  */
 const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
@@ -57,6 +58,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       fullWidth = false,
       width = "300px",
       disabled = false,
+      ariaLabel,
     },
     ref,
   ) => {
@@ -144,6 +146,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               onBlur={handleBlur}
               tabIndex={0}
               disabled={disabled}
+              aria-label={ariaLabel}
               style={{
                 paddingLeft: icon && iconPosition === "left" ? "2rem" : "",
                 paddingRight:
