@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TextField from "@minerva/lib-core/src/components/TextField/TextField";
-import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
+import { FaUser, FaLock, FaEnvelope, FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from "./index.module.scss";
 
 const TextFieldSection: React.FC = () => {
@@ -46,14 +46,13 @@ const TextFieldSection: React.FC = () => {
           <p>展示带有左侧图标的基本 TextField</p>
         </div>
         <div>
-          <h4>Lable TextField</h4>
+          <h4>Label TextField</h4>
           <TextField
             label="Email"
             value={email}
             onChange={handleEmailChange}
             icon={<FaEnvelope />}
           />
-
           <TextField label="Email" value={email} onChange={handleEmailChange} />
         </div>
         <div>

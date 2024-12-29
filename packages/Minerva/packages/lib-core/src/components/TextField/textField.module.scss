@@ -127,8 +127,8 @@
   }
 
   &:focus-visible {
-    outline: 2px solid #ff9800;
-    outline-offset: 2px;
+    outline: none;
+    outline-offset: 0;
   }
 
   &:-webkit-autofill,
