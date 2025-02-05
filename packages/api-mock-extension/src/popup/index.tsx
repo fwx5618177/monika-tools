@@ -59,49 +59,43 @@ const Popup: React.FC = () => {
       case 'api-mock':
         return (
           <>
-            <header className={styles.header}>
-              <h1>API Mock</h1>
+            <div className={styles.toolbar}>
               <Switch
                 checked={config.enabled}
                 onChange={toggleEnabled}
                 label="启用模拟"
               />
-            </header>
+              <button
+                className={styles.addButton}
+                onClick={() => setIsAddingRule(true)}
+              >
+                添加规则
+              </button>
+            </div>
 
-            <main className={styles.main}>
-              <div className={styles.actions}>
-                <button
-                  className={styles.addButton}
-                  onClick={() => setIsAddingRule(true)}
-                >
-                  添加规则
-                </button>
-              </div>
-
-              {isAddingRule && (
-                <div className={styles.formWrapper}>
-                  <RuleForm
-                    onSubmit={(rule) => {
-                      addRule(rule);
-                      setIsAddingRule(false);
-                    }}
-                    onCancel={() => setIsAddingRule(false)}
-                  />
-                </div>
-              )}
-
-              {config.rules.length > 0 ? (
-                <RuleList
-                  rules={config.rules}
-                  onToggleRule={toggleRule}
-                  onDeleteRule={deleteRule}
+            {isAddingRule && (
+              <div className={styles.formWrapper}>
+                <RuleForm
+                  onSubmit={(rule) => {
+                    addRule(rule);
+                    setIsAddingRule(false);
+                  }}
+                  onCancel={() => setIsAddingRule(false)}
                 />
-              ) : (
-                <div className={styles.empty}>
-                  暂无规则。点击"添加规则"创建新规则。
-                </div>
-              )}
-            </main>
+              </div>
+            )}
+
+            {config.rules.length > 0 ? (
+              <RuleList
+                rules={config.rules}
+                onToggleRule={toggleRule}
+                onDeleteRule={deleteRule}
+              />
+            ) : (
+              <div className={styles.empty}>
+                暂无规则。点击"添加规则"创建新规则。
+              </div>
+            )}
           </>
         );
 
@@ -122,34 +116,23 @@ const Popup: React.FC = () => {
 
   return (
     <div className={styles.popup}>
-      <aside className={styles.sidebar}>
-        <div className={styles.logo}>Monika Tools</div>
-        <ul className={styles.menu}>
-          {FEATURES.map((feature) => (
-            <li key={feature.id}>
-              <a
-                href="#"
-                className={activeFeature === feature.id ? styles.active : ''}
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (!feature.disabled) {
-                    setActiveFeature(feature.id);
-                  }
-                }}
-                style={{
-                  opacity: feature.disabled ? 0.5 : 1,
-                  cursor: feature.disabled ? 'not-allowed' : 'pointer',
-                }}
-              >
-                <span className={styles.icon}>{feature.icon}</span>
-                {feature.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </aside>
+      <nav className={styles.nav}>
+        {FEATURES.map((feature) => (
+          <button
+            key={feature.id}
+            className={`${styles.navButton} ${
+              activeFeature === feature.id ? styles.active : ''
+            }`}
+            onClick={() => !feature.disabled && setActiveFeature(feature.id)}
+            disabled={feature.disabled}
+          >
+            <span className={styles.icon}>{feature.icon}</span>
+            {feature.name}
+          </button>
+        ))}
+      </nav>
 
-      <div className={styles.content}>{renderContent()}</div>
+      <main className={styles.main}>{renderContent()}</main>
     </div>
   );
 };
