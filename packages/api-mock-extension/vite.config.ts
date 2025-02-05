@@ -110,7 +110,6 @@ export default defineConfig(({ mode }) => {
           copyFiles([
             { from: 'manifest.json', to: `${outDir}/manifest.json` },
             { from: 'rules.json', to: `${outDir}/rules.json` },
-            { from: 'index.html', to: `${outDir}/index.html` },
             {
               from: 'public/icons/icon16.png',
               to: `${outDir}/icons/icon16.png`,
