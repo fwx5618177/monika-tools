@@ -1,0 +1,70 @@
+.form {
+    padding: $spacing-medium;
+    background: white;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+}
+
+.field {
+    margin-bottom: $spacing-medium;
+
+    label {
+        display: block;
+        margin-bottom: $spacing-small;
+        font-weight: 500;
+        color: $text-color;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: $spacing-small;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        font-size: $font-size-base;
+        transition: border-color 0.3s;
+
+        &:focus {
+            outline: none;
+            border-color: $primary-color;
+        }
+    }
+
+    textarea {
+        min-height: 120px;
+        font-family: monospace;
+        resize: vertical;
+    }
+}
+
+.actions {
+    display: flex;
+    gap: $spacing-medium * 0.75;
+    margin-top: $spacing-large;
+}
+
+%button-base {
+    @include button-base;
+    font-size: $font-size-base;
+}
+
+.submitButton {
+    @extend %button-base;
+    background: $primary-color;
+    color: white;
+
+    &:hover {
+        background: $primary-dark;
+    }
+}
+
+.cancelButton {
+    @extend %button-base;
+    background: $background-light;
+    color: $text-color;
+
+    &:hover {
+        background: color.adjust($background-light, $lightness: -5%);
+    }
+}

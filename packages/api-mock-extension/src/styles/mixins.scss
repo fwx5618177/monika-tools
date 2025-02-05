@@ -1,0 +1,43 @@
+@use 'sass:color';
+@use './variables' as *;
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+}
+
+@mixin button-base {
+    padding: $spacing-small $spacing-medium;
+    border: none;
+    border-radius: $border-radius;
+    font-size: $font-size-base;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+@mixin text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin scrollbar {
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $background-light;
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: color.adjust($background-light, $lightness: -20%);
+        border-radius: 3px;
+
+        &:hover {
+            background: color.adjust($background-light, $lightness: -30%);
+        }
+    }
+}

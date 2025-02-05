@@ -1,0 +1,127 @@
+.rulesList {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-medium;
+}
+
+.ruleItem {
+    background: white;
+    border-radius: $border-radius;
+    padding: $spacing-medium;
+    box-shadow: $shadow;
+}
+
+.ruleHeader {
+    @include flex-center;
+    gap: $spacing-medium * 0.75;
+    margin-bottom: $spacing-medium * 0.75;
+}
+
+%method-base {
+    padding: $spacing-small * 0.5 $spacing-small;
+    border-radius: $border-radius;
+    font-size: $font-size-small;
+    font-weight: 600;
+}
+
+.method {
+    @extend %method-base;
+
+    &.get {
+        background: #E3F2FD;
+        color: $primary-color;
+    }
+
+    &.post {
+        background: #E8F5E9;
+        color: #388E3C;
+    }
+
+    &.put {
+        background: #FFF3E0;
+        color: #F57C00;
+    }
+
+    &.delete {
+        background: #FFEBEE;
+        color: $error-color;
+    }
+
+    &.patch {
+        background: #F3E5F5;
+        color: #7B1FA2;
+    }
+}
+
+.url {
+    flex: 1;
+    font-size: $font-size-base;
+    color: $text-light;
+    word-break: break-all;
+}
+
+.actions {
+    @include flex-center;
+    gap: $spacing-medium * 0.75;
+}
+
+.deleteButton {
+    padding: $spacing-small * 0.5;
+    border: none;
+    border-radius: $border-radius;
+    background: transparent;
+    color: $text-light;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+        color: $error-color;
+    }
+}
+
+.ruleDetails {
+    font-size: $font-size-small;
+    color: $text-light;
+}
+
+.statusCode,
+.delay {
+    margin-bottom: $spacing-small;
+
+    span {
+        font-weight: 500;
+        color: $text-color;
+    }
+}
+
+.response {
+    margin-top: $spacing-medium * 0.75;
+
+    .responseHeader {
+        margin-bottom: $spacing-small * 0.5;
+        font-weight: 500;
+    }
+
+    pre {
+        padding: $spacing-small;
+        background: $background-light;
+        border-radius: $border-radius;
+        font-family: monospace;
+        font-size: $font-size-small;
+        overflow-x: auto;
+        margin: 0;
+    }
+}
+
+@media (max-width: $mobile) {
+    .ruleHeader {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .actions {
+        margin-top: $spacing-small;
+        width: 100%;
+        justify-content: space-between;
+    }
+}

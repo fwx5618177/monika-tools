@@ -1,0 +1,188 @@
+// Variables
+$popup-width: 400px;
+$popup-min-height: 300px;
+$padding: 16px;
+$border-color: #ddd;
+$primary-color: #2196F3;
+$primary-dark: #1976D2;
+$error-color: #D32F2F;
+$text-color: #333;
+$text-light: #666;
+$background-light: #f5f5f5;
+$shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+$border-radius: 4px;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin button-base {
+  padding: 8px 16px;
+  border: none;
+  border-radius: $border-radius;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+// Styles
+.popup {
+  width: $popup-width;
+  min-height: $popup-min-height;
+  background: $background-light;
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  background: white;
+  border-right: 1px solid $border-color;
+  padding: $padding;
+
+  .logo {
+    margin-bottom: $padding;
+    font-size: 20px;
+    font-weight: 600;
+    color: $primary-color;
+  }
+
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 8px;
+
+      a {
+        display: block;
+        padding: 8px 12px;
+        color: $text-color;
+        text-decoration: none;
+        border-radius: $border-radius;
+        transition: all 0.3s;
+
+        &:hover {
+          background: $background-light;
+        }
+
+        &.active {
+          background: $primary-color;
+          color: white;
+        }
+
+        .icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+.content {
+  flex: 1;
+  padding: $padding;
+  overflow-y: auto;
+}
+
+.header {
+  @include flex-center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: $padding;
+  border-bottom: 1px solid $border-color;
+
+  h1 {
+    margin: 0;
+    font-size: 20px;
+    color: $text-color;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: $padding;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.addButton {
+  @include button-base;
+  background: $primary-color;
+  color: white;
+
+  &:hover {
+    background: $primary-dark;
+  }
+}
+
+.formWrapper {
+  margin: $padding 0;
+}
+
+.empty {
+  padding: 32px;
+  text-align: center;
+  color: $text-light;
+  background: white;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+}
+
+.loading,
+.error {
+  padding: 32px;
+  text-align: center;
+  color: $text-light;
+}
+
+.error {
+  color: $error-color;
+}
+
+// Media queries
+@media (max-width: 480px) {
+  .popup {
+    width: 100%;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid $border-color;
+    padding: 12px;
+
+    .menu {
+      display: flex;
+      overflow-x: auto;
+      padding-bottom: 8px;
+
+      li {
+        margin: 0 8px 0 0;
+        white-space: nowrap;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .content {
+    padding: 12px;
+  }
+
+  .header {
+    h1 {
+      font-size: 18px;
+    }
+  }
+}

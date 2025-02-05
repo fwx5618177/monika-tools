@@ -1,3 +1,4 @@
-import { setupInterceptors } from "./interceptors";
+import { RequestInterceptor } from './services/interceptor';
 
-setupInterceptors();
+// 初始化请求拦截器
+RequestInterceptor.getInstance();
