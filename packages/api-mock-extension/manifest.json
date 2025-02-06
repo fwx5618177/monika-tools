@@ -7,7 +7,8 @@
     "storage",
     "webRequest",
     "declarativeNetRequest",
-    "sidePanel"
+    "sidePanel",
+    "tabs"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -41,7 +42,7 @@
     "128": "icons/icon128.png"
   },
   "side_panel": {
-    "default_path": "index.html?view=sidebar"
+    "default_path": "index.html"
   },
   "web_accessible_resources": [
     {

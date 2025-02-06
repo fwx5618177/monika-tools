@@ -30,6 +30,21 @@ const ViewModeSwitch: React.FC = () => {
     }
   };
 
+  const toggleViewMode = async () => {
+    try {
+      const currentWindow = await chrome.windows.getCurrent();
+      await chrome.runtime.sendMessage({
+        type: 'TOGGLE_VIEW_MODE',
+        payload: {
+          mode: isPanel ? 'popup' : 'panel',
+          windowId: currentWindow.id,
+        },
+      });
+    } catch (error) {
+      console.error('Failed to toggle view mode:', error);
+    }
+  };
+
   return (
     <header className={styles.header}>
       {location.pathname !== '/' && (
@@ -38,18 +53,7 @@ const ViewModeSwitch: React.FC = () => {
         </button>
       )}
       <div className={styles.viewSwitch}>
-        <button
-          className={styles.switchButton}
-          onClick={() => {
-            if (isPanel) {
-              chrome.action.openPopup();
-            } else {
-              chrome.sidePanel.open({
-                windowId: chrome.windows.WINDOW_ID_CURRENT,
-              });
-            }
-          }}
-        >
+        <button className={styles.switchButton} onClick={toggleViewMode}>
           {isPanel ? '切换到弹窗模式' : '切换到侧边栏模式'}
         </button>
       </div>
