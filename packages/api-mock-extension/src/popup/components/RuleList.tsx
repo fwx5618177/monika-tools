@@ -1,6 +1,6 @@
 import React from 'react';
 import type { MockRule } from '../../background/interfaces/types';
-import styles from '@/popup/styles/RuleList.module.scss';
+import styles from '@/popup/styles/components/RuleList.module.scss';
 
 interface RuleListProps {
   rules: MockRule[];

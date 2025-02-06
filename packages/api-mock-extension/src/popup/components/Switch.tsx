@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '@/popup/styles/Switch.module.scss';
+import styles from '@/popup/styles/components/Switch.module.scss';
 
 interface SwitchProps {
   checked: boolean;

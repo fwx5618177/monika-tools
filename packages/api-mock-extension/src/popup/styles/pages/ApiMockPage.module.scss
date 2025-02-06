@@ -1,0 +1,50 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.page {
+    padding: $spacing-medium;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-medium;
+}
+
+.addButton {
+    @include button-base;
+    background: $primary-color;
+    color: white;
+
+    &:hover {
+        background: $primary-dark;
+    }
+}
+
+.formWrapper {
+    margin: $spacing-medium 0;
+    padding: $spacing-medium;
+    background: $background-light;
+    border-radius: $border-radius;
+    border: 1px solid $border-color;
+}
+
+.empty {
+    padding: $spacing-large;
+    text-align: center;
+    color: $text-light;
+    background: $background-light;
+    border-radius: $border-radius;
+}
+
+.loading,
+.error {
+    padding: $spacing-large;
+    text-align: center;
+    color: $text-light;
+}
+
+.error {
+    color: $error-color;
+}

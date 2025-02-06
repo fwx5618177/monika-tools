@@ -1,139 +1,80 @@
-import React, { useState } from 'react';
-import { RuleForm } from './components/RuleForm';
-import { RuleList } from './components/RuleList';
-import { Switch } from './components/Switch';
-import { useMockRules } from './hooks/useMockRules';
+import React, { useEffect, useState } from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
+import { routes } from './routes';
 import styles from './styles/Popup.module.scss';
 
-interface Feature {
-  id: string;
-  name: string;
-  icon: string;
-  disabled?: boolean;
-}
+const ViewModeSwitch: React.FC = () => {
+  const [isPanel, setIsPanel] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-const FEATURES: Feature[] = [
-  {
-    id: 'api-mock',
-    name: 'API Mock',
-    icon: '🚀',
-    disabled: false,
-  },
-  {
-    id: 'request-log',
-    name: '请求日志',
-    icon: '📊',
-    disabled: true,
-  },
-  {
-    id: 'settings',
-    name: '设置',
-    icon: '⚙️',
-    disabled: true,
-  },
-];
+  useEffect(() => {
+    // 检查当前是否在侧边栏模式
+    const mediaQuery = window.matchMedia('(view-type: side-panel)');
+    setIsPanel(mediaQuery.matches);
 
-const Popup: React.FC = () => {
-  const {
-    config,
-    loading,
-    error,
-    toggleEnabled,
-    addRule,
-    deleteRule,
-    toggleRule,
-  } = useMockRules();
-  const [isAddingRule, setIsAddingRule] = useState(false);
-  const [activeFeature, setActiveFeature] = useState<string>(FEATURES[0].id);
+    const handler = (e: MediaQueryListEvent) => setIsPanel(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
 
-  if (loading) {
-    return <div className={styles.loading}>加载中...</div>;
-  }
-
-  if (error) {
-    return <div className={styles.error}>{error}</div>;
-  }
-
-  const renderContent = () => {
-    switch (activeFeature) {
-      case 'api-mock':
-        return (
-          <>
-            <div className={styles.toolbar}>
-              <Switch
-                checked={config.enabled}
-                onChange={toggleEnabled}
-                label="启用模拟"
-              />
-              <button
-                className={styles.addButton}
-                onClick={() => setIsAddingRule(true)}
-              >
-                添加规则
-              </button>
-            </div>
-
-            {isAddingRule && (
-              <div className={styles.formWrapper}>
-                <RuleForm
-                  onSubmit={(rule) => {
-                    addRule(rule);
-                    setIsAddingRule(false);
-                  }}
-                  onCancel={() => setIsAddingRule(false)}
-                />
-              </div>
-            )}
-
-            {config.rules.length > 0 ? (
-              <RuleList
-                rules={config.rules}
-                onToggleRule={toggleRule}
-                onDeleteRule={deleteRule}
-              />
-            ) : (
-              <div className={styles.empty}>
-                暂无规则。点击"添加规则"创建新规则。
-              </div>
-            )}
-          </>
-        );
-
-      case 'request-log':
-        return (
-          <div className={styles.empty}>请求日志功能即将上线，敬请期待...</div>
-        );
-
-      case 'settings':
-        return (
-          <div className={styles.empty}>设置功能即将上线，敬请期待...</div>
-        );
-
-      default:
-        return null;
+  const handleBack = () => {
+    if (location.pathname !== '/') {
+      navigate('/');
     }
   };
 
   return (
-    <div className={styles.popup}>
-      <nav className={styles.nav}>
-        {FEATURES.map((feature) => (
-          <button
-            key={feature.id}
-            className={`${styles.navButton} ${
-              activeFeature === feature.id ? styles.active : ''
-            }`}
-            onClick={() => !feature.disabled && setActiveFeature(feature.id)}
-            disabled={feature.disabled}
-          >
-            <span className={styles.icon}>{feature.icon}</span>
-            {feature.name}
-          </button>
-        ))}
-      </nav>
+    <header className={styles.header}>
+      {location.pathname !== '/' && (
+        <button className={styles.backButton} onClick={handleBack}>
+          ← 返回
+        </button>
+      )}
+      <div className={styles.viewSwitch}>
+        <button
+          className={styles.switchButton}
+          onClick={() => {
+            if (isPanel) {
+              chrome.action.openPopup();
+            } else {
+              chrome.sidePanel.open({
+                windowId: chrome.windows.WINDOW_ID_CURRENT,
+              });
+            }
+          }}
+        >
+          {isPanel ? '切换到弹窗模式' : '切换到侧边栏模式'}
+        </button>
+      </div>
+    </header>
+  );
+};
 
-      <main className={styles.main}>{renderContent()}</main>
-    </div>
+const Popup: React.FC = () => {
+  return (
+    <BrowserRouter>
+      <div className={styles.popup}>
+        <ViewModeSwitch />
+        <main className={styles.main}>
+          <Routes>
+            {routes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={route.element}
+              />
+            ))}
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
   );
 };
 

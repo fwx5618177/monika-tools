@@ -1,0 +1,69 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.homePage {
+    padding: $spacing-large;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: $spacing-large;
+
+    h1 {
+        font-size: 24px;
+        color: $primary-color;
+        margin-bottom: $spacing-small;
+    }
+
+    p {
+        color: $text-light;
+        font-size: 14px;
+    }
+}
+
+.menuGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: $spacing-medium;
+    padding: $spacing-medium;
+}
+
+.menuItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-large;
+    background: white;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow;
+        border-color: $primary-color;
+    }
+
+    .icon {
+        font-size: 24px;
+        margin-bottom: $spacing-small;
+    }
+
+    .title {
+        font-weight: 500;
+        margin-bottom: $spacing-small;
+        color: $text-color;
+    }
+
+    .description {
+        font-size: 12px;
+        color: $text-light;
+        line-height: 1.4;
+    }
+}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { MockRule } from '../../background/interfaces/types';
-import styles from '@/popup/styles/RuleForm.module.scss';
+import styles from '@/popup/styles/components/RuleForm.module.scss';
 
 interface RuleFormProps {
   onSubmit: (rule: MockRule) => void;

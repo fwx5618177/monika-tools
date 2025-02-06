@@ -38,6 +38,39 @@ $border-radius: 4px;
   background: white;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-medium;
+  background: $background-light;
+  border-bottom: 1px solid $border-color;
+}
+
+.backButton {
+  @include button-base;
+  background: transparent;
+  color: $text-color;
+  padding: $spacing-small $spacing-medium;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.viewSwitch {
+  .switchButton {
+    @include button-base;
+    background: $primary-color;
+    color: white;
+    padding: $spacing-small $spacing-medium;
+
+    &:hover {
+      background: $primary-dark;
+    }
+  }
+}
+
 .nav {
   display: flex;
   padding: $spacing-small;
