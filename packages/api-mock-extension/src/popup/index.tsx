@@ -16,12 +16,16 @@ const ViewModeSwitch: React.FC = () => {
 
   useEffect(() => {
     // 检查当前是否在侧边栏模式
-    const mediaQuery = window.matchMedia('(view-type: side-panel)');
-    setIsPanel(mediaQuery.matches);
-
-    const handler = (e: MediaQueryListEvent) => setIsPanel(e.matches);
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
+    const checkViewMode = async () => {
+      try {
+        const sidePanel = await chrome.sidePanel.getOptions({});
+        setIsPanel(!!sidePanel?.enabled);
+      } catch (error) {
+        console.error('Failed to get side panel options:', error);
+        setIsPanel(false);
+      }
+    };
+    checkViewMode();
   }, []);
 
   const handleBack = () => {
@@ -32,14 +36,33 @@ const ViewModeSwitch: React.FC = () => {
 
   const toggleViewMode = async () => {
     try {
-      const currentWindow = await chrome.windows.getCurrent();
-      await chrome.runtime.sendMessage({
-        type: 'TOGGLE_VIEW_MODE',
-        payload: {
-          mode: isPanel ? 'popup' : 'panel',
-          windowId: currentWindow.id,
-        },
-      });
+      if (isPanel) {
+        // 从侧边栏切换到弹窗
+        await chrome.runtime.sendMessage({
+          type: 'TOGGLE_VIEW_MODE',
+          payload: { mode: 'popup' },
+        });
+        setIsPanel(false);
+      } else {
+        // 从弹窗切换到侧边栏
+        const [currentWindow] = await chrome.windows.getAll({
+          windowTypes: ['normal'],
+          populate: false,
+        });
+        if (!currentWindow?.id) {
+          console.error('No valid window found');
+          return;
+        }
+        await chrome.runtime.sendMessage({
+          type: 'TOGGLE_VIEW_MODE',
+          payload: {
+            mode: 'panel',
+            windowId: currentWindow.id,
+          },
+        });
+        setIsPanel(true);
+        window.close(); // 只在切换到侧边栏时关闭弹窗
+      }
     } catch (error) {
       console.error('Failed to toggle view mode:', error);
     }

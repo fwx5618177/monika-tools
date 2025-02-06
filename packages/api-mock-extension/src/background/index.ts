@@ -6,20 +6,27 @@ import { StorageService } from './services/storageService';
 const mockService = MockService.getInstance();
 const storageService = StorageService.getInstance();
 
+// 确保默认为弹窗模式
+const initializePopupMode = async () => {
+  await chrome.action.setPopup({ popup: 'index.html' });
+  // 禁用侧边栏，确保默认不会打开侧边栏
+  await chrome.sidePanel.setOptions({ enabled: false });
+};
+
+// 立即执行初始化
+initializePopupMode();
+
 // 监听安装事件
 chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === 'install') {
     // 首次安装时的初始化
     console.log('Extension installed');
     await storageService.clear();
-    // 设置侧边栏默认状态
-    await chrome.sidePanel.setOptions({
-      enabled: true,
-      path: 'index.html',
-    });
+    await initializePopupMode(); // 确保安装时也是弹窗模式
   } else if (details.reason === 'update') {
     // 更新时的处理
     console.log('Extension updated');
+    await initializePopupMode(); // 更新时也重置为弹窗模式
   }
 });
 
@@ -74,15 +81,28 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           break;
 
         case 'TOGGLE_VIEW_MODE':
-          if (payload.mode === 'panel') {
-            // 切换到侧边栏模式
-            await chrome.sidePanel.open({ windowId: payload.windowId });
-            chrome.action.setPopup({ popup: '' }); // 禁用弹出窗口
-          } else {
-            // 切换到弹出窗口模式
-            chrome.action.setPopup({ popup: 'index.html' });
+          try {
+            const { mode, windowId } = payload;
+            if (mode === 'panel') {
+              // 切换到侧边栏模式
+              console.log('Switching to panel mode for window:', windowId);
+              await chrome.action.setPopup({ popup: '' }); // 先禁用弹窗
+              await chrome.sidePanel.setOptions({
+                enabled: true,
+                path: 'index.html',
+              }); // 启用侧边栏并设置路径
+              await chrome.sidePanel.open({ windowId }); // 打开侧边栏
+            } else {
+              // 切换到弹窗模式
+              console.log('Switching to popup mode');
+              await chrome.sidePanel.setOptions({ enabled: false }); // 先禁用侧边栏
+              await chrome.action.setPopup({ popup: 'index.html' }); // 再启用弹窗
+            }
+            sendResponse(true);
+          } catch (error) {
+            console.error('Error toggling view mode:', error);
+            sendResponse(false);
           }
-          sendResponse(true);
           break;
 
         default:
