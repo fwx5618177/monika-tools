@@ -3,6 +3,7 @@ import { ApiMockPage } from './pages/ApiMockPage';
 import { RequestLogPage } from './pages/RequestLogPage';
 import SettingsPage from './pages/SettingsPage';
 import { HomePage } from './pages/HomePage';
+import { JsonToolsPage } from './pages/JsonToolsPage';
 
 export interface RouteConfig {
   path: string;
@@ -54,11 +55,11 @@ export const routes: RouteConfig[] = [
   },
   {
     path: '/json-tools',
-    element: <div>开发中...</div>,
+    element: <JsonToolsPage />,
     title: 'JSON 工具',
     icon: '📝',
     showInHome: true,
-    description: 'JSON 格式化、比较、转换等',
+    description: 'JSON 格式化、比较、转换、验证等多功能工具集',
   },
   {
     path: '/code-generator',

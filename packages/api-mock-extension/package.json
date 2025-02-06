@@ -29,6 +29,7 @@
   "packageManager": "pnpm@9.14.2",
   "devDependencies": {
     "@types/chrome": "^0.0.260",
+    "@types/jsonpath": "^0.2.4",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
@@ -47,9 +48,12 @@
   "dependencies": {
     "@types/classnames": "^2.3.4",
     "classnames": "^2.2.6",
+    "jsonpath": "^1.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
-    "react-router-dom": "^7.1.5"
+    "react-router-dom": "^7.1.5",
+    "xml-js": "^1.6.11",
+    "yaml": "^2.7.0"
   }
 }
