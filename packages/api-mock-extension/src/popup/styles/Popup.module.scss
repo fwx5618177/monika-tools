@@ -35,7 +35,8 @@ $border-radius: 4px;
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: white;
+  background: var(--theme-background);
+  color: var(--theme-text);
   position: relative;
 }
 
@@ -57,28 +58,27 @@ $border-radius: 4px;
   justify-content: center;
   border: none;
   border-radius: 50%;
-  background: white;
-  color: $text-light;
+  background: var(--theme-surface);
+  color: var(--theme-text-light);
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--theme-shadow);
 
   svg {
     font-size: 14px;
   }
 
   &:hover {
-    background: $primary-color;
-    color: white;
-    box-shadow: 0 2px 8px rgba($primary-color, 0.3);
+    background: var(--theme-primary);
+    color: var(--theme-text-inverse);
   }
 }
 
 .nav {
   display: flex;
   padding: $spacing-small;
-  background: $background-light;
-  border-bottom: 1px solid $border-color;
+  background: var(--theme-background-light);
+  border-bottom: 1px solid var(--theme-border);
   gap: $spacing-small;
 }
 
@@ -88,17 +88,17 @@ $border-radius: 4px;
   align-items: center;
   gap: $spacing-small;
   background: transparent;
-  color: $text-color;
+  color: var(--theme-text);
   border: 1px solid transparent;
 
   &:hover:not(:disabled) {
-    background: rgba(0, 0, 0, 0.05);
+    background: var(--theme-background-dark);
   }
 
   &.active {
-    background: white;
-    border-color: $border-color;
-    color: $primary-color;
+    background: var(--theme-surface);
+    border-color: var(--theme-border);
+    color: var(--theme-primary);
   }
 
   &:disabled {
@@ -115,6 +115,7 @@ $border-radius: 4px;
   flex: 1;
   padding: $spacing-medium;
   overflow: auto;
+  background: var(--theme-background);
   @include scrollbar;
 }
 
@@ -146,8 +147,8 @@ $border-radius: 4px;
 .empty {
   padding: $spacing-large;
   text-align: center;
-  color: $text-light;
-  background: $background-light;
+  color: var(--theme-text-light);
+  background: var(--theme-background-light);
   border-radius: $border-radius;
 }
 
@@ -155,11 +156,11 @@ $border-radius: 4px;
 .error {
   padding: $spacing-large;
   text-align: center;
-  color: $text-light;
+  color: var(--theme-text-light);
 }
 
 .error {
-  color: $error-color;
+  color: var(--theme-error);
 }
 
 // Media queries
