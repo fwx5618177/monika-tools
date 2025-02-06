@@ -55,7 +55,7 @@
     color: white;
 
     &:hover {
-        background: $primary-dark;
+        opacity: 0.9;
     }
 }
 
@@ -65,6 +65,6 @@
     color: $text-color;
 
     &:hover {
-        background: color.adjust($background-light, $lightness: -5%);
+        background: rgba(0, 0, 0, 0.05);
     }
 }

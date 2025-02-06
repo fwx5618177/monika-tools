@@ -7,6 +7,7 @@ import {
   useNavigate,
   Navigate,
 } from 'react-router-dom';
+import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { routes } from './routes';
 import styles from './styles/Popup.module.scss';
 
@@ -28,12 +29,6 @@ const ViewModeSwitch: React.FC = () => {
     };
     checkViewMode();
   }, []);
-
-  const handleBack = () => {
-    if (location.pathname !== '/') {
-      navigate('/');
-    }
-  };
 
   const toggleViewMode = async () => {
     try {
@@ -70,18 +65,26 @@ const ViewModeSwitch: React.FC = () => {
   };
 
   return (
-    <header className={styles.header}>
-      {location.pathname !== '/' && (
-        <button className={styles.backButton} onClick={handleBack}>
-          ← 返回
-        </button>
-      )}
+    <>
       <div className={styles.viewSwitch}>
-        <button className={styles.switchButton} onClick={toggleViewMode}>
-          {isPanel ? '切换到弹窗模式' : '切换到侧边栏模式'}
+        <button
+          className={styles.switchButton}
+          onClick={toggleViewMode}
+          title={isPanel ? '切换到弹窗模式' : '切换到侧边栏模式'}
+        >
+          {isPanel ? <FaArrowLeft /> : <FaArrowRight />}
         </button>
+        {location.pathname !== '/' && (
+          <button
+            className={styles.backButton}
+            onClick={() => navigate('/')}
+            title="返回首页"
+          >
+            <FaArrowLeft />
+          </button>
+        )}
       </div>
-    </header>
+    </>
   );
 };
 

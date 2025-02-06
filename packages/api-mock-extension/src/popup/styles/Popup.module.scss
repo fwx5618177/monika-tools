@@ -36,38 +36,41 @@ $border-radius: 4px;
   flex-direction: column;
   height: 100%;
   background: white;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: $spacing-medium;
-  background: $background-light;
-  border-bottom: 1px solid $border-color;
-}
-
-.backButton {
-  @include button-base;
-  background: transparent;
-  color: $text-color;
-  padding: $spacing-small $spacing-medium;
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.05);
-  }
+  position: relative;
 }
 
 .viewSwitch {
-  .switchButton {
-    @include button-base;
+  position: absolute;
+  top: $spacing-small;
+  right: $spacing-small;
+  z-index: 10;
+  display: flex;
+  gap: $spacing-small;
+}
+
+.switchButton,
+.backButton {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: white;
+  color: $text-light;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  svg {
+    font-size: 14px;
+  }
+
+  &:hover {
     background: $primary-color;
     color: white;
-    padding: $spacing-small $spacing-medium;
-
-    &:hover {
-      background: $primary-dark;
-    }
+    box-shadow: 0 2px 8px rgba($primary-color, 0.3);
   }
 }
 
@@ -160,42 +163,9 @@ $border-radius: 4px;
 }
 
 // Media queries
-@media (max-width: 480px) {
+@media (max-width: $mobile) {
   .popup {
     width: 100%;
     min-height: 100vh;
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid $border-color;
-    padding: 12px;
-
-    .menu {
-      display: flex;
-      overflow-x: auto;
-      padding-bottom: 8px;
-
-      li {
-        margin: 0 8px 0 0;
-        white-space: nowrap;
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
-    }
-  }
-
-  .content {
-    padding: 12px;
-  }
-
-  .header {
-    h1 {
-      font-size: 18px;
-    }
   }
 }

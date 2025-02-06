@@ -563,12 +563,21 @@ importers:
 
   packages/api-mock-extension:
     dependencies:
+      '@types/classnames':
+        specifier: ^2.3.4
+        version: 2.3.4
+      classnames:
+        specifier: ^2.2.6
+        version: 2.5.1
       react:
         specifier: ^18.2.0
         version: 18.3.1
       react-dom:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
+      react-icons:
+        specifier: ^5.0.1
+        version: 5.4.0(react@18.3.1)
       react-router-dom:
         specifier: ^7.1.5
         version: 7.1.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -641,7 +650,7 @@ importers:
         version: 1.7.2(vue@2.7.16)
       ammojs-typed:
         specifier: github:giniedp/ammojs-typed
-        version: git+https://git@github.com:giniedp/ammojs-typed.git#05408a318256ca561720aad1cfd0e83e772f06cb
+        version: https://codeload.github.com/giniedp/ammojs-typed/tar.gz/05408a318256ca561720aad1cfd0e83e772f06cb
       core-js:
         specifier: ^3.6.5
         version: 3.39.0
@@ -669,7 +678,7 @@ importers:
         version: 4.33.0(eslint@7.32.0)(typescript@4.2.2)
       ammo.js:
         specifier: github:kripken/ammo.js
-        version: git+https://git@github.com:kripken/ammo.js.git#1ed8b58c7058a5f697f2642ceef8ee20fdd55e10
+        version: https://codeload.github.com/kripken/ammo.js/tar.gz/1ed8b58c7058a5f697f2642ceef8ee20fdd55e10
       babel-eslint:
         specifier: ^10.0.1
         version: 10.1.0(eslint@7.32.0)
@@ -1131,7 +1140,7 @@ importers:
         version: 10.0.1
       remark-codesandbox-sandpack:
         specifier: git+https://github.com/fwx5618177/remark-codesandbox-sandpack.git
-        version: git+https://git@github.com:fwx5618177/remark-codesandbox-sandpack.git#7eda3d772a7b73a32ce8303d6bf23be091659391(react-dom@18.3.1(react@18.3.1))(react-markdown@9.0.1(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)(remark@15.0.1)
+        version: https://codeload.github.com/fwx5618177/remark-codesandbox-sandpack/tar.gz/7eda3d772a7b73a32ce8303d6bf23be091659391(react-dom@18.3.1(react@18.3.1))(react-markdown@9.0.1(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)(remark@15.0.1)
       remark-frontmatter:
         specifier: ^5.0.0
         version: 5.0.0
@@ -7821,6 +7830,10 @@ packages:
   '@types/chrome@0.0.268':
     resolution: {integrity: sha512-7N1QH9buudSJ7sI8Pe4mBHJr5oZ48s0hcanI9w3wgijAlv1OZNUZve9JR4x42dn5lJ5Sm87V1JNfnoh10EnQlA==}
 
+  '@types/classnames@2.3.4':
+    resolution: {integrity: sha512-dwmfrMMQb9ujX1uYGvB5ERDlOzBNywnZAZBtOe107/hORWP05ESgU4QyaanZMWYYfd2BzrG78y13/Bju8IQcMQ==}
+    deprecated: This is a stub types definition. classnames provides its own type definitions, so you do not need this installed.
+
   '@types/clone@0.1.30':
     resolution: {integrity: sha512-vcxBr+ybljeSiasmdke1cQ9ICxoEwaBgM1OQ/P5h4MPj/kRyLcDl5L8PrftlbyV1kBbJIs3M3x1A1+rcWd4mEA==}
 
@@ -9541,12 +9554,12 @@ packages:
   alphanum-sort@1.0.2:
     resolution: {integrity: sha512-0FcBfdcmaumGPQ0qPn7Q5qTgz/ooXgIyp1rf8ik5bGX8mpE2YHjC0P/eyQvxu1GURYQgq9ozf2mteQ5ZD9YiyQ==}
 
-  ammo.js@git+https://git@github.com:kripken/ammo.js.git#1ed8b58c7058a5f697f2642ceef8ee20fdd55e10:
-    resolution: {commit: 1ed8b58c7058a5f697f2642ceef8ee20fdd55e10, repo: git@github.com:kripken/ammo.js.git, type: git}
+  ammo.js@https://codeload.github.com/kripken/ammo.js/tar.gz/1ed8b58c7058a5f697f2642ceef8ee20fdd55e10:
+    resolution: {tarball: https://codeload.github.com/kripken/ammo.js/tar.gz/1ed8b58c7058a5f697f2642ceef8ee20fdd55e10}
     version: 0.0.2
 
-  ammojs-typed@git+https://git@github.com:giniedp/ammojs-typed.git#05408a318256ca561720aad1cfd0e83e772f06cb:
-    resolution: {commit: 05408a318256ca561720aad1cfd0e83e772f06cb, repo: git@github.com:giniedp/ammojs-typed.git, type: git}
+  ammojs-typed@https://codeload.github.com/giniedp/ammojs-typed/tar.gz/05408a318256ca561720aad1cfd0e83e772f06cb:
+    resolution: {tarball: https://codeload.github.com/giniedp/ammojs-typed/tar.gz/05408a318256ca561720aad1cfd0e83e772f06cb}
     version: 1.0.5
 
   anser@2.3.0:
@@ -20447,8 +20460,8 @@ packages:
     resolution: {integrity: sha512-gUAyHVHPPC5wdqX/LG4LWtRYtgjxyX78oanFNTMMyFEfOqdC54s3eE82imuWKbOeqYht2CrNf64Qb8vgmmtZGA==}
     engines: {node: '>=4'}
 
-  remark-codesandbox-sandpack@git+https://git@github.com:fwx5618177/remark-codesandbox-sandpack.git#7eda3d772a7b73a32ce8303d6bf23be091659391:
-    resolution: {commit: 7eda3d772a7b73a32ce8303d6bf23be091659391, repo: git@github.com:fwx5618177/remark-codesandbox-sandpack.git, type: git}
+  remark-codesandbox-sandpack@https://codeload.github.com/fwx5618177/remark-codesandbox-sandpack/tar.gz/7eda3d772a7b73a32ce8303d6bf23be091659391:
+    resolution: {tarball: https://codeload.github.com/fwx5618177/remark-codesandbox-sandpack/tar.gz/7eda3d772a7b73a32ce8303d6bf23be091659391}
     version: 1.9.0
     engines: {node: '>=18.10.0 || <=20.10.0'}
     peerDependencies:
@@ -30774,6 +30787,10 @@ snapshots:
       '@types/filesystem': 0.0.36
       '@types/har-format': 1.2.16
 
+  '@types/classnames@2.3.4':
+    dependencies:
+      classnames: 2.5.1
+
   '@types/clone@0.1.30': {}
 
   '@types/color-convert@2.0.4':
@@ -33484,9 +33501,9 @@ snapshots:
 
   alphanum-sort@1.0.2: {}
 
-  ammo.js@git+https://git@github.com:kripken/ammo.js.git#1ed8b58c7058a5f697f2642ceef8ee20fdd55e10: {}
+  ammo.js@https://codeload.github.com/kripken/ammo.js/tar.gz/1ed8b58c7058a5f697f2642ceef8ee20fdd55e10: {}
 
-  ammojs-typed@git+https://git@github.com:giniedp/ammojs-typed.git#05408a318256ca561720aad1cfd0e83e772f06cb: {}
+  ammojs-typed@https://codeload.github.com/giniedp/ammojs-typed/tar.gz/05408a318256ca561720aad1cfd0e83e772f06cb: {}
 
   anser@2.3.0: {}
 
@@ -38067,7 +38084,7 @@ snapshots:
     dependencies:
       debug: 3.2.7(supports-color@5.5.0)
       enhanced-resolve: 0.9.1
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-webpack@0.13.10(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1))(webpack@4.47.0))(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-webpack@0.13.10)(eslint@8.57.1)
       find-root: 1.1.0
       hasown: 2.0.2
       interpret: 1.4.0
@@ -38313,7 +38330,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-webpack@0.13.10(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1))(webpack@4.47.0))(eslint@8.57.1):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-webpack@0.13.10)(eslint@8.57.1):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -48645,7 +48662,7 @@ snapshots:
     dependencies:
       es6-error: 4.1.1
 
-  remark-codesandbox-sandpack@git+https://git@github.com:fwx5618177/remark-codesandbox-sandpack.git#7eda3d772a7b73a32ce8303d6bf23be091659391(react-dom@18.3.1(react@18.3.1))(react-markdown@9.0.1(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)(remark@15.0.1):
+  remark-codesandbox-sandpack@https://codeload.github.com/fwx5618177/remark-codesandbox-sandpack/tar.gz/7eda3d772a7b73a32ce8303d6bf23be091659391(react-dom@18.3.1(react@18.3.1))(react-markdown@9.0.1(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)(remark@15.0.1):
     dependencies:
       '@codesandbox/sandpack-react': 2.19.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@codesandbox/sandpack-themes': 2.0.21
@@ -54813,7 +54830,7 @@ snapshots:
       eslint-import-resolver-webpack: 0.13.10(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1))(webpack@4.47.0)
       eslint-plugin-ava: 14.0.0(eslint@8.57.1)
       eslint-plugin-eslint-comments: 3.2.0(eslint@8.57.1)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-webpack@0.13.10(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1))(webpack@4.47.0))(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-webpack@0.13.10)(eslint@8.57.1)
       eslint-plugin-n: 16.6.2(eslint@8.57.1)
       eslint-plugin-no-use-extend-native: 0.5.0
       eslint-plugin-prettier: 5.2.1(@types/eslint@8.56.12)(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)

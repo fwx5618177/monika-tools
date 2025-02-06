@@ -1,7 +1,7 @@
 import React from 'react';
 import { ApiMockPage } from './pages/ApiMockPage';
 import { RequestLogPage } from './pages/RequestLogPage';
-import { SettingsPage } from './pages/SettingsPage';
+import SettingsPage from './pages/SettingsPage';
 import { HomePage } from './pages/HomePage';
 
 export interface RouteConfig {

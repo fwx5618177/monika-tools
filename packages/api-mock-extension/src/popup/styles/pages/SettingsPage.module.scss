@@ -5,6 +5,83 @@
     padding: $spacing-medium;
 }
 
+.section {
+    margin-bottom: $spacing-large;
+
+    h2 {
+        font-size: $font-size-large;
+        color: $text-color;
+        margin-bottom: $spacing-medium;
+        font-weight: 600;
+    }
+}
+
+.themeGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: $spacing-medium;
+}
+
+.themeButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-small;
+    border: 2px solid transparent;
+    border-radius: $border-radius;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: var(--theme-background);
+    }
+
+    &.active {
+        border-color: var(--theme-primary);
+        background: var(--theme-background);
+    }
+}
+
+.themePreview {
+    width: 60px;
+    height: 60px;
+    border-radius: $border-radius;
+    background: var(--theme-background);
+    padding: $spacing-small;
+    margin-bottom: $spacing-small;
+    box-shadow: $shadow;
+}
+
+.themeColor {
+    width: 100%;
+    height: 100%;
+    border-radius: $border-radius;
+    background: var(--theme-primary);
+}
+
+.themeName {
+    font-size: $font-size-base;
+    color: $text-color;
+    margin-top: $spacing-small;
+}
+
+.about {
+    padding: $spacing-medium;
+    background: $background-light;
+    border-radius: $border-radius;
+
+    p {
+        color: $text-light;
+        line-height: 1.6;
+
+        &:first-child {
+            color: $text-color;
+            font-weight: 500;
+        }
+    }
+}
+
 .empty {
     padding: $spacing-large;
     text-align: center;

@@ -2,68 +2,107 @@
 @use '@/styles/mixins' as *;
 
 .homePage {
-    padding: $spacing-large;
+    padding: $spacing-small;
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: white;
+    background: $background-light;
 }
 
 .header {
     text-align: center;
-    margin-bottom: $spacing-large;
+    margin-bottom: $spacing-medium;
+    padding: $spacing-small;
+    background: white;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
 
     h1 {
-        font-size: 24px;
+        font-size: 20px;
         color: $primary-color;
-        margin-bottom: $spacing-small;
+        margin-bottom: $spacing-small * 0.5;
+        font-weight: 600;
     }
 
     p {
         color: $text-light;
-        font-size: 14px;
+        font-size: $font-size-small;
     }
 }
 
 .menuGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: $spacing-medium;
-    padding: $spacing-medium;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-small;
+    overflow-y: auto;
+    @include scrollbar;
 }
 
 .menuItem {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: $spacing-large;
+    align-items: flex-start;
+    padding: $spacing-medium;
     background: white;
     border: 1px solid $border-color;
     border-radius: $border-radius;
     cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
+    transition: all 0.2s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        background: $primary-color;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
 
     &:hover {
         transform: translateY(-2px);
         box-shadow: $shadow;
-        border-color: $primary-color;
+        border-color: rgba(0, 102, 255, 0.2);
+
+        &::before {
+            opacity: 1;
+        }
+
+        .icon {
+            transform: translateY(-2px);
+            color: $primary-color;
+        }
     }
 
     .icon {
-        font-size: 24px;
+        font-size: 20px;
         margin-bottom: $spacing-small;
-    }
-
-    .title {
-        font-weight: 500;
-        margin-bottom: $spacing-small;
+        transition: all 0.2s ease;
         color: $text-color;
     }
 
+    .title {
+        font-weight: 600;
+        color: $text-color;
+        margin-bottom: $spacing-small * 0.5;
+        font-size: $font-size-base;
+    }
+
     .description {
-        font-size: 12px;
+        font-size: $font-size-small;
         color: $text-light;
         line-height: 1.4;
+    }
+}
+
+// 侧边栏模式
+@media (view-type: side-panel) {
+    .menuGrid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }

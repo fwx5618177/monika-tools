@@ -12,7 +12,7 @@
     border-radius: $border-radius;
     font-size: $font-size-base;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.2s ease;
 }
 
 @mixin text-ellipsis {
@@ -28,16 +28,16 @@
     }
 
     &::-webkit-scrollbar-track {
-        background: $background-light;
+        background: transparent;
         border-radius: 3px;
     }
 
     &::-webkit-scrollbar-thumb {
-        background: color.adjust($background-light, $lightness: -20%);
+        background: rgba(0, 0, 0, 0.2);
         border-radius: 3px;
 
         &:hover {
-            background: color.adjust($background-light, $lightness: -30%);
+            background: rgba(0, 0, 0, 0.3);
         }
     }
 }
