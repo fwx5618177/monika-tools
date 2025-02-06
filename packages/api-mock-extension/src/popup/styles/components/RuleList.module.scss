@@ -1,3 +1,6 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
 .rulesList {
     display: flex;
     flex-direction: column;
@@ -13,12 +16,12 @@
 
 .ruleHeader {
     @include flex-center;
-    gap: $spacing-medium * 0.75;
-    margin-bottom: $spacing-medium * 0.75;
+    gap: $spacing-medium-75;
+    margin-bottom: $spacing-medium-75;
 }
 
 %method-base {
-    padding: $spacing-small * 0.5 $spacing-small;
+    padding: $spacing-small-half $spacing-small;
     border-radius: $border-radius;
     font-size: $font-size-small;
     font-weight: 600;
@@ -62,11 +65,11 @@
 
 .actions {
     @include flex-center;
-    gap: $spacing-medium * 0.75;
+    gap: $spacing-medium-75;
 }
 
 .deleteButton {
-    padding: $spacing-small * 0.5;
+    padding: $spacing-small-half;
     border: none;
     border-radius: $border-radius;
     background: transparent;
@@ -95,10 +98,10 @@
 }
 
 .response {
-    margin-top: $spacing-medium * 0.75;
+    margin-top: $spacing-medium-75;
 
     .responseHeader {
-        margin-bottom: $spacing-small * 0.5;
+        margin-bottom: $spacing-small-half;
         font-weight: 500;
     }
 

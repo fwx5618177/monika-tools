@@ -20,7 +20,7 @@
     h1 {
         font-size: 20px;
         color: $primary-color;
-        margin-bottom: $spacing-small * 0.5;
+        margin-bottom: $spacing-small-half;
         font-weight: 600;
     }
 
@@ -89,7 +89,7 @@
     .title {
         font-weight: 600;
         color: $text-color;
-        margin-bottom: $spacing-small * 0.5;
+        margin-bottom: $spacing-small-half;
         font-size: $font-size-base;
     }
 

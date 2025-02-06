@@ -1,3 +1,6 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
 .form {
     padding: $spacing-medium;
     background: white;
@@ -40,7 +43,7 @@
 
 .actions {
     display: flex;
-    gap: $spacing-medium * 0.75;
+    gap: $spacing-medium-75;
     margin-top: $spacing-large;
 }
 

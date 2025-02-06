@@ -18,7 +18,7 @@
 
 .themeGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: $spacing-medium;
 }
 
@@ -34,12 +34,12 @@
     transition: all 0.2s ease;
 
     &:hover {
-        background: var(--theme-background);
+        background: var(--theme-background-light);
     }
 
     &.active {
         border-color: var(--theme-primary);
-        background: var(--theme-background);
+        background: var(--theme-background-light);
     }
 }
 
@@ -47,7 +47,7 @@
     width: 60px;
     height: 60px;
     border-radius: $border-radius;
-    background: var(--theme-background);
+    background: var(--theme-background-light);
     padding: $spacing-small;
     margin-bottom: $spacing-small;
     box-shadow: $shadow;
@@ -57,27 +57,86 @@
     width: 100%;
     height: 100%;
     border-radius: $border-radius;
-    background: var(--theme-primary);
 }
 
 .themeName {
     font-size: $font-size-base;
-    color: $text-color;
+    color: var(--theme-text);
     margin-top: $spacing-small;
+}
+
+.settingsList {
+    background: $background-light;
+    border-radius: $border-radius;
+    padding: $spacing-medium;
+}
+
+.settingItem {
+    padding: $spacing-medium;
+    border-bottom: 1px solid $border-color;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.settingLabel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-small;
+    font-weight: 500;
+    color: $text-color;
+
+    input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        border-radius: $border-radius-sm;
+        border: 2px solid $border-color;
+        cursor: pointer;
+
+        &:checked {
+            background-color: $primary-color;
+            border-color: $primary-color;
+        }
+    }
+}
+
+.settingDesc {
+    font-size: $font-size-small;
+    color: $text-light;
 }
 
 .about {
     padding: $spacing-medium;
-    background: $background-light;
+    background: var(--theme-background-light);
     border-radius: $border-radius;
 
     p {
-        color: $text-light;
+        color: var(--theme-text-light);
         line-height: 1.6;
 
         &:first-child {
-            color: $text-color;
+            color: var(--theme-text);
             font-weight: 500;
+        }
+    }
+}
+
+.links {
+    margin-top: $spacing-medium;
+    display: flex;
+    gap: $spacing-medium;
+
+    a {
+        color: $link-color;
+        text-decoration: none;
+        font-size: $font-size-small;
+        font-weight: 500;
+
+        &:hover {
+            color: $link-hover-color;
+            text-decoration: underline;
         }
     }
 }

@@ -2,49 +2,204 @@
 
 // Theme colors (通过 JS 动态设置)
 :root {
+    // 主色调
     --theme-primary: #0066FF;
+    --theme-primary-light: #3385FF;
     --theme-primary-dark: #0052CC;
     --theme-secondary: #00C7FF;
+    --theme-secondary-light: #33D4FF;
+    --theme-secondary-dark: #00A3CC;
+
+    // 背景色系
     --theme-background: #FFFFFF;
-    --theme-surface: #F5F9FF;
+    --theme-background-light: #F8FAFC;
+    --theme-background-dark: #F1F5F9;
+    --theme-surface: #FFFFFF;
+    --theme-surface-light: #FAFAFA;
+    --theme-surface-dark: #F5F5F5;
+
+    // 文字色系
     --theme-text: #1A1F36;
-    --theme-text-light: #626F86;
-    --theme-border: #E6E8F0;
-    --theme-error: #FF4D4F;
-    --theme-success: #52C41A;
-    --theme-warning: #FAAD14;
+    --theme-text-light: #4A5568;
+    --theme-text-dark: #2D3748;
+    --theme-text-muted: #718096;
+    --theme-text-inverse: #FFFFFF;
+
+    // 边框和分割线
+    --theme-border: #E2E8F0;
+    --theme-border-light: #EDF2F7;
+    --theme-border-dark: #CBD5E0;
+    --theme-divider: rgba(0, 0, 0, 0.06);
+
+    // 状态色
+    --theme-info: #3182CE;
+    --theme-success: #48BB78;
+    --theme-warning: #ECC94B;
+    --theme-error: #E53E3E;
+
+    // 特殊用途
+    --theme-link: #0066FF;
+    --theme-link-hover: #0052CC;
+    --theme-selection: rgba(0, 102, 255, 0.1);
+    --theme-focus: rgba(0, 102, 255, 0.4);
+    --theme-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    // 排版
+    --theme-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --theme-font-family-code: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    --theme-font-size-base: 14px;
+    --theme-line-height-base: 1.5;
+    --theme-font-size-xs: 12px;
+    --theme-font-size-sm: 14px;
+    --theme-font-size-md: 16px;
+    --theme-font-size-lg: 18px;
+    --theme-font-size-xl: 20px;
+    --theme-font-size-xxl: 24px;
+
+    // 间距
+    --theme-spacing-unit: 4px;
+    --theme-spacing-xs: 4px;
+    --theme-spacing-sm: 8px;
+    --theme-spacing-md: 16px;
+    --theme-spacing-lg: 24px;
+    --theme-spacing-xl: 32px;
+    --theme-spacing-xxl: 48px;
+
+    // 间距的倍数
+    --theme-spacing-xs-half: 2px;
+    --theme-spacing-sm-half: 4px;
+    --theme-spacing-md-half: 8px;
+    --theme-spacing-lg-half: 12px;
+    --theme-spacing-xl-half: 16px;
+
+    --theme-spacing-sm-75: 6px;
+    --theme-spacing-md-75: 12px;
+    --theme-spacing-lg-75: 18px;
+    --theme-spacing-xl-75: 24px;
+
+    // 圆角
+    --theme-radius-none: 0;
+    --theme-radius-sm: 2px;
+    --theme-radius-md: 4px;
+    --theme-radius-lg: 8px;
+    --theme-radius-full: 9999px;
+
+    // 阴影
+    --theme-shadow-none: none;
+    --theme-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --theme-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --theme-shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --theme-shadow-xl: 0 8px 12px rgba(0, 0, 0, 0.1);
 }
 
 // Colors
 $primary-color: var(--theme-primary);
+$primary-light: var(--theme-primary-light);
 $primary-dark: var(--theme-primary-dark);
 $secondary-color: var(--theme-secondary);
+$secondary-light: var(--theme-secondary-light);
+$secondary-dark: var(--theme-secondary-dark);
+
 $background-color: var(--theme-background);
-$background-light: var(--theme-surface);
+$background-light: var(--theme-background-light);
+$background-dark: var(--theme-background-dark);
+$surface-color: var(--theme-surface);
+$surface-light: var(--theme-surface-light);
+$surface-dark: var(--theme-surface-dark);
+
 $text-color: var(--theme-text);
 $text-light: var(--theme-text-light);
+$text-dark: var(--theme-text-dark);
+$text-muted: var(--theme-text-muted);
+$text-inverse: var(--theme-text-inverse);
+
 $border-color: var(--theme-border);
-$error-color: var(--theme-error);
+$border-light: var(--theme-border-light);
+$border-dark: var(--theme-border-dark);
+$divider-color: var(--theme-divider);
+
+$info-color: var(--theme-info);
 $success-color: var(--theme-success);
 $warning-color: var(--theme-warning);
+$error-color: var(--theme-error);
+
+$link-color: var(--theme-link);
+$link-hover-color: var(--theme-link-hover);
+$selection-color: var(--theme-selection);
+$focus-color: var(--theme-focus);
 
 // Typography
-$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-$font-size-base: 14px;
-$font-size-large: 16px;
-$font-size-small: 12px;
+$font-family: var(--theme-font-family);
+$font-family-code: var(--theme-font-family-code);
+$font-size-base: var(--theme-font-size-base);
+$line-height-base: var(--theme-line-height-base);
+$font-size-xs: var(--theme-font-size-xs);
+$font-size-sm: var(--theme-font-size-sm);
+$font-size-md: var(--theme-font-size-md);
+$font-size-lg: var(--theme-font-size-lg);
+$font-size-xl: var(--theme-font-size-xl);
+$font-size-xxl: var(--theme-font-size-xxl);
+
+// 向后兼容的字体大小变量
+$font-size-small: $font-size-sm; // 14px
+$font-size-large: $font-size-lg; // 18px
 
 // Spacing
-$spacing-unit: 8px;
-$spacing-small: $spacing-unit;
-$spacing-medium: $spacing-unit * 2;
-$spacing-large: $spacing-unit * 3;
+$spacing-unit: var(--theme-spacing-unit);
+$spacing-xs: var(--theme-spacing-xs);
+$spacing-sm: var(--theme-spacing-sm);
+$spacing-md: var(--theme-spacing-md);
+$spacing-lg: var(--theme-spacing-lg);
+$spacing-xl: var(--theme-spacing-xl);
+$spacing-xxl: var(--theme-spacing-xxl);
 
-// Layout
-$border-radius: 4px;
-$shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-$shadow-large: 0 4px 12px rgba(0, 0, 0, 0.15);
+// 间距的倍数
+$spacing-xs-half: var(--theme-spacing-xs-half);
+$spacing-sm-half: var(--theme-spacing-sm-half);
+$spacing-md-half: var(--theme-spacing-md-half);
+$spacing-lg-half: var(--theme-spacing-lg-half);
+$spacing-xl-half: var(--theme-spacing-xl-half);
+
+$spacing-sm-75: var(--theme-spacing-sm-75);
+$spacing-md-75: var(--theme-spacing-md-75);
+$spacing-lg-75: var(--theme-spacing-lg-75);
+$spacing-xl-75: var(--theme-spacing-xl-75);
+
+// 向后兼容的spacing变量
+$spacing-small: $spacing-sm;
+$spacing-medium: $spacing-md;
+$spacing-large: $spacing-lg;
+
+$spacing-small-half: $spacing-sm-half;
+$spacing-medium-half: $spacing-md-half;
+$spacing-large-half: $spacing-lg-half;
+
+$spacing-small-75: $spacing-sm-75;
+$spacing-medium-75: $spacing-md-75;
+$spacing-large-75: $spacing-lg-75;
+
+// Border Radius
+$radius-none: var(--theme-radius-none);
+$radius-sm: var(--theme-radius-sm);
+$radius-md: var(--theme-radius-md);
+$radius-lg: var(--theme-radius-lg);
+$radius-full: var(--theme-radius-full);
+
+// 向后兼容的圆角变量
+$border-radius: $radius-md; // 4px
+$border-radius-sm: $radius-sm; // 2px
+$border-radius-lg: $radius-lg; // 8px
+
+// Shadows
+$shadow-none: var(--theme-shadow-none);
+$shadow-sm: var(--theme-shadow-sm);
+$shadow-md: var(--theme-shadow-md);
+$shadow-lg: var(--theme-shadow-lg);
+$shadow-xl: var(--theme-shadow-xl);
+
+// 向后兼容的阴影变量
+$shadow: $shadow-md; // 中等阴影
+$shadow-large: $shadow-lg; // 大阴影
 
 // Breakpoints
 $mobile: 480px;
