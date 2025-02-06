@@ -6,11 +6,20 @@ import { StorageService } from './services/storageService';
 const mockService = MockService.getInstance();
 const storageService = StorageService.getInstance();
 
+// 保存点击监听器的引用
+let actionClickListener: ((tab: chrome.tabs.Tab) => Promise<void>) | null =
+  null;
+
 // 确保默认为弹窗模式
 const initializePopupMode = async () => {
   await chrome.action.setPopup({ popup: 'index.html' });
   // 禁用侧边栏，确保默认不会打开侧边栏
   await chrome.sidePanel.setOptions({ enabled: false });
+  // 移除可能存在的点击监听器
+  if (actionClickListener) {
+    chrome.action.onClicked.removeListener(actionClickListener);
+    actionClickListener = null;
+  }
 };
 
 // 立即执行初始化
@@ -37,7 +46,7 @@ chrome.runtime.onSuspend.addListener(() => {
 });
 
 // 处理来自 popup 和 content script 的消息
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   const { type, payload } = message;
 
   (async () => {
@@ -86,17 +95,37 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             if (mode === 'panel') {
               // 切换到侧边栏模式
               console.log('Switching to panel mode for window:', windowId);
-              await chrome.action.setPopup({ popup: '' }); // 先禁用弹窗
+
+              // 移除之前的监听器（如果存在）
+              if (actionClickListener) {
+                chrome.action.onClicked.removeListener(actionClickListener);
+              }
+
+              // 设置新的点击监听器
+              actionClickListener = async (tab: chrome.tabs.Tab) => {
+                if (tab.windowId) {
+                  await chrome.sidePanel.open({ windowId: tab.windowId });
+                }
+              };
+              chrome.action.onClicked.addListener(actionClickListener);
+
+              await chrome.action.setPopup({ popup: '' }); // 禁用弹窗
               await chrome.sidePanel.setOptions({
                 enabled: true,
                 path: 'index.html',
               }); // 启用侧边栏并设置路径
-              await chrome.sidePanel.open({ windowId }); // 打开侧边栏
             } else {
               // 切换到弹窗模式
               console.log('Switching to popup mode');
-              await chrome.sidePanel.setOptions({ enabled: false }); // 先禁用侧边栏
-              await chrome.action.setPopup({ popup: 'index.html' }); // 再启用弹窗
+
+              // 移除点击监听器
+              if (actionClickListener) {
+                chrome.action.onClicked.removeListener(actionClickListener);
+                actionClickListener = null;
+              }
+
+              await chrome.sidePanel.setOptions({ enabled: false }); // 禁用侧边栏
+              await chrome.action.setPopup({ popup: 'index.html' }); // 启用弹窗
             }
             sendResponse(true);
           } catch (error) {

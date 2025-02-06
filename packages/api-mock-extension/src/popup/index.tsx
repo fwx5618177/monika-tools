@@ -5,6 +5,7 @@ import {
   Route,
   useLocation,
   useNavigate,
+  Navigate,
 } from 'react-router-dom';
 import { routes } from './routes';
 import styles from './styles/Popup.module.scss';
@@ -98,6 +99,8 @@ const Popup: React.FC = () => {
                 element={route.element}
               />
             ))}
+            <Route path="/index.html" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
       </div>
