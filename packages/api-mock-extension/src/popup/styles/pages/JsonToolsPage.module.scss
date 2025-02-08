@@ -2,91 +2,116 @@
 @use '@/styles/mixins' as *;
 
 .page {
-    padding: $spacing-medium;
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     background: var(--theme-background);
 }
 
-.toolList {
+.header {
     display: flex;
-    gap: $spacing-small;
-    margin-bottom: $spacing-medium;
-    overflow-x: auto;
-    padding-bottom: $spacing-small;
+    align-items: center;
+    gap: $spacing-medium;
+    padding: $spacing-medium;
+    background: var(--theme-surface);
+    border-bottom: 1px solid var(--theme-border);
+    flex-shrink: 0;
+
+    h2 {
+        margin: 0;
+        font-size: $font-size-xl;
+        font-weight: 600;
+        color: var(--theme-text);
+    }
+}
+
+.backButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: $border-radius;
+    background: transparent;
+    color: var(--theme-text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: var(--theme-background-light);
+        color: var(--theme-primary);
+    }
+}
+
+.toolGrid {
+    padding: $spacing-medium;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $spacing-medium;
+    overflow-y: auto;
+    flex: 1;
     @include scrollbar;
 }
 
 .toolCard {
     display: flex;
-    align-items: center;
-    gap: $spacing-small;
-    padding: $spacing-small $spacing-medium;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: $spacing-medium;
     background: var(--theme-surface);
     border: 1px solid var(--theme-border);
     border-radius: $border-radius;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-width: 200px;
     text-align: left;
 
     &:hover {
+        transform: translateY(-2px);
         border-color: var(--theme-primary);
-        background: var(--theme-background-light);
-    }
-
-    &.active {
-        border-color: var(--theme-primary);
-        background: var(--theme-primary-light);
-
-        .toolInfo {
-            h3 {
-                color: var(--theme-primary);
-            }
-        }
+        box-shadow: var(--theme-shadow-md);
     }
 }
 
 .toolIcon {
-    font-size: 20px;
-    line-height: 1;
+    margin-bottom: $spacing-medium;
+    padding: $spacing-medium;
+    border-radius: $border-radius;
+    background: var(--theme-background-light);
 }
 
 .toolInfo {
-    flex: 1;
-    min-width: 0;
-
     h3 {
-        margin: 0 0 4px;
-        font-size: $font-size-base;
+        margin: 0 0 $spacing-small;
+        font-size: $font-size-lg;
         font-weight: 600;
         color: var(--theme-text);
     }
 
     p {
         margin: 0;
-        font-size: $font-size-small;
+        font-size: $font-size-base;
         color: var(--theme-text-light);
-        @include text-ellipsis;
+        line-height: 1.5;
     }
 }
 
 .toolContent {
     flex: 1;
-    min-height: 0;
     padding: $spacing-medium;
-    background: var(--theme-surface);
-    border: 1px solid var(--theme-border);
-    border-radius: $border-radius;
-    overflow: auto;
+    overflow-y: auto;
     @include scrollbar;
+    display: flex;
+    flex-direction: column;
 }
 
 .toolbar {
     display: flex;
+    flex-wrap: wrap;
     gap: $spacing-small;
     margin-bottom: $spacing-medium;
+    flex-shrink: 0;
 }
 
 .toolButton {
@@ -94,10 +119,12 @@
     background: var(--theme-surface);
     color: var(--theme-text);
     border: 1px solid var(--theme-border);
+    font-weight: 500;
 
     &:hover:not(:disabled) {
+        background: var(--theme-primary);
+        color: var(--theme-text-inverse);
         border-color: var(--theme-primary);
-        color: var(--theme-primary);
     }
 
     &:disabled {
@@ -106,221 +133,224 @@
     }
 }
 
+.editorContainer {
+    position: relative;
+    height: 300px;
+    margin-bottom: $spacing-medium;
+    border-radius: $border-radius;
+    background: var(--theme-surface);
+    box-shadow: var(--theme-shadow-sm);
+    flex-shrink: 0;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
 .editor {
     width: 100%;
     height: 100%;
-    padding: $spacing-small;
-    border: 1px solid var(--theme-border);
+    padding: $spacing-medium;
+    border: 2px solid transparent;
     border-radius: $border-radius;
     background: var(--theme-background);
     color: var(--theme-text);
     font-family: var(--theme-font-family-code);
-    font-size: $font-size-small;
+    font-size: $font-size-base;
+    line-height: 1.6;
     resize: none;
-    outline: none;
+    transition: all 0.2s ease;
+    overflow: auto;
+    @include scrollbar;
+
+    &:hover {
+        border-color: var(--theme-border);
+    }
 
     &:focus {
+        outline: none;
         border-color: var(--theme-primary);
+        box-shadow: 0 0 0 3px var(--theme-primary-light);
     }
 
     &::placeholder {
         color: var(--theme-text-light);
+    }
+
+    &:read-only {
+        background: var(--theme-background-light);
+        cursor: default;
+    }
+}
+
+.copyButton {
+    position: absolute;
+    top: $spacing-small;
+    right: $spacing-small;
+    padding: $spacing-small;
+    background: var(--theme-surface);
+    border: 1px solid var(--theme-border);
+    border-radius: $border-radius;
+    color: var(--theme-text-light);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 1;
+
+    &:hover {
+        background: var(--theme-primary);
+        color: var(--theme-text-inverse);
+        border-color: var(--theme-primary);
+    }
+
+    &.success {
+        background: var(--theme-success);
+        color: var(--theme-text-inverse);
+        border-color: var(--theme-success);
     }
 }
 
 .error {
     margin-top: $spacing-medium;
-    padding: $spacing-small $spacing-medium;
+    padding: $spacing-medium;
     background: rgba(var(--theme-error-rgb), 0.1);
+    border: 1px solid var(--theme-error);
+    border-radius: $border-radius;
     color: var(--theme-error);
-    border-radius: $border-radius;
-    font-size: $font-size-small;
+    flex-shrink: 0;
 }
 
-.select {
-    @include button-base;
-    background: var(--theme-surface);
-    color: var(--theme-text);
-    border: 1px solid var(--theme-border);
-    min-width: 120px;
-    cursor: pointer;
-
-    &:focus {
-        border-color: var(--theme-primary);
-        outline: none;
-    }
-
-    option {
-        background: var(--theme-background);
-        color: var(--theme-text);
-    }
-}
-
-.pathInput {
-    flex: 1;
-    padding: $spacing-small $spacing-medium;
-    border: 1px solid var(--theme-border);
-    border-radius: $border-radius;
-    background: var(--theme-surface);
-    color: var(--theme-text);
-    font-family: var(--theme-font-family-code);
-    font-size: $font-size-small;
-    outline: none;
-
-    &:focus {
-        border-color: var(--theme-primary);
-    }
-
-    &::placeholder {
-        color: var(--theme-text-light);
-    }
-}
-
-.helpText {
-    margin-top: $spacing-medium;
+.jsonStats {
+    margin: $spacing-medium 0;
     padding: $spacing-medium;
     background: var(--theme-background-light);
     border-radius: $border-radius;
-
-    h4 {
-        margin: 0 0 $spacing-small;
-        color: var(--theme-text);
-        font-size: $font-size-base;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    li {
-        margin-bottom: $spacing-small;
-        color: var(--theme-text);
-        font-size: $font-size-small;
-
-        code {
-            padding: 2px 6px;
-            background: var(--theme-background);
-            border-radius: $border-radius-sm;
-            color: var(--theme-primary);
-            font-family: var(--theme-font-family-code);
-        }
-    }
-}
-
-.validationResult {
-    flex: 1;
-    padding: $spacing-medium;
-    background: var(--theme-background-light);
-    border-radius: $border-radius;
-}
-
-.resultStatus {
-    display: flex;
-    align-items: center;
-    gap: $spacing-small;
-    margin-bottom: $spacing-medium;
-    padding: $spacing-small $spacing-medium;
-    border-radius: $border-radius;
-
-    &.valid {
-        background: rgba(var(--theme-success-rgb), 0.1);
-        color: var(--theme-success);
-    }
-
-    &.invalid {
-        background: rgba(var(--theme-error-rgb), 0.1);
-        color: var(--theme-error);
-    }
-
-    .icon {
-        font-size: $font-size-large;
-    }
-}
-
-.errorDetails,
-.validDetails {
-    h4 {
-        margin: 0 0 $spacing-small;
-        font-size: $font-size-base;
-    }
-
-    p {
-        margin: 0 0 $spacing-small;
-        font-size: $font-size-small;
-        color: var(--theme-text);
-        font-family: var(--theme-font-family-code);
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
-}
-
-.errorDetails h4 {
-    color: var(--theme-error);
-}
-
-.validDetails h4 {
-    color: var(--theme-success);
-}
-
-.diffResults {
-    margin-top: $spacing-medium;
-    padding: $spacing-medium;
-    background: var(--theme-background-light);
-    border-radius: $border-radius;
+    flex-shrink: 0;
 
     h3 {
         margin: 0 0 $spacing-medium;
+        font-size: $font-size-lg;
         color: var(--theme-text);
-        font-size: $font-size-base;
     }
 }
 
-.diffList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.statGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-medium;
+}
 
-    li {
-        margin-bottom: $spacing-small;
+.statItem {
+    padding: $spacing-small;
+    background: var(--theme-surface);
+    border-radius: $border-radius;
+
+    .label {
+        font-size: $font-size-sm;
+        color: var(--theme-text-light);
+    }
+
+    .value {
+        font-size: $font-size-lg;
+        font-weight: 600;
+        color: var(--theme-text);
+    }
+}
+
+.keyList {
+    margin-top: $spacing-medium;
+    max-height: 300px;
+    overflow-y: auto;
+    @include scrollbar;
+
+    .keyItem {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         padding: $spacing-small;
-        border-radius: $border-radius;
-        font-size: $font-size-small;
-        font-family: var(--theme-font-family-code);
+        border-bottom: 1px solid var(--theme-border);
 
-        &.changed {
-            background: rgba(var(--theme-warning-rgb), 0.1);
+        &:last-child {
+            border-bottom: none;
         }
 
-        &.added {
-            background: rgba(var(--theme-success-rgb), 0.1);
+        .keyName {
+            font-family: var(--theme-font-family-code);
+            color: var(--theme-text);
         }
 
-        &.removed {
-            background: rgba(var(--theme-error-rgb), 0.1);
+        .keyType {
+            padding: 2px 6px;
+            border-radius: $border-radius-sm;
+            background: var(--theme-background-light);
+            font-size: $font-size-sm;
+            color: var(--theme-text-light);
+        }
+
+        .copyButton {
+            padding: 4px;
+            background: none;
+            border: none;
+            color: var(--theme-text-light);
+            cursor: pointer;
+            transition: color 0.2s ease;
+            position: static;
+
+            &:hover {
+                color: var(--theme-primary);
+            }
         }
     }
 }
 
-.path {
-    display: block;
-    margin-bottom: $spacing-small-half;
-    color: var(--theme-text);
-    font-weight: 500;
-}
+.jsonTree {
+    font-family: var(--theme-font-family-code);
+    font-size: $font-size-base;
+    line-height: 1.6;
 
-.oldValue {
-    color: var(--theme-error);
-}
+    .treeNode {
+        margin-left: $spacing-medium;
+    }
 
-.newValue {
-    color: var(--theme-success);
-}
+    .nodeKey {
+        color: var(--theme-primary);
+        cursor: pointer;
+        user-select: none;
 
-.arrow {
-    margin: 0 $spacing-small;
-    color: var(--theme-text-light);
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .nodeValue {
+        color: var(--theme-text);
+
+        &.string {
+            color: var(--theme-success);
+        }
+
+        &.number {
+            color: var(--theme-info);
+        }
+
+        &.boolean {
+            color: var(--theme-warning);
+        }
+
+        &.null {
+            color: var(--theme-error);
+        }
+    }
+
+    .expandIcon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-right: $spacing-small-half;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+
+        &.expanded {
+            transform: rotate(90deg);
+        }
+    }
 }

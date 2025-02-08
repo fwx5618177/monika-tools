@@ -9,7 +9,8 @@
     "declarativeNetRequest",
     "sidePanel",
     "tabs",
-    "scripting"
+    "scripting",
+    "alarms"
   ],
   "host_permissions": [
     "<all_urls>"

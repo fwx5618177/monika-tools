@@ -22,8 +22,23 @@ const initializePopupMode = async () => {
   }
 };
 
+// 创建定期运行的 alarm 来保持 service worker 活跃
+const createKeepAliveAlarm = () => {
+  chrome.alarms.create('keepAlive', {
+    periodInMinutes: 1,
+  });
+};
+
+// 监听 alarm 事件
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === 'keepAlive') {
+    console.log('Service worker kept alive');
+  }
+});
+
 // 立即执行初始化
 initializePopupMode();
+createKeepAliveAlarm();
 
 // 监听安装事件
 chrome.runtime.onInstalled.addListener(async (details) => {
@@ -32,10 +47,12 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     console.log('Extension installed');
     await storageService.clear();
     await initializePopupMode(); // 确保安装时也是弹窗模式
+    createKeepAliveAlarm(); // 创建 keepAlive alarm
   } else if (details.reason === 'update') {
     // 更新时的处理
     console.log('Extension updated');
     await initializePopupMode(); // 更新时也重置为弹窗模式
+    createKeepAliveAlarm(); // 确保 keepAlive alarm 存在
   }
 });
 

@@ -15,20 +15,49 @@ interface ValidationResult {
  * @returns 验证结果
  */
 export function validateJson(jsonString: string): ValidationResult {
+  if (!jsonString.trim()) {
+    return {
+      isValid: false,
+      error: '输入不能为空',
+    };
+  }
+
   try {
-    JSON.parse(jsonString);
+    // 尝试解析 JSON
+    const parsed = JSON.parse(jsonString);
+
+    // 检查是否是有效的 JSON 值
+    if (parsed === undefined) {
+      return {
+        isValid: false,
+        error: '无效的 JSON 值',
+      };
+    }
+
     return { isValid: true };
   } catch (err) {
     if (err instanceof SyntaxError) {
+      // 提取错误位置信息
       const match = err.message.match(/at position (\d+)/);
       if (match) {
         const position = parseInt(match[1], 10);
         const lines = jsonString.slice(0, position).split('\n');
+        const line = lines.length;
+        const column = lines[lines.length - 1].length + 1;
+
+        // 提供更友好的错误信息
+        let error = err.message;
+        if (error.includes('Unexpected token')) {
+          error = `在第 ${line} 行第 ${column} 列发现意外的字符`;
+        } else if (error.includes('Unexpected end of JSON input')) {
+          error = 'JSON 字符串不完整';
+        }
+
         return {
           isValid: false,
-          error: err.message,
-          line: lines.length,
-          column: lines[lines.length - 1].length + 1,
+          error,
+          line,
+          column,
         };
       }
     }
@@ -45,8 +74,16 @@ export function validateJson(jsonString: string): ValidationResult {
  * @returns 格式化后的 JSON 字符串
  */
 export function formatJson(jsonString: string): string {
-  const obj = JSON.parse(jsonString);
-  return JSON.stringify(obj, null, 2);
+  if (!jsonString.trim()) {
+    return '';
+  }
+
+  try {
+    const obj = JSON.parse(jsonString);
+    return JSON.stringify(obj, null, 2);
+  } catch (err) {
+    throw new Error('无法格式化无效的 JSON 字符串');
+  }
 }
 
 /**
@@ -55,8 +92,16 @@ export function formatJson(jsonString: string): string {
  * @returns 压缩后的 JSON 字符串
  */
 export function minifyJson(jsonString: string): string {
-  const obj = JSON.parse(jsonString);
-  return JSON.stringify(obj);
+  if (!jsonString.trim()) {
+    return '';
+  }
+
+  try {
+    const obj = JSON.parse(jsonString);
+    return JSON.stringify(obj);
+  } catch (err) {
+    throw new Error('无法压缩无效的 JSON 字符串');
+  }
 }
 
 /**
@@ -114,6 +159,7 @@ export function compareJson(jsonString1: string, jsonString2: string): any[] {
       const keys1 = Object.keys(value1);
       const keys2 = Object.keys(value2);
 
+      // 找出删除的键
       for (const key of keys1) {
         if (!(key in value2)) {
           diffs.push({
@@ -124,15 +170,17 @@ export function compareJson(jsonString1: string, jsonString2: string): any[] {
         }
       }
 
+      // 找出新增和修改的键
       for (const key of keys2) {
+        const newPath = path ? `${path}.${key}` : key;
         if (!(key in value1)) {
           diffs.push({
-            path: path ? `${path}.${key}` : key,
+            path: newPath,
             type: 'added',
             newValue: value2[key],
           });
         } else {
-          compare(path ? `${path}.${key}` : key, value1[key], value2[key]);
+          compare(newPath, value1[key], value2[key]);
         }
       }
       return;
@@ -157,7 +205,7 @@ export function compareJson(jsonString1: string, jsonString2: string): any[] {
  */
 export function convertJsonToYaml(jsonString: string): string {
   const obj = JSON.parse(jsonString);
-  return stringifyYaml(obj);
+  return stringifyYaml(obj, { indent: 2 });
 }
 
 /**
