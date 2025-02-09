@@ -1,0 +1,118 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: $spacing-medium;
+    gap: $spacing-medium;
+    background: var(--theme-background);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-medium;
+    padding-bottom: $spacing-medium;
+    border-bottom: 1px solid var(--theme-border);
+
+    h2 {
+        margin: 0;
+        font-size: $font-size-lg;
+        color: var(--theme-text);
+        font-weight: 600;
+    }
+}
+
+.backButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: $radius-full;
+    background: var(--theme-surface);
+    color: var(--theme-text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: var(--theme-background-dark);
+        color: var(--theme-primary);
+    }
+}
+
+.optionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $spacing-medium;
+    padding: $spacing-medium 0;
+    overflow-y: auto;
+    @include scrollbar;
+}
+
+.optionCard {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-medium;
+    padding: $spacing-medium;
+    background: var(--theme-surface);
+    border: 1px solid var(--theme-border);
+    border-radius: $radius-lg;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+
+    &:hover {
+        transform: translateY(-2px);
+        border-color: var(--theme-primary);
+        box-shadow: var(--theme-shadow-md);
+
+        .optionIcon {
+            background: var(--theme-primary);
+            color: var(--theme-text-inverse);
+        }
+    }
+}
+
+.optionIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: var(--theme-background-light);
+    border-radius: $radius-lg;
+    color: var(--theme-primary);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.optionInfo {
+    flex: 1;
+    min-width: 0;
+
+    h3 {
+        margin: 0 0 $spacing-small;
+        font-size: $font-size-md;
+        color: var(--theme-text);
+        font-weight: 600;
+    }
+
+    p {
+        margin: 0;
+        font-size: $font-size-sm;
+        color: var(--theme-text-light);
+        line-height: 1.5;
+    }
+}
+
+.crawlerContent {
+    flex: 1;
+    overflow: hidden;
+    background: var(--theme-surface);
+    border: 1px solid var(--theme-border);
+    border-radius: $radius-lg;
+}

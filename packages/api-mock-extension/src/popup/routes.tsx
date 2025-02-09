@@ -4,6 +4,7 @@ import { RequestLogPage } from './pages/RequestLogPage';
 import SettingsPage from './pages/SettingsPage';
 import { HomePage } from './pages/HomePage';
 import { JsonToolsPage } from './pages/JsonToolsPage';
+import { WebCrawlerPage } from './pages/WebCrawlerPage';
 
 export interface RouteConfig {
   path: string;
@@ -39,7 +40,7 @@ export const routes: RouteConfig[] = [
   },
   {
     path: '/web-crawler',
-    element: <div>开发中...</div>,
+    element: <WebCrawlerPage />,
     title: '网页爬虫',
     icon: '🕷️',
     showInHome: true,
