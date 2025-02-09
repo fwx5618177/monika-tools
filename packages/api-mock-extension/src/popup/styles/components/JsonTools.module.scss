@@ -5,18 +5,19 @@
     display: flex;
     flex-direction: column;
     gap: $spacing-medium;
-    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: $spacing-medium;
 }
 
 .toolbar {
     display: flex;
+    flex-direction: column;
     gap: $spacing-small;
-    flex-wrap: wrap;
     padding: $spacing-small;
     background: var(--theme-background-light);
     border-radius: $border-radius;
-    border: 1px solid var(--theme-border);
+    flex-shrink: 0;
 }
 
 .toolButton {
@@ -55,12 +56,79 @@
     }
 }
 
-.editorContainer {
-    flex: 1;
+.searchModeGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-small;
+    padding: $spacing-small;
+    background: var(--theme-background-light);
+    border-radius: $border-radius;
+    border: 1px solid var(--theme-border);
+    margin-bottom: $spacing-small;
+}
+
+.searchBar {
     display: flex;
     flex-direction: column;
+    gap: $spacing-small;
+    width: 100%;
+
+    @media (min-width: $tablet) {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.searchInput {
+    flex: 1;
+    min-width: 0;
+    padding: $spacing-small $spacing-medium;
+    border: 1px solid var(--theme-border);
+    border-radius: $border-radius;
+    background: var(--theme-surface);
+    color: var(--theme-text);
+    font-size: $font-size-sm;
+    font-family: var(--theme-font-family-code);
+
+    &:focus {
+        outline: none;
+        border-color: var(--theme-primary);
+    }
+}
+
+.searchButton {
+    @include button-base;
+    display: flex;
+    align-items: center;
+    gap: $spacing-small;
+    padding: $spacing-small $spacing-medium;
+    background: var(--theme-primary);
+    color: var(--theme-text-inverse);
+    border: none;
+    border-radius: $border-radius;
+    font-size: $font-size-sm;
+
+    &:hover:not(:disabled) {
+        background: var(--theme-primary-dark);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    svg {
+        font-size: 16px;
+    }
+}
+
+.editorContainer {
     position: relative;
-    height: 400px;
+    flex: 1;
+    min-height: 150px;
+    max-height: 300px;
+    display: flex;
+    flex-direction: column;
     background: var(--theme-surface);
     border: 1px solid var(--theme-border);
     border-radius: $border-radius;
@@ -68,16 +136,18 @@
 }
 
 .editor {
+    flex: 1;
     width: 100%;
     height: 100%;
     padding: $spacing-medium;
     border: none;
-    background: transparent;
-    color: var(--theme-text);
+    resize: none;
     font-family: var(--theme-font-family-code);
     font-size: $font-size-sm;
     line-height: 1.5;
-    resize: none;
+    color: var(--theme-text);
+    background: transparent;
+    overflow-y: auto;
     @include scrollbar;
 
     &:focus {
@@ -85,24 +155,26 @@
     }
 
     &.error {
-        color: var(--theme-error);
+        border-color: var(--theme-error);
+    }
+
+    &.hasError {
+        caret-color: var(--theme-error);
+
+        &::selection {
+            background-color: rgba(244, 67, 54, 0.2);
+        }
     }
 }
 
 .splitView {
     display: flex;
+    flex-direction: column;
     gap: $spacing-medium;
-    height: 400px;
-    margin: $spacing-medium 0;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
 
-    @media (max-width: $mobile) {
-        flex-direction: column;
-        height: auto;
-
-        .editorContainer {
-            height: 300px;
-        }
-    }
 }
 
 .error {
@@ -111,7 +183,6 @@
     background: color.adjust(#f44336, $alpha: -0.9);
     border: 1px solid var(--theme-error);
     border-radius: $border-radius;
-    margin: $spacing-small 0;
 }
 
 .success {
@@ -124,41 +195,34 @@
 }
 
 .helpPanel {
+    flex-shrink: 0;
+    padding: $spacing-medium;
     background: var(--theme-background-light);
     border: 1px solid var(--theme-border);
     border-radius: $border-radius;
-    padding: $spacing-medium;
-    margin-top: $spacing-medium;
+    margin-bottom: $spacing-small;
+    overflow-y: auto;
+    @include scrollbar;
 
     h4 {
-        color: var(--theme-text);
-        margin-bottom: $spacing-small;
-        font-size: $font-size-md;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: $spacing-small;
-    }
-
-    li {
         display: flex;
         align-items: center;
         gap: $spacing-small;
-        color: var(--theme-text-light);
+        margin-bottom: $spacing-small;
+        color: var(--theme-text);
         font-size: $font-size-sm;
 
-        code {
-            background: var(--theme-surface);
-            padding: 2px 6px;
-            border-radius: $border-radius-sm;
+        svg {
             color: var(--theme-primary);
-            font-family: var(--theme-font-family-code);
         }
+    }
+
+    ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: $spacing-small;
+        list-style: decimal;
+        margin-right: 8px;
     }
 }
 
@@ -252,5 +316,234 @@
     &:focus {
         outline: none;
         border-color: var(--theme-primary);
+    }
+}
+
+.modeButton {
+    @include button-base;
+    flex: 1;
+    min-width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-small-half;
+    padding: $spacing-small $spacing-medium;
+    background: var(--theme-surface);
+    color: var(--theme-text);
+    border: 1px solid var(--theme-border);
+    border-radius: $border-radius;
+    font-size: $font-size-sm;
+    transition: all 0.2s ease;
+
+    @media (min-width: $tablet) {
+        flex: 0 0 auto;
+    }
+
+    &:hover:not(.active) {
+        background: var(--theme-background-dark);
+    }
+
+    &.active {
+        background: var(--theme-primary);
+        color: var(--theme-text-inverse);
+        border-color: var(--theme-primary);
+    }
+
+    svg {
+        font-size: 14px;
+    }
+}
+
+.resultsContainer {
+    flex: 1;
+    min-height: 120px;
+    overflow-y: auto;
+    background: var(--theme-surface);
+    border: 1px solid var(--theme-border);
+    border-radius: $border-radius;
+    margin-top: $spacing-small;
+}
+
+.resultsList {
+    padding: $spacing-small;
+    overflow-y: auto;
+}
+
+.resultItem {
+    display: flex;
+    align-items: center;
+    gap: $spacing-small;
+    padding: $spacing-small;
+    border-radius: $border-radius;
+    margin-bottom: $spacing-small;
+    font-size: $font-size-sm;
+
+    svg {
+        flex-shrink: 0;
+        font-size: 16px;
+    }
+
+    &.errorItem {
+        background-color: rgba(244, 67, 54, 0.1);
+        border: 1px solid var(--theme-error);
+    }
+
+    &.infoItem {
+        background-color: rgba(33, 150, 243, 0.1);
+        border: 1px solid var(--theme-info);
+    }
+}
+
+.resultPath {
+    position: relative;
+    margin-bottom: $spacing-small;
+    padding: $spacing-small $spacing-medium $spacing-small $spacing-small;
+    background: var(--theme-background);
+    border-radius: $border-radius;
+    padding-right: 40px;
+
+    code {
+        font-family: var(--theme-font-family-code);
+        color: var(--theme-primary);
+        font-size: $font-size-sm;
+        word-break: break-all;
+        white-space: pre-wrap;
+    }
+
+    .copyButton {
+        position: absolute;
+        top: 50%;
+        right: $spacing-small;
+        transform: translateY(-50%);
+        padding: $spacing-small-half;
+        min-width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--theme-surface);
+        border: 1px solid var(--theme-border);
+        border-radius: $border-radius;
+        color: var(--theme-text-light);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        z-index: 1;
+
+        &:hover {
+            background: var(--theme-background-dark);
+            color: var(--theme-text);
+        }
+
+        &.success {
+            color: var(--theme-success);
+        }
+
+        svg {
+            font-size: 14px;
+        }
+    }
+}
+
+.resultValue {
+    padding: $spacing-small;
+    background: var(--theme-background);
+    border-radius: $border-radius;
+
+    pre {
+        margin: 0;
+        font-family: var(--theme-font-family-code);
+        font-size: $font-size-sm;
+        white-space: pre-wrap;
+        word-break: break-all;
+        overflow-x: auto;
+        @include scrollbar;
+    }
+}
+
+.placeholder {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--theme-text-muted);
+    font-size: $font-size-sm;
+    padding: $spacing-medium;
+    text-align: center;
+}
+
+.examples {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-small;
+    margin-top: $spacing-small;
+    overflow-y: auto;
+    @include scrollbar;
+}
+
+.exampleButton {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-small-half;
+    padding: $spacing-small;
+    background: var(--theme-background-light);
+    border: 1px solid var(--theme-border);
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    width: 100%;
+    min-width: 0;
+
+    &:hover {
+        background: var(--theme-background);
+        border-color: var(--theme-primary);
+    }
+
+    code {
+        font-family: var(--theme-font-family-code);
+        color: var(--theme-primary);
+        font-size: $font-size-sm;
+        word-break: break-all;
+        width: 100%;
+    }
+
+    span {
+        color: var(--theme-text-light);
+        font-size: $font-size-sm;
+        @include text-ellipsis;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+.syntaxGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: $spacing-small;
+    margin-top: $spacing-small;
+}
+
+.syntaxItem {
+    display: flex;
+    align-items: center;
+    gap: $spacing-small;
+    padding: $spacing-small;
+    background: var(--theme-surface);
+    border: 1px solid var(--theme-border);
+    border-radius: $border-radius;
+
+    code {
+        padding: 2px 6px;
+        background: var(--theme-background-dark);
+        border-radius: $border-radius-sm;
+        color: var(--theme-primary);
+        font-family: var(--theme-font-family-code);
+        font-size: $font-size-sm;
+    }
+
+    span {
+        color: var(--theme-text-light);
+        font-size: $font-size-sm;
     }
 }
