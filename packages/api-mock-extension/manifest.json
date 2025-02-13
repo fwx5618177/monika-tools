@@ -10,10 +10,11 @@
     "sidePanel",
     "tabs",
     "scripting",
-    "alarms"
+    "alarms",
+    "activeTab"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "*://*/*"
   ],
   "background": {
     "service_worker": "background.js",
@@ -22,13 +23,13 @@
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "*://*/*"
       ],
       "js": [
         "content.js"
       ],
-      "run_at": "document_start",
-      "all_frames": true
+      "type": "module",
+      "run_at": "document_end"
     }
   ],
   "action": {
@@ -51,7 +52,8 @@
     {
       "resources": [
         "icons/*",
-        "assets/*"
+        "assets/*",
+        "manifest.json"
       ],
       "matches": [
         "<all_urls>"
@@ -60,5 +62,10 @@
   ],
   "optional_permissions": [
     "cookies"
-  ]
+  ],
+  "externally_connectable": {
+    "matches": [
+      "<all_urls>"
+    ]
+  }
 }

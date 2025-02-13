@@ -103,3 +103,62 @@ export interface VideoResult {
   title?: string;
   description?: string;
 }
+
+export interface TextCrawlOptions {
+  useRegex: boolean;
+  pattern?: string;
+  preserveHtml: boolean;
+  preserveFormat: boolean;
+  includeImages: boolean;
+  autoFormat: boolean;
+  extractComments: boolean;
+  extractForumPosts: boolean;
+}
+
+export interface TextBlock {
+  id: string;
+  content: string;
+  html: string;
+  type: 'text' | 'title' | 'quote' | 'list' | 'code' | 'forum-post';
+  images: Array<{
+    url: string;
+    alt: string;
+  }>;
+  metadata: {
+    selector: string;
+    position: number;
+    wordCount: number;
+    charCount: number;
+    author?: string;
+    timestamp?: string;
+    level?: number;
+  };
+  selected: boolean;
+}
+
+export interface TextCrawlResult {
+  title: string;
+  url: string;
+  timestamp: string;
+  blocks: TextBlock[];
+  stats: {
+    totalBlocks: number;
+    totalWords: number;
+    totalChars: number;
+    totalImages: number;
+  };
+}
+
+// 消息响应类型
+export interface TextCrawlResponse {
+  result?: TextCrawlResult;
+  error?: string;
+}
+
+// 消息请求类型
+export interface TextCrawlRequest {
+  type: 'CRAWL_TEXT' | 'PING';
+  data?: {
+    options: TextCrawlOptions;
+  };
+}

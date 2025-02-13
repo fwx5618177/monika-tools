@@ -2,41 +2,56 @@
 @use '@/styles/mixins' as *;
 
 .container {
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: $spacing-medium;
     padding: $spacing-medium;
-    height: 100%;
-    overflow-y: auto;
     background: var(--theme-background);
-    @include scrollbar;
-
-    @media (view-type: side-panel) {
-        padding: $spacing-small;
-        gap: $spacing-small;
-    }
 }
 
 .toolbar {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     gap: $spacing-small;
-    padding: $spacing-small;
+    padding: $spacing-small $spacing-medium;
     background: var(--theme-surface);
     border-radius: $radius-lg;
     box-shadow: var(--theme-shadow-sm);
+    flex-wrap: nowrap;
+    min-height: 48px;
+
+    .input {
+        flex: 1;
+        min-width: 0;
+        margin-right: $spacing-small;
+    }
+
+    .primaryButton {
+        white-space: nowrap;
+    }
 }
 
 .primaryButton {
     @include button-base;
     background: var(--theme-primary);
     color: var(--theme-text-inverse);
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: $spacing-small;
+    padding: $spacing-small $spacing-medium;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    height: 36px;
 
     &:hover:not(:disabled) {
         background: var(--theme-primary-dark);
+        transform: translateY(-1px);
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0);
     }
 
     &:disabled {
@@ -55,11 +70,21 @@
     color: var(--theme-text);
     display: flex;
     align-items: center;
-    gap: $spacing-small;
-    border: 1px solid var(--theme-border);
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: $radius-full;
+    transition: all 0.2s ease;
 
     &:hover:not(:disabled) {
         background: var(--theme-background-dark);
+        color: var(--theme-primary);
+        transform: translateY(-1px);
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0);
     }
 
     &:disabled {
@@ -68,7 +93,12 @@
     }
 
     svg {
-        font-size: 16px;
+        font-size: 18px;
+    }
+
+    &.active {
+        background: var(--theme-primary);
+        color: var(--theme-text-inverse);
     }
 }
 
@@ -76,10 +106,20 @@
     background: var(--theme-surface);
     border-radius: $radius-lg;
     padding: $spacing-medium;
-    border: 1px solid var(--theme-border);
+    box-shadow: var(--theme-shadow-sm);
+
+    h4 {
+        margin: 0 0 $spacing-medium;
+        font-size: $font-size-base;
+        color: var(--theme-text);
+        font-weight: 600;
+    }
 }
 
-.optionGroup {
+.optionRow {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-medium;
     margin-bottom: $spacing-medium;
 
     &:last-child {
@@ -91,22 +131,24 @@
     display: flex;
     align-items: center;
     gap: $spacing-small;
-    margin-bottom: $spacing-small;
     color: var(--theme-text);
-    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
 
     input[type="checkbox"] {
-        width: 16px;
-        height: 16px;
-        border-radius: $radius-sm;
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        cursor: pointer;
     }
 }
 
-.optionRow {
-    display: flex;
-    align-items: center;
-    gap: $spacing-small;
-    margin-top: $spacing-small;
+.optionGroup {
+    margin-bottom: $spacing-medium;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .input {

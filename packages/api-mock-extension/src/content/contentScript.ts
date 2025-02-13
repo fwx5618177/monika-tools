@@ -3,11 +3,14 @@ import type {
   ExtractedContent,
   FilterOptions,
   ImageResult,
-  RichTextResult,
   RichTextOptions,
-  VideoResult,
+  RichTextResult,
   VideoOptions,
-} from '../types';
+  VideoResult,
+  TextCrawlOptions,
+  TextCrawlResult,
+  TextBlock,
+} from '@/types';
 import { crawlLinks } from './linkCrawler';
 
 // 提取主要内容
@@ -600,43 +603,182 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   } else if (request.type === 'CRAWL_LINKS') {
     crawlLinks(request.options)
       .then((results) => sendResponse({ results }))
-      .catch((err) => {
+      .catch((err: unknown) => {
         const error = err instanceof Error ? err.message : '未知错误';
         sendResponse({ error });
       });
     return true;
   } else if (request.type === 'CRAWL_TEXT') {
+    const { options } = request.data;
     try {
-      const result = extractMainContent(
-        request.payload.selector,
-        request.payload.options
-      );
+      const result = extractText(options);
       sendResponse(result);
-    } catch (error) {
+    } catch (error: unknown) {
       sendResponse({
-        error: error instanceof Error ? error.message : '内容提取失败',
+        error: error instanceof Error ? error.message : String(error),
       });
     }
+    return true;
   } else if (request.type === 'CRAWL_IMAGES') {
-    // 处理图片爬取请求
     extractImages(request.payload.selector, request.payload.options)
       .then((results) => sendResponse(results))
-      .catch((error) =>
+      .catch((error: unknown) =>
         sendResponse({
           error: error instanceof Error ? error.message : '图片提取失败',
         })
       );
-    return true; // 异步响应
+    return true;
   } else if (request.type === 'CRAWL_RICH_TEXT') {
     extractRichText(request.data.selector, request.data.options)
       .then((result) => sendResponse(result))
-      .catch((error) => sendResponse({ error: error.message }));
+      .catch((error: unknown) =>
+        sendResponse({
+          error: error instanceof Error ? error.message : String(error),
+        })
+      );
     return true;
   } else if (request.type === 'CRAWL_VIDEOS') {
     extractVideos(request.data.selector, request.data.options)
       .then((results) => sendResponse(results))
-      .catch((error) => sendResponse({ error: error.message }));
+      .catch((error: unknown) =>
+        sendResponse({
+          error: error instanceof Error ? error.message : String(error),
+        })
+      );
+    return true;
+  } else if (request.type === 'extractText') {
+    try {
+      const result = extractText(request.options);
+      sendResponse({ success: true, data: result });
+    } catch (error: unknown) {
+      sendResponse({
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
     return true;
   }
   return true;
+});
+
+// 提取文本内容
+export function extractText(options: TextCrawlOptions): TextCrawlResult {
+  const mainElement = findMainArticle();
+  if (!mainElement) {
+    throw new Error('无法找到主要内容区域');
+  }
+
+  const blocks: TextBlock[] = [];
+  let totalWords = 0;
+  let totalChars = 0;
+  let totalImages = 0;
+
+  // 处理文本块
+  const textElements = mainElement.querySelectorAll(
+    'p, h1, h2, h3, h4, h5, h6, li'
+  );
+  textElements.forEach((element, index) => {
+    const text = options.preserveFormat
+      ? element.innerHTML
+      : element.textContent || '';
+    if (!text.trim()) return;
+
+    // 应用正则过滤
+    if (options.useRegex && options.pattern) {
+      const regex = new RegExp(options.pattern);
+      if (!regex.test(text)) return;
+    }
+
+    const words = text.trim().split(/\s+/).length;
+    const chars = text.length;
+    totalWords += words;
+    totalChars += chars;
+
+    // 确定文本块类型
+    let type: TextBlock['type'] = 'text';
+    const tagName = element.tagName.toLowerCase();
+    if (tagName.startsWith('h')) {
+      type = 'title';
+    } else if (element.closest('blockquote')) {
+      type = 'quote';
+    } else if (element.closest('ul, ol')) {
+      type = 'list';
+    } else if (element.closest('pre, code')) {
+      type = 'code';
+    } else if (
+      options.extractForumPosts &&
+      element.closest('.post, .forum-post, .comment')
+    ) {
+      type = 'forum-post';
+    }
+
+    // 提取图片
+    const images = options.includeImages
+      ? Array.from(element.querySelectorAll('img')).map((img) => ({
+          url: img.src,
+          alt: img.alt || '',
+        }))
+      : [];
+    totalImages += images.length;
+
+    blocks.push({
+      id: `block-${index}`,
+      content: text,
+      html: options.preserveHtml ? element.innerHTML : text,
+      type,
+      images,
+      metadata: {
+        selector: getSelector(element),
+        position: index,
+        wordCount: words,
+        charCount: chars,
+        author: element.closest('[data-author], .author')?.textContent?.trim(),
+        timestamp: element
+          .closest('[data-time], .time, .date')
+          ?.textContent?.trim(),
+        level: type === 'title' ? parseInt(tagName[1]) : undefined,
+      },
+      selected: false,
+    });
+  });
+
+  return {
+    title: document.title,
+    url: window.location.href,
+    timestamp: new Date().toISOString(),
+    blocks,
+    stats: {
+      totalBlocks: blocks.length,
+      totalWords,
+      totalChars,
+      totalImages,
+    },
+  };
+}
+
+// 获取元素的选择器
+function getSelector(element: Element): string {
+  const path: string[] = [];
+  let current = element;
+
+  while (current && current !== document.body) {
+    let selector = current.tagName.toLowerCase();
+    if (current.id) {
+      selector += `#${current.id}`;
+      path.unshift(selector);
+      break;
+    }
+    if (current.className) {
+      selector += `.${current.className.split(' ').join('.')}`;
+    }
+    path.unshift(selector);
+    current = current.parentElement as Element;
+  }
+
+  return path.join(' > ');
+}
+
+// 确保 content script 已加载的标记
+window.addEventListener('load', () => {
+  (window as any).__CONTENT_SCRIPT_LOADED__ = true;
 });

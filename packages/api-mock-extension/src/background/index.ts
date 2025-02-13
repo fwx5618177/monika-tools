@@ -66,6 +66,8 @@ chrome.runtime.onSuspend.addListener(() => {
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   const { type, payload } = message;
 
+  console.log('background 收到消息:', message);
+
   (async () => {
     try {
       switch (type) {
@@ -185,3 +187,63 @@ chrome.webRequest.onBeforeRequest.addListener(
   },
   { urls: ['<all_urls>'] }
 );
+
+// 确保 content script 已注入
+async function ensureContentScriptInjected(tabId: number) {
+  try {
+    // 先尝试发送 PING 消息检查 content script 是否已加载
+    try {
+      const response = await chrome.tabs.sendMessage(tabId, { type: 'PING' });
+      if (response === true) {
+        console.log('Content script already loaded in tab:', tabId);
+        return; // content script 已加载，不需要重新注入
+      }
+    } catch (e) {
+      // 消息发送失败，说明 content script 未加载
+      console.log('Content script not loaded in tab:', tabId, 'injecting...');
+    }
+
+    // 注入 content script
+    await chrome.scripting.executeScript({
+      target: { tabId },
+      files: ['content.js'],
+    });
+
+    // 等待 content script 完全初始化
+    let retries = 0;
+    const maxRetries = 15; // 增加重试次数
+    const retryInterval = 1000; // 增加重试间隔到 1 秒
+
+    while (retries < maxRetries) {
+      try {
+        const response = await chrome.tabs.sendMessage(tabId, { type: 'PING' });
+        if (response === true) {
+          console.log('Content script successfully initialized in tab:', tabId);
+          return;
+        }
+      } catch (e) {
+        console.log(`Retry ${retries + 1}/${maxRetries} for tab:`, tabId);
+      }
+      await new Promise((resolve) => setTimeout(resolve, retryInterval));
+      retries++;
+    }
+
+    throw new Error(
+      `Content script initialization timeout after ${maxRetries} retries`
+    );
+  } catch (error) {
+    console.error('Content script injection failed for tab:', tabId, error);
+    throw error;
+  }
+}
+
+// 监听标签页更新
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  // 只在页面完全加载后注入一次
+  if (changeInfo.status === 'complete' && tab.url?.startsWith('http')) {
+    console.log('Page fully loaded, injecting content script for tab:', tabId);
+    ensureContentScriptInjected(tabId).catch((error) => {
+      console.error('Failed to inject content script:', error);
+    });
+  }
+});
