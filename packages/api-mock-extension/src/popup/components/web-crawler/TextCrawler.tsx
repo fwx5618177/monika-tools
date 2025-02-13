@@ -13,6 +13,8 @@ import {
   FiMaximize2,
   FiCheckSquare,
   FiSquare,
+  FiCode,
+  FiFileText,
 } from 'react-icons/fi';
 import type {
   TextCrawlOptions,
@@ -22,6 +24,7 @@ import type {
   TextCrawlRequest,
 } from '@/types';
 import classNames from 'classnames';
+import { ImageViewer } from './ImageViewer';
 
 export const TextCrawler: React.FC = () => {
   const [options, setOptions] = useState<TextCrawlOptions>({
@@ -43,6 +46,7 @@ export const TextCrawler: React.FC = () => {
   const [selectedBlocks, setSelectedBlocks] = useState<Set<string>>(new Set());
   const [expandedBlocks, setExpandedBlocks] = useState<Set<string>>(new Set());
   const [previewMode, setPreviewMode] = useState<'text' | 'html'>('text');
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleCrawl = useCallback(async () => {
     setLoading(true);
@@ -84,7 +88,6 @@ export const TextCrawler: React.FC = () => {
         }
       } catch (e) {
         console.log('报错: content script 未加载，重新注入');
-        // 如果出错，可能是 content script 未注入，尝试注入
         await chrome.scripting.executeScript({
           target: { tabId: tab.id },
           files: ['content.js'],
@@ -107,19 +110,18 @@ export const TextCrawler: React.FC = () => {
         },
       });
 
-      console.log(response);
-
       if ('error' in response) {
         throw new Error(response.error);
       }
 
-      console.log('爬取文本的消息发送成功');
-
-      if ('result' in response) {
+      if ('result' in response && response.result) {
+        console.log('提取结果:', response.result);
         setResults(response.result);
         setSelectedBlocks(
           new Set(response.result.blocks.map((block) => block.id))
         );
+      } else {
+        throw new Error('未能获取到有效的提取结果');
       }
     } catch (err) {
       console.error('Crawl failed:', err);
@@ -192,9 +194,15 @@ export const TextCrawler: React.FC = () => {
     if (!results) return;
 
     try {
-      const selectedContent = results.blocks
-        .filter((block) => selectedBlocks.has(block.id))
-        .map((block) => (options.preserveHtml ? block.html : block.content))
+      const selectedContent = [
+        // Include title if selected
+        selectedBlocks.has('title') ? results.title : '',
+        // Include selected blocks
+        ...results.blocks
+          .filter((block) => selectedBlocks.has(block.id))
+          .map((block) => (options.preserveHtml ? block.html : block.content)),
+      ]
+        .filter(Boolean)
         .join('\n\n');
 
       await navigator.clipboard.writeText(selectedContent);
@@ -211,6 +219,20 @@ export const TextCrawler: React.FC = () => {
     setSelectedBlocks(new Set());
     setExpandedBlocks(new Set());
   }, []);
+
+  const handleReset = useCallback(() => {
+    handleClear();
+    setPattern('');
+    setOptions({
+      useRegex: false,
+      preserveHtml: false,
+      preserveFormat: false,
+      includeImages: false,
+      autoFormat: false,
+      extractComments: false,
+      extractForumPosts: false,
+    });
+  }, [handleClear]);
 
   const toggleBlockSelection = useCallback((blockId: string) => {
     setSelectedBlocks((prev) => {
@@ -254,17 +276,32 @@ export const TextCrawler: React.FC = () => {
       <div key={block.id} className={styles.block}>
         <div className={styles.blockHeader}>
           <button
-            className={styles.selectButton}
+            className={classNames(styles.selectButton, {
+              [styles.selected]: isSelected,
+            })}
             onClick={() => toggleBlockSelection(block.id)}
           >
             {isSelected ? <FiCheckSquare /> : <FiSquare />}
           </button>
           <span className={styles.blockType}>{block.type}</span>
           <span className={styles.blockStats}>
-            {block.metadata.wordCount} 词 / {block.metadata.charCount} 字
+            <div className={styles.statsItem}>
+              <span className={styles.statsLabel}>词数：</span>
+              <span className={styles.statsValue}>
+                {block.metadata.wordCount}
+              </span>
+            </div>
+            <div className={styles.statsItem}>
+              <span className={styles.statsLabel}>字数：</span>
+              <span className={styles.statsValue}>
+                {block.metadata.charCount}
+              </span>
+            </div>
           </span>
           <button
-            className={styles.expandButton}
+            className={classNames(styles.expandButton, {
+              [styles.expanded]: isExpanded,
+            })}
             onClick={() => toggleBlockExpansion(block.id)}
           >
             <FiMaximize2 />
@@ -273,6 +310,7 @@ export const TextCrawler: React.FC = () => {
         <div
           className={classNames(styles.blockContent, {
             [styles.expanded]: isExpanded,
+            [styles.htmlView]: previewMode === 'html',
           })}
         >
           {previewMode === 'html' ? (
@@ -280,23 +318,33 @@ export const TextCrawler: React.FC = () => {
           ) : (
             <div>{block.content}</div>
           )}
-          {block.images.length > 0 && (
-            <div className={styles.imageList}>
-              {block.images.map((img, index) => (
-                <div key={index} className={styles.imageItem}>
-                  <FiImage />
-                  <a href={img.url} target="_blank" rel="noopener noreferrer">
-                    {img.alt || '查看图片'}
-                  </a>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
-        {block.metadata.author && (
+        {block.images.length > 0 && (
+          <div className={styles.imageList}>
+            {block.images.map((img, index) => (
+              <div key={index} className={styles.imageItem}>
+                <img
+                  src={img.url}
+                  alt={img.alt || '图片'}
+                  onClick={() => setSelectedImage(img.url)}
+                />
+                <div className={styles.imageOverlay}>
+                  <button onClick={() => setSelectedImage(img.url)}>
+                    放大查看
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        {(block.metadata.author || block.metadata.timestamp) && (
           <div className={styles.blockMeta}>
-            作者: {block.metadata.author}
-            {block.metadata.timestamp && ` • ${block.metadata.timestamp}`}
+            {block.metadata.author && (
+              <span>作者: {block.metadata.author}</span>
+            )}
+            {block.metadata.timestamp && (
+              <span>时间: {block.metadata.timestamp}</span>
+            )}
           </div>
         )}
       </div>
@@ -306,38 +354,43 @@ export const TextCrawler: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.toolbar}>
-        {options.useRegex && (
-          <input
-            type="text"
-            className={styles.input}
-            value={pattern}
-            onChange={(e) => setPattern(e.target.value)}
-            placeholder="输入正则表达式..."
-          />
-        )}
-        <button
-          className={styles.primaryButton}
-          onClick={handleCrawl}
-          disabled={loading}
-        >
-          <FiSearch />
-          {loading ? '提取中...' : '提取文本'}
-        </button>
-        <button
-          className={`${styles.toolButton} ${showOptions ? styles.active : ''}`}
-          onClick={() => setShowOptions(!showOptions)}
-          title="选项设置"
-        >
-          <FiSettings />
-        </button>
-        <button
-          className={styles.toolButton}
-          onClick={handleClear}
-          disabled={!results}
-          title="清空"
-        >
-          <FiRotateCcw />
-        </button>
+        <div className={styles.leftGroup}>
+          {options.useRegex && (
+            <input
+              type="text"
+              className={styles.input}
+              value={pattern}
+              onChange={(e) => setPattern(e.target.value)}
+              placeholder="输入正则表达式..."
+            />
+          )}
+          <button
+            className={styles.primaryButton}
+            onClick={handleCrawl}
+            disabled={loading}
+          >
+            <FiSearch />
+            {loading ? '提取中...' : '提取文本'}
+          </button>
+          <button
+            className={classNames(styles.toolButton, {
+              [styles.active]: showOptions,
+            })}
+            onClick={() => setShowOptions(!showOptions)}
+            title="选项设置"
+          >
+            <FiSettings />
+          </button>
+          {results && (
+            <button
+              className={styles.toolButton}
+              onClick={handleReset}
+              title="重置"
+            >
+              <FiRotateCcw />
+            </button>
+          )}
+        </div>
       </div>
 
       {showOptions && (
@@ -419,17 +472,8 @@ export const TextCrawler: React.FC = () => {
 
       {results && (
         <div className={styles.results}>
-          <div className={styles.resultHeader}>
-            <div className={styles.resultInfo}>
-              <h3>{results.title}</h3>
-              <p className={styles.resultStats}>
-                共 {results.stats.totalBlocks} 个文本块，
-                {results.stats.totalWords} 词，
-                {results.stats.totalChars} 字，
-                {results.stats.totalImages} 张图片
-              </p>
-            </div>
-            <div className={styles.resultActions}>
+          {results && (
+            <div className={styles.rightGroup}>
               <button
                 className={styles.toolButton}
                 onClick={toggleAllBlocks}
@@ -453,18 +497,116 @@ export const TextCrawler: React.FC = () => {
                 {copied ? <FiCheck /> : <FiCopy />}
               </button>
               <div className={styles.exportDropdown}>
-                <button className={styles.toolButton}>
+                <button
+                  className={styles.toolButton}
+                  disabled={selectedBlocks.size === 0}
+                >
                   <FiDownload />
                 </button>
                 <div className={styles.exportMenu}>
                   <button onClick={() => handleExport('html')}>
+                    <FiCode />
                     导出 HTML
                   </button>
                   <button onClick={() => handleExport('md')}>
+                    <FiFileText />
                     导出 Markdown
                   </button>
-                  <button onClick={() => handleExport('png')}>导出 PNG</button>
-                  <button onClick={() => handleExport('jpg')}>导出 JPG</button>
+                  <button onClick={() => handleExport('png')}>
+                    <FiImage />
+                    导出 PNG
+                  </button>
+                  <button onClick={() => handleExport('jpg')}>
+                    <FiImage />
+                    导出 JPG
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          <div className={styles.resultHeader}>
+            <div className={styles.titleSection}>
+              <div className={styles.titleWrapper}>
+                <button
+                  className={classNames(styles.selectButton, {
+                    [styles.selected]: selectedBlocks.has('title'),
+                  })}
+                  onClick={() => toggleBlockSelection('title')}
+                >
+                  {selectedBlocks.has('title') ? (
+                    <FiCheckSquare />
+                  ) : (
+                    <FiSquare />
+                  )}
+                </button>
+                <h2 className={styles.resultTitle}>{results.title}</h2>
+              </div>
+              <div className={styles.metaInfo}>
+                <div className={classNames(styles.metaItem, styles.langBadge)}>
+                  {results.metadata.lang}
+                </div>
+                <div className={classNames(styles.metaItem, styles.langBadge)}>
+                  {results.metadata.charset}
+                </div>
+                {results.metadata.description && (
+                  <div className={styles.metaItem}>
+                    <span className={styles.label}>描述:</span>
+                    <span>{results.metadata.description}</span>
+                  </div>
+                )}
+                {results.metadata.keywords && (
+                  <div className={styles.metaItem}>
+                    <span className={styles.label}>关键词:</span>
+                    <span>{results.metadata.keywords}</span>
+                  </div>
+                )}
+                {results.metadata.author && (
+                  <div className={styles.metaItem}>
+                    <span className={styles.label}>作者:</span>
+                    <span>{results.metadata.author}</span>
+                  </div>
+                )}
+                {results.title && (
+                  <div className={styles.metaItem}>
+                    <span className={styles.label}>标题:</span>
+                    <span>{results.title}</span>
+                  </div>
+                )}
+                <div className={styles.metaItem}>
+                  <span className={styles.label}>URL:</span>
+                  <span>{results.url}</span>
+                </div>
+                <div className={styles.metaItem}>
+                  <span className={styles.label}>时间:</span>
+                  <span>{new Date(results.timestamp).toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+            <div className={styles.resultStats}>
+              <div className={styles.statsGroup}>
+                <div className={styles.statsItem}>
+                  <span className={styles.statsLabel}>文本块数：</span>
+                  <span className={styles.statsValue}>
+                    {results.stats.totalBlocks}
+                  </span>
+                </div>
+                <div className={styles.statsItem}>
+                  <span className={styles.statsLabel}>总词数：</span>
+                  <span className={styles.statsValue}>
+                    {results.stats.totalWords}
+                  </span>
+                </div>
+                <div className={styles.statsItem}>
+                  <span className={styles.statsLabel}>总字数：</span>
+                  <span className={styles.statsValue}>
+                    {results.stats.totalChars}
+                  </span>
+                </div>
+                <div className={styles.statsItem}>
+                  <span className={styles.statsLabel}>图片数：</span>
+                  <span className={styles.statsValue}>
+                    {results.stats.totalImages}
+                  </span>
                 </div>
               </div>
             </div>
@@ -493,6 +635,13 @@ export const TextCrawler: React.FC = () => {
             {results.blocks.map(renderBlock)}
           </div>
         </div>
+      )}
+
+      {selectedImage && (
+        <ImageViewer
+          imageUrl={selectedImage}
+          onClose={() => setSelectedImage(null)}
+        />
       )}
 
       <div className={styles.helpPanel}>

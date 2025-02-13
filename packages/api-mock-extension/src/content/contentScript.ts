@@ -747,6 +747,13 @@ export function extractText(options: TextCrawlOptions): TextCrawlResult {
     url: window.location.href,
     timestamp: new Date().toISOString(),
     blocks,
+    metadata: {
+      lang: document.documentElement.lang || 'unknown',
+      description: '',
+      keywords: '',
+      author: '',
+      charset: document.charset,
+    },
     stats: {
       totalBlocks: blocks.length,
       totalWords,

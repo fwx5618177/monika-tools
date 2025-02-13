@@ -136,10 +136,19 @@ export interface TextBlock {
   selected: boolean;
 }
 
+export interface PageMetadata {
+  lang: string;
+  description: string;
+  keywords: string;
+  author: string;
+  charset: string;
+}
+
 export interface TextCrawlResult {
   title: string;
   url: string;
   timestamp: string;
+  metadata: PageMetadata;
   blocks: TextBlock[];
   stats: {
     totalBlocks: number;

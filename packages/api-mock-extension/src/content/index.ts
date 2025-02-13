@@ -1,30 +1,115 @@
 import { InjectionIndicator } from './components/InjectionIndicator';
+import type { TextCrawlResult, TextBlock, PageMetadata } from '@/types';
+
+// 文本清理和格式化函数
+function cleanAndFormatText(
+  text: string,
+  preserveFormat: boolean = false
+): string {
+  if (preserveFormat) {
+    return text
+      .replace(/[\n\r]+/g, '\n') // 保留单个换行
+      .replace(/[^\S\r\n]+/g, ' ') // 规范化空白字符（保留换行）
+      .replace(/\n\s+/g, '\n') // 清理每行开头的空白
+      .replace(/\s+\n/g, '\n') // 清理每行结尾的空白
+      .trim();
+  }
+  return text
+    .replace(/[\n\r]+/g, ' ') // 替换换行为空格
+    .replace(/\s+/g, ' ') // 合并多个空格
+    .trim();
+}
+
+// HTML 清理函数
+function cleanHtml(html: string, preserveFormat: boolean = false): string {
+  if (preserveFormat) {
+    return html
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // 移除脚本
+      .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '') // 移除样式
+      .replace(/<\/?(?!br|p|div|h[1-6])[^>]+(>|$)/g, '') // 只保留换行相关的标签
+      .replace(/(<br\s*\/?>)/gi, '\n') // 转换<br>为换行
+      .replace(/<\/(p|div|h[1-6])>/gi, '\n\n') // 段落结束添加双换行
+      .replace(/<[^>]+>/g, '') // 移除剩余标签
+      .replace(/&nbsp;/g, ' ') // 替换HTML空格
+      .replace(/&[a-z]+;/gi, '') // 移除其他HTML实体
+      .replace(/\n\s+/g, '\n') // 清理每行开头的空白
+      .replace(/\s+\n/g, '\n') // 清理每行结尾的空白
+      .replace(/\n{3,}/g, '\n\n') // 最多保留两个连续换行
+      .trim();
+  }
+  return html
+    .replace(/<[^>]+>/g, '') // 移除所有HTML标签
+    .replace(/&nbsp;/g, ' ') // 替换HTML空格
+    .replace(/&[a-z]+;/gi, '') // 移除其他HTML实体
+    .trim();
+}
+
+// 规范化图片URL
+function normalizeImageUrl(url: string): string {
+  try {
+    return new URL(url, window.location.href).href;
+  } catch {
+    return url;
+  }
+}
+
+// 检查文本块是否有意义
+function isSignificantText(text: string): boolean {
+  const cleanText = cleanAndFormatText(text);
+  // 检查文本长度和内容质量
+  return (
+    cleanText.length >= 50 && // 最小长度
+    cleanText.split(/\s+/).length >= 5 && // 最少词数
+    !/^\d+$/.test(cleanText) && // 不全是数字
+    !/^[^a-zA-Z]+$/.test(cleanText) // 包含一些字母
+  );
+}
+
+// 获取元素的语言
+function getElementLang(el: Element): string {
+  let current = el as HTMLElement;
+  while (current) {
+    if (current.lang) {
+      return current.lang;
+    }
+    current = current.parentElement as HTMLElement;
+  }
+  return document.documentElement.lang || 'unknown';
+}
+
+// 提取文本块的作者信息
+function extractAuthorInfo(el: Element): string | undefined {
+  // 查找可能包含作者信息的元素
+  const authorEl = el.querySelector(
+    '[rel="author"], [class*="author"], [class*="byline"]'
+  );
+  if (authorEl) {
+    return cleanAndFormatText(authorEl.textContent || '');
+  }
+  return undefined;
+}
+
+// 提取发布时间
+function extractTimestamp(el: Element): string | undefined {
+  const timeEl = el.querySelector(
+    'time, [datetime], [class*="date"], [class*="time"]'
+  );
+  if (timeEl) {
+    const datetime = timeEl.getAttribute('datetime');
+    if (datetime) {
+      try {
+        return new Date(datetime).toISOString();
+      } catch {
+        // 如果datetime解析失败，使用文本内容
+        return cleanAndFormatText(timeEl.textContent || '');
+      }
+    }
+    return cleanAndFormatText(timeEl.textContent || '');
+  }
+  return undefined;
+}
 
 // 创建一个显示注入成功的对话框
-function showInjectionDialog() {
-  const dialog = document.createElement('div');
-  dialog.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 4px;
-    z-index: 999999;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  `;
-  dialog.textContent = 'Content Script Injected! 🚀';
-  document.body.appendChild(dialog);
-
-  // 3秒后移除对话框
-  setTimeout(() => {
-    dialog.style.transition = 'opacity 0.5s';
-    dialog.style.opacity = '0';
-    setTimeout(() => dialog.remove(), 500);
-  }, 3000);
-}
 
 // 立即执行的初始化函数
 (async function initialize() {
@@ -49,6 +134,187 @@ function showInjectionDialog() {
     console.error('Failed to initialize content script:', error);
   }
 })();
+
+// 添加辅助函数来映射元素类型到 TextBlock 类型
+function mapElementTypeToBlockType(
+  tagName: string,
+  classList: DOMTokenList
+): 'text' | 'title' | 'quote' | 'list' | 'code' | 'forum-post' {
+  const tag = tagName.toLowerCase();
+  const classes = Array.from(classList).join(' ').toLowerCase();
+
+  // Check for headings
+  if (/^h[1-6]$/.test(tag)) {
+    return 'title';
+  }
+
+  // Check for quotes
+  if (tag === 'blockquote' || tag === 'q' || classes.includes('quote')) {
+    return 'quote';
+  }
+
+  // Check for lists
+  if (tag === 'ul' || tag === 'ol' || tag === 'dl') {
+    return 'list';
+  }
+
+  // Check for code blocks
+  if (tag === 'pre' || tag === 'code' || classes.includes('code')) {
+    return 'code';
+  }
+
+  // Check for forum posts
+  if (
+    classes.includes('post') ||
+    classes.includes('comment') ||
+    classes.includes('forum')
+  ) {
+    return 'forum-post';
+  }
+
+  // Default to text
+  return 'text';
+}
+
+// 获取标题级别
+function getHeadingLevel(tagName: string): number | undefined {
+  const match = tagName.match(/h(\d)/i);
+  return match ? parseInt(match[1]) : undefined;
+}
+
+// 提取公共的文本提取逻辑
+function extractTextContent(
+  options: {
+    preserveHtml?: boolean;
+    preserveFormat?: boolean;
+    selector?: string;
+  } = {}
+): {
+  blocks: TextBlock[];
+  metadata: PageMetadata;
+  stats: {
+    totalBlocks: number;
+    totalWords: number;
+    totalChars: number;
+    totalImages: number;
+  };
+} {
+  // 首先提取标题
+  const titleSelectors = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].join(',');
+  const titleElements = Array.from(
+    document.querySelectorAll(titleSelectors)
+  ).filter((el) => {
+    // 过滤掉导航、页脚等区域的标题
+    const isNavOrFooter = el.closest(
+      'nav, footer, header, [role="navigation"]'
+    );
+    return !isNavOrFooter;
+  });
+
+  // 定义要提取的正文选择器
+  const contentSelectors = options.selector
+    ? [options.selector]
+    : [
+        'article',
+        'main',
+        'section',
+        '.content',
+        '.article',
+        '.post',
+        'p',
+        'div > p',
+      ];
+
+  // 提取正文块
+  const contentElements = Array.from(
+    document.querySelectorAll(contentSelectors.join(','))
+  ).filter((el) => {
+    // 过滤掉导航、页脚等区域
+    const isNavOrFooter = el.closest(
+      'nav, footer, header, [role="navigation"]'
+    );
+    if (isNavOrFooter) return false;
+
+    const text = el.textContent?.trim();
+    return text && isSignificantText(text);
+  });
+
+  // 合并标题和正文，并保持它们的相对位置
+  const allElements = [...titleElements, ...contentElements].sort((a, b) => {
+    const posA = a.compareDocumentPosition(b);
+    const posB = b.compareDocumentPosition(a);
+    if (posA & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+    if (posB & Node.DOCUMENT_POSITION_FOLLOWING) return 1;
+    return 0;
+  });
+
+  // 处理所有元素
+  const blocks = allElements.map((el, index) => {
+    const text = cleanAndFormatText(
+      el.textContent || '',
+      options.preserveFormat
+    );
+    const html = el.innerHTML;
+    const cleanedHtml = options.preserveHtml
+      ? html
+      : cleanHtml(html, options.preserveFormat);
+
+    return {
+      id: `block-${index}`,
+      type: mapElementTypeToBlockType(el.tagName, el.classList),
+      content: text,
+      html: cleanedHtml,
+      metadata: {
+        selector: el.tagName.toLowerCase(),
+        position: index,
+        wordCount: text.split(/\s+/).length,
+        charCount: text.length,
+        author: extractAuthorInfo(el),
+        timestamp: extractTimestamp(el),
+        level: getHeadingLevel(el.tagName),
+      },
+      images: Array.from(el.querySelectorAll('img')).map((img) => ({
+        url: normalizeImageUrl(img.src),
+        alt: img.alt,
+        title: img.title || null,
+        width: img.width || null,
+        height: img.height || null,
+      })),
+      selected: false,
+    };
+  });
+
+  const metadata: PageMetadata = {
+    lang: document.documentElement.lang || 'unknown',
+    description:
+      document
+        .querySelector('meta[name="description"]')
+        ?.getAttribute('content') || '',
+    keywords:
+      document
+        .querySelector('meta[name="keywords"]')
+        ?.getAttribute('content') || '',
+    author:
+      document.querySelector('meta[name="author"]')?.getAttribute('content') ||
+      '',
+    charset: document.charset,
+  };
+
+  const stats = {
+    totalBlocks: blocks.length,
+    totalWords: blocks.reduce(
+      (sum, block) => sum + block.metadata.wordCount,
+      0
+    ),
+    totalChars: blocks.reduce(
+      (sum, block) => sum + block.metadata.charCount,
+      0
+    ),
+    totalImages: blocks.reduce((sum, block) => sum + block.images.length, 0),
+  };
+
+  return { blocks, metadata, stats };
+}
 
 // 添加消息监听器
 chrome.runtime.onMessage.addListener(
@@ -76,54 +342,20 @@ chrome.runtime.onMessage.addListener(
           `Processing CRAWL_TEXT message in tab ${tabId} with options:`,
           message.data.options
         );
-        // 这里我们直接实现文本提取逻辑，而不是导入
+
+        const { blocks, metadata, stats } = extractTextContent({
+          preserveHtml: message.data.options.preserveHtml,
+          preserveFormat: message.data.options.preserveFormat,
+        });
+
         const result = {
           title: document.title,
           url: window.location.href,
           timestamp: new Date().toISOString(),
-          blocks: Array.from(
-            document.querySelectorAll('p, article, section, div > p')
-          )
-            .filter((el) => {
-              const text = el.textContent?.trim();
-              return text && text.length > 50; // 只提取有意义的文本块
-            })
-            .map((el, index) => ({
-              id: `block-${index}`,
-              type: el.tagName.toLowerCase(),
-              content: el.textContent?.trim() || '',
-              html: el.innerHTML,
-              metadata: {
-                wordCount: el.textContent?.trim().split(/\s+/).length || 0,
-                charCount: el.textContent?.trim().length || 0,
-              },
-              images: Array.from(el.querySelectorAll('img')).map((img) => ({
-                url: img.src,
-                alt: img.alt,
-              })),
-            })),
-          stats: {
-            totalBlocks: 0,
-            totalWords: 0,
-            totalChars: 0,
-            totalImages: 0,
-          },
+          metadata,
+          blocks,
+          stats,
         };
-
-        // 计算统计信息
-        result.stats.totalBlocks = result.blocks.length;
-        result.stats.totalWords = result.blocks.reduce(
-          (sum, block) => sum + block.metadata.wordCount,
-          0
-        );
-        result.stats.totalChars = result.blocks.reduce(
-          (sum, block) => sum + block.metadata.charCount,
-          0
-        );
-        result.stats.totalImages = result.blocks.reduce(
-          (sum, block) => sum + block.images.length,
-          0
-        );
 
         console.log(`Text extraction successful in tab ${tabId}`);
         sendResponse({ result });
@@ -141,3 +373,47 @@ chrome.runtime.onMessage.addListener(
     return false;
   }
 );
+
+// 提取文本内容
+export function extractText(): TextCrawlResult {
+  const mainElement = findMainArticle();
+  if (!mainElement) {
+    throw new Error('无法找到主要内容区域');
+  }
+
+  const { blocks, metadata, stats } = extractTextContent({
+    selector: mainElement.tagName.toLowerCase(),
+  });
+
+  return {
+    title: document.title,
+    url: window.location.href,
+    timestamp: new Date().toISOString(),
+    metadata,
+    blocks,
+    stats,
+  };
+}
+
+// 查找主要文章内容区域
+function findMainArticle(): Element | null {
+  // 常见的主要内容容器选择器
+  const selectors = [
+    'article',
+    'main',
+    '[role="main"]',
+    '#content',
+    '.content',
+    '.article',
+    '.post',
+    '.entry',
+  ];
+
+  for (const selector of selectors) {
+    const element = document.querySelector(selector);
+    if (element) return element;
+  }
+
+  // 如果没有找到明确的主要内容容器，返回body
+  return document.body;
+}
