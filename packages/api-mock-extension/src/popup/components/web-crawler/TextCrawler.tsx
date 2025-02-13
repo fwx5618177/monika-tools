@@ -26,6 +26,27 @@ import type {
 import classNames from 'classnames';
 import { ImageViewer } from './ImageViewer';
 
+// 添加新的导出选项类型
+type ExportFormat = 'html' | 'md' | 'png' | 'jpg' | 'pdf' | 'txt' | 'docx';
+type ExportTheme = 'default' | 'dark' | 'light' | 'paper';
+
+interface ExportOptions {
+  format: ExportFormat;
+  theme: ExportTheme;
+  scale: number;
+  includeTitle: boolean;
+  includeMetadata: boolean;
+  includeImages: boolean;
+  customStyles?: string;
+}
+
+// 添加导出进度状态
+interface ExportProgress {
+  status: 'preparing' | 'processing' | 'finishing' | 'done' | 'error';
+  progress: number;
+  message: string;
+}
+
 export const TextCrawler: React.FC = () => {
   const [options, setOptions] = useState<TextCrawlOptions>({
     useRegex: false,
@@ -47,6 +68,11 @@ export const TextCrawler: React.FC = () => {
   const [expandedBlocks, setExpandedBlocks] = useState<Set<string>>(new Set());
   const [previewMode, setPreviewMode] = useState<'text' | 'html'>('text');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [exportProgress, setExportProgress] = useState<ExportProgress | null>(
+    null
+  );
+  const [exportTheme, setExportTheme] = useState<ExportTheme>('default');
+  const [exportScale, setExportScale] = useState<number>(2);
 
   const handleCrawl = useCallback(async () => {
     setLoading(true);
@@ -132,50 +158,238 @@ export const TextCrawler: React.FC = () => {
   }, [options, pattern]);
 
   const handleExport = useCallback(
-    async (format: 'html' | 'md' | 'png' | 'jpg') => {
+    async (format: ExportFormat) => {
       if (!results) return;
 
-      const selectedContent = results.blocks
-        .filter((block) => selectedBlocks.has(block.id))
-        .map((block) => (options.preserveHtml ? block.html : block.content))
-        .join('\n\n');
+      const selectedBlocksList = results.blocks.filter((block) =>
+        selectedBlocks.has(block.id)
+      );
+      if (selectedBlocksList.length === 0) {
+        setError('请先选择要导出的内容');
+        return;
+      }
 
-      switch (format) {
-        case 'html':
-          const html = `
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <title>${results.title}</title>
-              <style>
-                body { font-family: system-ui; line-height: 1.5; max-width: 800px; margin: 0 auto; padding: 20px; }
-                img { max-width: 100%; height: auto; }
-              </style>
-            </head>
-            <body>${selectedContent}</body>
-          </html>
-        `;
-          downloadFile(html, 'text/html', 'extracted-content.html');
-          break;
+      try {
+        setExportProgress({
+          status: 'preparing',
+          progress: 0,
+          message: '准备导出...',
+        });
 
-        case 'md':
-          // 这里需要添加 HTML 到 Markdown 的转换逻辑
-          downloadFile(
-            selectedContent,
-            'text/markdown',
-            'extracted-content.md'
-          );
-          break;
+        const exportOptions: ExportOptions = {
+          format,
+          theme: exportTheme,
+          scale: exportScale,
+          includeTitle: true,
+          includeMetadata: true,
+          includeImages: options.includeImages,
+          customStyles: getThemeStyles(exportTheme),
+        };
 
-        case 'png':
-        case 'jpg':
-          // 这里需要添加将内容转换为图片的逻辑
-          // 可以使用 html2canvas 或其他库
-          break;
+        switch (format) {
+          case 'html':
+            setExportProgress({
+              status: 'processing',
+              progress: 30,
+              message: '生成 HTML...',
+            });
+            const html = `
+              <!DOCTYPE html>
+              <html>
+                <head>
+                  <meta charset="utf-8">
+                  <title>${results.title}</title>
+                  <style>
+                    ${exportOptions.customStyles}
+                    body {
+                      font-family: system-ui;
+                      line-height: 1.5;
+                      max-width: 800px;
+                      margin: 0 auto;
+                      padding: 20px;
+                    }
+                    img { max-width: 100%; height: auto; }
+                    .block { margin-bottom: 1.5em; }
+                    .block-title { font-size: 1.2em; font-weight: 600; }
+                    .block-meta { font-size: 0.9em; color: #666; }
+                    .block-content { margin: 1em 0; }
+                  </style>
+                </head>
+                <body class="theme-${exportTheme}">
+                  ${selectedBlocksList
+                    .map(
+                      (block) => `
+                    <div class="block block-${block.type}">
+                      ${block.type === 'title' ? `<div class="block-title">${block.content}</div>` : ''}
+                      <div class="block-content">${options.preserveHtml ? block.html : block.content}</div>
+                      ${
+                        block.metadata.author || block.metadata.timestamp
+                          ? `
+                        <div class="block-meta">
+                          ${block.metadata.author ? `<span>作者: ${block.metadata.author}</span>` : ''}
+                          ${block.metadata.timestamp ? `<span>时间: ${block.metadata.timestamp}</span>` : ''}
+                        </div>
+                      `
+                          : ''
+                      }
+                    </div>
+                  `
+                    )
+                    .join('\n')}
+                </body>
+              </html>
+            `;
+            setExportProgress({
+              status: 'finishing',
+              progress: 90,
+              message: '完成 HTML 导出...',
+            });
+            downloadFile(html, 'text/html', 'extracted-content.html');
+            break;
+
+          case 'md':
+            setExportProgress({
+              status: 'processing',
+              progress: 30,
+              message: '生成 Markdown...',
+            });
+            const markdown = selectedBlocksList
+              .map((block) => {
+                const content = block.content;
+                switch (block.type) {
+                  case 'title':
+                    return `# ${content}\n`;
+                  case 'quote':
+                    return `> ${content}\n`;
+                  case 'code':
+                    return `\`\`\`\n${content}\n\`\`\`\n`;
+                  default:
+                    return `${content}\n\n`;
+                }
+              })
+              .join('\n');
+            setExportProgress({
+              status: 'finishing',
+              progress: 90,
+              message: '完成 Markdown 导出...',
+            });
+            downloadFile(markdown, 'text/markdown', 'extracted-content.md');
+            break;
+
+          case 'png':
+          case 'jpg':
+            setExportProgress({
+              status: 'processing',
+              progress: 30,
+              message: `生成${format.toUpperCase()}图片...`,
+            });
+            try {
+              const [tab] = await chrome.tabs.query({
+                active: true,
+                currentWindow: true,
+              });
+
+              if (!tab?.id) {
+                throw new Error('No active tab found');
+              }
+
+              const response = await chrome.tabs.sendMessage(tab.id, {
+                type: 'EXPORT_AS_IMAGE',
+                data: {
+                  blocks: selectedBlocksList,
+                  format,
+                  theme: exportTheme,
+                  scale: exportScale,
+                  includeTitle: true,
+                  includeMetadata: true,
+                  metadata: results.metadata,
+                  options: {
+                    ...options,
+                    customStyles: exportOptions.customStyles,
+                  },
+                },
+              });
+
+              if ('error' in response) {
+                throw new Error(response.error);
+              }
+
+              if ('dataUrl' in response) {
+                setExportProgress({
+                  status: 'finishing',
+                  progress: 90,
+                  message: '处理图片数据...',
+                });
+                const link = document.createElement('a');
+                link.href = response.dataUrl;
+                link.download = `extracted-content.${format}`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }
+            } catch (error) {
+              console.error('Export failed:', error);
+              setError(
+                error instanceof Error
+                  ? error.message
+                  : 'Failed to export image'
+              );
+              setExportProgress({
+                status: 'error',
+                progress: 100,
+                message: '导出失败',
+              });
+              return;
+            }
+            break;
+
+          case 'pdf':
+            setError('PDF导出功能即将推出');
+            return;
+
+          case 'txt':
+            setExportProgress({
+              status: 'processing',
+              progress: 30,
+              message: '生成纯文本...',
+            });
+            const plainText = selectedBlocksList
+              .map((block) => block.content)
+              .join('\n\n');
+            setExportProgress({
+              status: 'finishing',
+              progress: 90,
+              message: '完成纯文本导出...',
+            });
+            downloadFile(plainText, 'text/plain', 'extracted-content.txt');
+            break;
+
+          case 'docx':
+            setError('Word文档导出功能即将推出');
+            return;
+        }
+
+        setExportProgress({
+          status: 'done',
+          progress: 100,
+          message: '导出完成',
+        });
+
+        // 3秒后清除进度状态
+        setTimeout(() => {
+          setExportProgress(null);
+        }, 3000);
+      } catch (err) {
+        console.error('Export failed:', err);
+        setError('导出失败');
+        setExportProgress({
+          status: 'error',
+          progress: 100,
+          message: '导出失败',
+        });
       }
     },
-    [results, selectedBlocks, options.preserveHtml]
+    [results, options, exportTheme, exportScale, selectedBlocks]
   );
 
   const downloadFile = (content: string, type: string, filename: string) => {
@@ -351,6 +565,77 @@ export const TextCrawler: React.FC = () => {
     );
   };
 
+  // 添加主题样式函数
+  const getThemeStyles = (theme: ExportTheme): string => {
+    switch (theme) {
+      case 'dark':
+        return `
+          body { background: #1a1a1a; color: #ffffff; }
+          .block { background: #2d2d2d; padding: 20px; border-radius: 8px; }
+          .block-title { color: #ffffff; }
+          .block-meta { color: #888888; }
+        `;
+      case 'light':
+        return `
+          body { background: #ffffff; color: #333333; }
+          .block { background: #f8f9fa; padding: 20px; border-radius: 8px; }
+          .block-title { color: #000000; }
+          .block-meta { color: #666666; }
+        `;
+      case 'paper':
+        return `
+          body { background: #f4f1ea; color: #2c2c2c; font-family: Georgia, serif; }
+          .block { background: #ffffff; padding: 20px; border-radius: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+          .block-title { color: #2c2c2c; font-family: 'Times New Roman', serif; }
+          .block-meta { color: #666666; font-style: italic; }
+        `;
+      default:
+        return '';
+    }
+  };
+
+  // 在 JSX 中添加导出选项面板
+  const renderExportOptions = () => (
+    <div className={styles.exportOptions}>
+      <div className={styles.exportThemes}>
+        <label>导出主题</label>
+        <div className={styles.themeButtons}>
+          {(['default', 'dark', 'light', 'paper'] as ExportTheme[]).map(
+            (theme) => (
+              <button
+                key={theme}
+                className={classNames(styles.themeButton, {
+                  [styles.active]: exportTheme === theme,
+                })}
+                onClick={() => setExportTheme(theme)}
+              >
+                {theme === 'default'
+                  ? '默认'
+                  : theme === 'dark'
+                    ? '深色'
+                    : theme === 'light'
+                      ? '浅色'
+                      : '纸张'}
+              </button>
+            )
+          )}
+        </div>
+      </div>
+      <div className={styles.exportScale}>
+        <label>图片缩放</label>
+        <input
+          type="range"
+          min="1"
+          max="4"
+          step="0.5"
+          value={exportScale}
+          onChange={(e) => setExportScale(Number(e.target.value))}
+        />
+        <span>{exportScale}x</span>
+      </div>
+    </div>
+  );
+
   return (
     <div className={styles.container}>
       <div className={styles.toolbar}>
@@ -512,6 +797,10 @@ export const TextCrawler: React.FC = () => {
                     <FiFileText />
                     导出 Markdown
                   </button>
+                  <button onClick={() => handleExport('txt')}>
+                    <FiFileText />
+                    导出纯文本
+                  </button>
                   <button onClick={() => handleExport('png')}>
                     <FiImage />
                     导出 PNG
@@ -519,6 +808,14 @@ export const TextCrawler: React.FC = () => {
                   <button onClick={() => handleExport('jpg')}>
                     <FiImage />
                     导出 JPG
+                  </button>
+                  <button onClick={() => handleExport('pdf')} disabled>
+                    <FiFileText />
+                    导出 PDF (即将推出)
+                  </button>
+                  <button onClick={() => handleExport('docx')} disabled>
+                    <FiFileText />
+                    导出 Word (即将推出)
                   </button>
                 </div>
               </div>
@@ -659,6 +956,18 @@ export const TextCrawler: React.FC = () => {
           <li>可以选择多个文本块进行批量操作</li>
         </ul>
       </div>
+
+      {exportProgress && (
+        <div className={styles.exportProgress}>
+          <div
+            className={classNames(styles.progressBar, {
+              [styles.error]: exportProgress.status === 'error',
+            })}
+            style={{ width: `${exportProgress.progress}%` }}
+          />
+          <div className={styles.progressMessage}>{exportProgress.message}</div>
+        </div>
+      )}
     </div>
   );
 };

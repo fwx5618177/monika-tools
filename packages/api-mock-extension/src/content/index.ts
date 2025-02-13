@@ -1,5 +1,6 @@
 import { InjectionIndicator } from './components/InjectionIndicator';
 import type { TextCrawlResult, TextBlock, PageMetadata } from '@/types';
+import html2canvas from 'html2canvas';
 
 // 文本清理和格式化函数
 function cleanAndFormatText(
@@ -366,6 +367,194 @@ chrome.runtime.onMessage.addListener(
         });
       }
       return true;
+    }
+
+    // 处理导出为图片的消息
+    if (message.type === 'EXPORT_AS_IMAGE') {
+      try {
+        console.log(
+          `Processing EXPORT_AS_IMAGE message in tab ${tabId}:`,
+          message.data
+        );
+
+        // 创建一个临时容器来渲染内容
+        const container = document.createElement('div');
+        container.style.cssText = `
+          position: fixed;
+          left: -9999px;
+          top: -9999px;
+          width: 800px;
+          background: white;
+          padding: 20px;
+          font-family: system-ui, -apple-system, sans-serif;
+          line-height: 1.5;
+          color: #333;
+        `;
+
+        // 添加标题
+        if (message.data.includeTitle) {
+          const titleEl = document.createElement('h1');
+          titleEl.style.cssText = `
+            margin: 0 0 20px 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: #000;
+          `;
+          titleEl.textContent = document.title;
+          container.appendChild(titleEl);
+        }
+
+        // 添加元数据
+        if (message.data.includeMetadata) {
+          const metaContainer = document.createElement('div');
+          metaContainer.style.cssText = `
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            font-size: 14px;
+          `;
+
+          const metadata = {
+            URL: window.location.href,
+            Time: new Date().toLocaleString(),
+            Author: message.data.metadata.author || 'Unknown',
+            Language: message.data.metadata.lang || 'Unknown',
+          };
+
+          Object.entries(metadata).forEach(([key, value]) => {
+            const row = document.createElement('div');
+            row.style.marginBottom = '5px';
+            row.innerHTML = `<strong>${key}:</strong> ${value}`;
+            metaContainer.appendChild(row);
+          });
+
+          container.appendChild(metaContainer);
+        }
+
+        // 添加选中的文本块
+        message.data.blocks.forEach((block: TextBlock) => {
+          const blockEl = document.createElement('div');
+          blockEl.style.cssText = `
+            margin-bottom: 20px;
+            padding: ${block.type === 'quote' ? '10px 20px' : '0'};
+            border-left: ${block.type === 'quote' ? '4px solid #ddd' : 'none'};
+          `;
+
+          if (block.type === 'title') {
+            const level = block.metadata.level || 2;
+            const heading = document.createElement(`h${level}`);
+            heading.style.cssText = `
+              margin: 0 0 10px 0;
+              font-size: ${24 - (level - 1) * 2}px;
+              font-weight: 600;
+              color: #000;
+            `;
+            heading.textContent = block.content;
+            blockEl.appendChild(heading);
+          } else if (block.type === 'code') {
+            const pre = document.createElement('pre');
+            pre.style.cssText = `
+              margin: 0;
+              padding: 15px;
+              background: #f8f9fa;
+              border-radius: 4px;
+              font-family: monospace;
+              font-size: 14px;
+              overflow-x: auto;
+            `;
+            pre.textContent = block.content;
+            blockEl.appendChild(pre);
+          } else {
+            blockEl.innerHTML = message.data.options.preserveHtml
+              ? block.html
+              : block.content.replace(/\n/g, '<br>');
+          }
+
+          container.appendChild(blockEl);
+
+          // 添加图片（如果有）
+          if (block.images.length > 0 && message.data.options.includeImages) {
+            const imageContainer = document.createElement('div');
+            imageContainer.style.cssText = `
+              display: flex;
+              flex-wrap: wrap;
+              gap: 10px;
+              margin-top: 10px;
+            `;
+
+            block.images.forEach((img) => {
+              const imgEl = document.createElement('img');
+              imgEl.src = img.url;
+              imgEl.alt = img.alt;
+              imgEl.style.cssText = `
+                max-width: 200px;
+                max-height: 200px;
+                object-fit: contain;
+                border-radius: 4px;
+              `;
+              imageContainer.appendChild(imgEl);
+            });
+
+            blockEl.appendChild(imageContainer);
+          }
+        });
+
+        // 添加到文档中以便渲染
+        document.body.appendChild(container);
+
+        // 使用 html2canvas 渲染
+        const options = {
+          scale: 2, // 2x 分辨率以获得更清晰的图像
+          useCORS: true, // 允许加载跨域图片
+          backgroundColor: '#ffffff',
+          logging: false,
+        };
+
+        // 等待所有图片加载完成
+        const imagePromises = Array.from(container.querySelectorAll('img')).map(
+          (img) =>
+            new Promise((resolve, reject) => {
+              if (img.complete) {
+                resolve(img);
+              } else {
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+              }
+            })
+        );
+
+        Promise.all(imagePromises)
+          .then(() => html2canvas(container, options))
+          .then((canvas) => {
+            // 根据请求的格式转换
+            const format = message.data.format.toLowerCase();
+            const mimeType = format === 'png' ? 'image/png' : 'image/jpeg';
+            const quality = format === 'png' ? undefined : 0.9;
+
+            // 转换为 base64
+            const dataUrl = canvas.toDataURL(mimeType, quality);
+
+            // 清理临时元素
+            document.body.removeChild(container);
+
+            // 发送结果
+            sendResponse({ dataUrl });
+          })
+          .catch((error) => {
+            // 清理临时元素
+            document.body.removeChild(container);
+            throw error;
+          });
+
+        return true;
+      } catch (error) {
+        console.error(`Image export failed in tab ${tabId}:`, error);
+        sendResponse({
+          error: error instanceof Error ? error.message : String(error),
+        });
+        return true;
+      }
     }
 
     // 对于未知消息类型，返回 false

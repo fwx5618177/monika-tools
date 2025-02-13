@@ -635,3 +635,151 @@
         }
     }
 }
+
+.exportOptions {
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 10px 0;
+
+    .exportThemes {
+        margin-bottom: 15px;
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .themeButtons {
+            display: flex;
+            gap: 8px;
+
+            .themeButton {
+                padding: 6px 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                background: #fff;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                &:hover {
+                    background: #f0f0f0;
+                }
+
+                &.active {
+                    background: #007bff;
+                    color: #fff;
+                    border-color: #0056b3;
+                }
+            }
+        }
+    }
+
+    .exportScale {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        label {
+            font-weight: 500;
+            color: #333;
+            min-width: 70px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 4px;
+            background: #ddd;
+            border-radius: 2px;
+            appearance: none;
+            outline: none;
+
+            &::-webkit-slider-thumb {
+                appearance: none;
+                width: 16px;
+                height: 16px;
+                background: #007bff;
+                border-radius: 50%;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                &:hover {
+                    transform: unquote(' scale(1.1)');
+                }
+            }
+        }
+
+        span {
+            min-width: 40px;
+            text-align: right;
+            color: #666;
+        }
+    }
+}
+
+.exportProgress {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 1000;
+
+    .progressBar {
+        height: 4px;
+        background: #007bff;
+        transition: width 0.3s ease;
+
+        &.error {
+            background: #dc3545;
+        }
+    }
+
+    .progressMessage {
+        padding: 12px;
+        text-align: center;
+        font-size: 14px;
+        color: #333;
+    }
+}
+
+.exportMenu {
+    button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 8px 12px;
+        border: none;
+        background: none;
+        color: #333;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: #f8f9fa;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+
+            &:hover {
+                background: none;
+            }
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+            color: #666;
+        }
+    }
+}
