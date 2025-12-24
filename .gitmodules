@@ -43,6 +43,3 @@
 [submodule "packages/vike"]
 	path = packages/vike
 	url = git@github.com:vikejs/vike.git
-[submodule "packages/ChemicalCheck"]
-	path = packages/ChemicalCheck
-	url = git@github.com:fwx5618177/ChemicalCheck.git
