@@ -46,6 +46,3 @@
 [submodule "packages/ChemicalCheck"]
 	path = packages/ChemicalCheck
 	url = git@github.com:fwx5618177/ChemicalCheck.git
-[submodule "packages/Nextjs-dashboard"]
-	path = packages/Nextjs-dashboard
-	url = git@github.com:fwx5618177/Nextjs-dashboard.git
